@@ -1,0 +1,2209 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configuración | Voz Angelical</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --dorado: #B48A42;
+    --dorado-claro: #DCC18A;
+    --dorado-oscuro: #8A632B;
+    --marfil: #F5EFE4;
+    --blanco: #FFFFFF;
+    --cafe: #30271D;
+    --gris: #796C59;
+    --borde: #E6D8C1;
+    --sidebar: 270px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--marfil);
+    color: var(--cafe);
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+}
+
+/* PANTALLA DE CARGA */
+
+#pantallaCarga {
+    position: fixed;
+    inset: 0;
+    background: var(--marfil);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#pantallaCarga img {
+    width: 140px;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+}
+
+/* MENU LATERAL */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar);
+    height: 100dvh;
+    background: white;
+    border-right: 1px solid var(--borde);
+    display: flex;
+    flex-direction: column;
+    z-index: 1045;
+    transition: transform .3s ease;
+}
+
+.marca {
+    text-align: center;
+    padding: 25px 15px 20px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.marca img {
+    width: 105px;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+}
+
+.marca h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dorado-oscuro);
+    margin-top: 12px;
+}
+
+.marca p {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gris);
+    margin: 0;
+}
+
+.menu {
+    padding: 20px 15px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.titulo-menu {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--gris);
+    padding: 10px 12px;
+    font-weight: 600;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    text-decoration: none;
+    color: var(--cafe);
+    padding: 13px 15px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    transition: .25s;
+}
+
+.menu a i {
+    font-size: 18px;
+    color: var(--dorado-oscuro);
+}
+
+.menu a:hover {
+    background: var(--marfil);
+    transform: translateX(3px);
+}
+
+.menu a.activo {
+    background: linear-gradient(135deg,#8A632B,#B48A42);
+    color: white;
+    box-shadow: 0 5px 15px rgba(138,99,43,.18);
+}
+
+.menu a.activo i {
+    color: white;
+}
+
+.sidebar-footer {
+    padding: 18px;
+    border-top: 1px solid var(--borde);
+}
+
+.btn-salir {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #E7CCCC;
+    background: #FFF6F6;
+    color: #A94442;
+    border-radius: 10px;
+    transition: .25s;
+}
+
+.btn-salir:hover {
+    background: #A94442;
+    color: white;
+}
+
+/* CONTENIDO PRINCIPAL */
+
+.principal {
+    margin-left: var(--sidebar);
+    min-height: 100vh;
+}
+
+.barra-superior {
+    min-height: 80px;
+    background: white;
+    border-bottom: 1px solid var(--borde);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    gap: 15px;
+}
+
+.barra-superior h5 {
+    font-family: 'Cinzel', serif;
+    color: var(--dorado-oscuro);
+    font-weight: 700;
+    margin: 0;
+}
+
+.barra-superior small {
+    color: var(--gris);
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--marfil);
+    color: var(--dorado-oscuro);
+    display: grid;
+    place-items: center;
+    font-size: 23px;
+    flex-shrink: 0;
+}
+
+.contenido {
+    padding: 30px;
+    animation: aparecer .6s ease;
+}
+
+/* ENCABEZADO */
+
+.encabezado {
+    background: linear-gradient(120deg,#8A632B,#B48A42,#C6A46A);
+    color: white;
+    border-radius: 20px;
+    padding: 35px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 25px rgba(138,99,43,.15);
+}
+
+.encabezado h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.encabezado p {
+    max-width: 650px;
+    line-height: 1.9;
+    margin-bottom: 0;
+}
+
+/* TARJETAS */
+
+.tarjeta {
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: 17px;
+    padding: 25px;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(95,67,25,.04);
+}
+
+.titulo-seccion {
+    font-family: 'Cinzel', serif;
+    color: var(--dorado-oscuro);
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.subtitulo {
+    font-size: 12px;
+    color: var(--gris);
+    line-height: 1.8;
+}
+
+.icono-seccion {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    background: var(--marfil);
+    color: var(--dorado-oscuro);
+    border-radius: 12px;
+    font-size: 23px;
+    flex-shrink: 0;
+}
+
+/* PERFIL EMPRESARIAL */
+
+.perfil-empresa {
+    text-align: center;
+    padding: 30px 15px;
+}
+
+.perfil-empresa img {
+    width: 155px;
+    height: 155px;
+    object-fit: contain;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+}
+
+.perfil-empresa h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--dorado-oscuro);
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+.etiqueta-privada {
+    display: inline-block;
+    background: #E5F4E9;
+    color: #287A41;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+}
+
+/* FORMULARIOS */
+
+.form-label {
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 7px;
+}
+
+.form-control,
+.form-select {
+    background: #FDFBF7;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    min-height: 45px;
+    font-size: 13px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: white;
+    border-color: var(--dorado);
+    box-shadow: 0 0 0 3px rgba(180,138,66,.15);
+}
+
+.form-text {
+    font-size: 10px;
+    color: var(--gris);
+}
+
+textarea.form-control {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.input-group-text {
+    background: var(--marfil);
+    color: var(--dorado-oscuro);
+    border-color: var(--borde);
+    font-size: 12px;
+}
+
+/* BOTONES */
+
+.btn-dorado {
+    background: var(--dorado-oscuro);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: .25s;
+}
+
+.btn-dorado:hover {
+    background: var(--dorado);
+    color: white;
+}
+
+.btn-dorado:disabled {
+    background: #B5A58C;
+    color: white;
+}
+
+.btn-secundario {
+    background: white;
+    border: 1px solid var(--dorado-claro);
+    color: var(--dorado-oscuro);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 12px;
+}
+
+.btn-secundario:hover {
+    background: var(--marfil);
+    color: var(--dorado-oscuro);
+}
+
+/* POLITICAS */
+
+.politica {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 17px 0;
+    border-bottom: 1px solid var(--borde);
+}
+
+.politica:last-child {
+    border-bottom: none;
+}
+
+.politica i {
+    color: var(--dorado-oscuro);
+    font-size: 22px;
+}
+
+.politica h6 {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.politica p {
+    font-size: 12px;
+    color: var(--gris);
+    margin: 0;
+    line-height: 1.8;
+}
+
+/* RESPALDOS */
+
+.respaldo {
+    background: var(--marfil);
+    border: 1px dashed var(--dorado-claro);
+    border-radius: 14px;
+    padding: 25px;
+    text-align: center;
+}
+
+.respaldo > i {
+    font-size: 45px;
+    color: var(--dorado-oscuro);
+}
+
+.respaldo h5 {
+    font-family: 'Cinzel', serif;
+    color: var(--dorado-oscuro);
+    margin-top: 15px;
+}
+
+/* BARRA DE GUARDADO */
+
+.barra-guardado {
+    position: sticky;
+    bottom: 12px;
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: 15px;
+    padding: 16px 20px;
+    box-shadow: 0 5px 25px rgba(48,39,29,.12);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+#estadoCambios {
+    color: var(--gris);
+    font-size: 12px;
+}
+
+/* RESPONSIVO */
+
+.btn-menu {
+    display: none;
+    width: 40px;
+    height: 40px;
+    background: var(--marfil);
+    border: 1px solid var(--borde);
+    color: var(--dorado-oscuro);
+    border-radius: 9px;
+    font-size: 22px;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.35);
+    z-index: 1040;
+}
+
+.overlay.activo {
+    display: block;
+}
+
+.footer {
+    text-align: center;
+    padding: 30px 10px;
+    color: var(--gris);
+    font-size: 11px;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media(max-width:991px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.abierto {
+        transform: translateX(0);
+    }
+
+    .principal {
+        margin-left: 0;
+    }
+
+    .btn-menu {
+        display: block;
+    }
+
+    .contenido {
+        padding: 20px;
+    }
+}
+
+@media(max-width:576px) {
+    .contenido {
+        padding: 15px;
+    }
+
+    .encabezado {
+        padding: 25px;
+    }
+
+    .encabezado h2 {
+        font-size: 23px;
+    }
+
+    .tarjeta {
+        padding: 18px;
+    }
+
+    .barra-superior {
+        padding: 15px;
+    }
+
+    .barra-superior h5 {
+        font-size: 16px;
+    }
+
+    #correoUsuario {
+        display: none;
+    }
+
+    .form-control,
+    .form-select {
+        font-size: 16px;
+    }
+
+    .barra-guardado {
+        justify-content: center;
+    }
+
+    .barra-guardado .botones {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+    }
+
+    .barra-guardado .botones button {
+        flex: 1;
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="pantallaCarga">
+    <img src="logo.png" alt="Voz Angelical">
+    <div class="spinner-border" style="color:#B48A42"></div>
+    <p>Cargando configuración...</p>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="marca">
+        <img src="logo.png" alt="Voz Angelical">
+        <h1>VOZ ANGELICAL</h1>
+        <p>GESTIÓN MUSICAL</p>
+    </div>
+
+    <nav class="menu">
+
+        <div class="titulo-menu">MENÚ PRINCIPAL</div>
+
+        <a href="inicio.html">
+            <i class="bi bi-grid"></i> Inicio
+        </a>
+
+        <a href="agenda.html">
+            <i class="bi bi-calendar-event"></i> Agenda
+        </a>
+
+        <a href="contratos.html">
+            <i class="bi bi-file-earmark-text"></i> Contratos
+        </a>
+
+        <a href="clientes.html">
+            <i class="bi bi-people"></i> Clientes
+        </a>
+
+        <a href="servicios.html">
+            <i class="bi bi-music-note-beamed"></i> Servicios
+        </a>
+
+        <a href="estadisticas.html">
+            <i class="bi bi-bar-chart"></i> Estadísticas
+        </a>
+
+        <div class="titulo-menu mt-3">ADMINISTRACIÓN</div>
+
+        <a href="configuracion.html" class="activo">
+            <i class="bi bi-gear"></i> Configuración
+        </a>
+
+        <a href="usuarios.html">
+            <i class="bi bi-person-gear"></i> Usuarios
+        </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+
+        <button class="btn-salir" id="cerrarSesion">
+            <i class="bi bi-box-arrow-right"></i>
+            Cerrar sesión
+        </button>
+
+        <p class="text-center text-muted mt-3 mb-0">
+            Versión 1.0
+        </p>
+
+    </div>
+
+</aside>
+
+<main class="principal">
+
+    <header class="barra-superior">
+
+        <div class="d-flex align-items-center gap-3">
+
+            <button class="btn-menu" id="abrirMenu">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <div>
+                <h5>Configuración</h5>
+                <small>Administración general del sistema</small>
+            </div>
+
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+
+            <span id="correoUsuario"></span>
+
+            <div class="avatar">
+                <i class="bi bi-person"></i>
+            </div>
+
+        </div>
+
+    </header>
+
+    <div class="contenido">
+
+        <section class="encabezado">
+
+            <h2>Configuración general</h2>
+
+            <p>
+                Personaliza la información de Voz Angelical,
+                administra los datos de contacto, configura
+                tus preferencias y protege la información
+                de tu negocio musical.
+            </p>
+
+        </section>
+
+        <div id="mensaje" class="alert d-none" role="alert"></div>
+
+        <form id="formConfiguracion">
+
+            <!-- INFORMACION EMPRESARIAL -->
+
+            <div class="row g-4 mb-4">
+
+                <div class="col-xl-4">
+
+                    <section class="tarjeta perfil-empresa">
+
+                        <img src="logo.png" alt="Voz Angelical">
+
+                        <h3 id="nombrePerfil">Voz Angelical</h3>
+
+                        <p class="subtitulo">
+                            Servicios musicales para misas y rosarios
+                        </p>
+
+                        <span class="etiqueta-privada">
+                            <i class="bi bi-shield-check"></i>
+                            Sistema privado
+                        </span>
+
+                        <hr>
+
+                        <p class="subtitulo">
+                            Identidad visual institucional
+                        </p>
+
+                        <div class="d-flex justify-content-center gap-2">
+
+                            <div title="Dorado oscuro"
+                                 style="width:35px;height:35px;background:#8A632B;border-radius:50%">
+                            </div>
+
+                            <div title="Dorado"
+                                 style="width:35px;height:35px;background:#B48A42;border-radius:50%">
+                            </div>
+
+                            <div title="Dorado claro"
+                                 style="width:35px;height:35px;background:#DCC18A;border-radius:50%">
+                            </div>
+
+                            <div title="Marfil"
+                                 style="width:35px;height:35px;background:#F5EFE4;border:1px solid #E6D8C1;border-radius:50%">
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+                <div class="col-xl-8">
+
+                    <section class="tarjeta">
+
+                        <div class="d-flex align-items-center gap-3 mb-4">
+
+                            <div class="icono-seccion">
+                                <i class="bi bi-building"></i>
+                            </div>
+
+                            <div>
+                                <h3 class="titulo-seccion">
+                                    Información empresarial
+                                </h3>
+                                <small class="subtitulo">
+                                    Datos generales del negocio
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Nombre comercial *
+                                </label>
+
+                                <input class="form-control"
+                                       id="nombreComercial"
+                                       maxlength="100"
+                                       required>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Representante legal
+                                </label>
+
+                                <input class="form-control"
+                                       id="representante"
+                                       maxlength="150"
+                                       placeholder="Nombre completo">
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    RFC (opcional)
+                                </label>
+
+                                <input class="form-control"
+                                       id="rfc"
+                                       maxlength="13"
+                                       placeholder="RFC">
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Estado
+                                </label>
+
+                                <input class="form-control"
+                                       id="estado"
+                                       maxlength="80">
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <label class="form-label">
+                                    Domicilio comercial
+                                </label>
+
+                                <input class="form-control"
+                                       id="domicilio"
+                                       maxlength="300"
+                                       placeholder="Dirección o localidad">
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <label class="form-label">
+                                    Descripción del negocio
+                                </label>
+
+                                <textarea class="form-control"
+                                          id="descripcion"
+                                          maxlength="1000"></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+            <!-- CONTACTO Y REDES SOCIALES -->
+
+            <section class="tarjeta mb-4">
+
+                <div class="d-flex align-items-center gap-3 mb-4">
+
+                    <div class="icono-seccion">
+                        <i class="bi bi-person-lines-fill"></i>
+                    </div>
+
+                    <div>
+                        <h3 class="titulo-seccion">
+                            Contacto y redes sociales
+                        </h3>
+                        <small class="subtitulo">
+                            Información de comunicación con clientes
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            <i class="bi bi-whatsapp"></i>
+                            WhatsApp
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">+52</span>
+
+                            <input class="form-control"
+                                   id="whatsapp"
+                                   type="tel"
+                                   inputmode="numeric"
+                                   pattern="[0-9]{10}"
+                                   maxlength="10">
+
+                        </div>
+
+                        <div class="form-text">
+                            Número mexicano de 10 dígitos.
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            <i class="bi bi-envelope"></i>
+                            Correo electrónico
+                        </label>
+
+                        <input class="form-control"
+                               type="email"
+                               id="correo"
+                               maxlength="150"
+                               placeholder="correo@ejemplo.com">
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            <i class="bi bi-facebook"></i>
+                            Facebook
+                        </label>
+
+                        <input class="form-control"
+                               id="facebook"
+                               maxlength="250">
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            <i class="bi bi-instagram"></i>
+                            Instagram
+                        </label>
+
+                        <input class="form-control"
+                               id="instagram"
+                               maxlength="150">
+
+                    </div>
+
+                    <div class="col-12">
+
+                        <label class="form-label">
+                            <i class="bi bi-globe"></i>
+                            Sitio web
+                        </label>
+
+                        <input class="form-control"
+                               type="url"
+                               id="sitioWeb"
+                               maxlength="300"
+                               placeholder="https://">
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- DATOS BANCARIOS -->
+
+            <section class="tarjeta mb-4">
+
+                <div class="d-flex align-items-center gap-3 mb-4">
+
+                    <div class="icono-seccion">
+                        <i class="bi bi-bank"></i>
+                    </div>
+
+                    <div>
+                        <h3 class="titulo-seccion">
+                            Información bancaria
+                        </h3>
+                        <small class="subtitulo">
+                            Datos para recibir pagos de clientes
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="alert alert-warning">
+
+                    <i class="bi bi-shield-lock"></i>
+
+                    Esta información es privada. No registres
+                    contraseñas bancarias, NIP, CVV ni códigos
+                    de seguridad.
+
+                </div>
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">Banco</label>
+
+                        <select class="form-select" id="banco">
+
+                            <option value="">Seleccionar banco</option>
+                            <option>BBVA</option>
+                            <option>Banamex</option>
+                            <option>Banorte</option>
+                            <option>Santander</option>
+                            <option>HSBC</option>
+                            <option>Scotiabank</option>
+                            <option>Banco Azteca</option>
+                            <option>BanCoppel</option>
+                            <option>Nu</option>
+                            <option>Mercado Pago</option>
+                            <option>Otro</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Titular de la cuenta
+                        </label>
+
+                        <input class="form-control"
+                               id="titular"
+                               maxlength="150">
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            CLABE interbancaria
+                        </label>
+
+                        <div class="input-group">
+
+                            <input class="form-control"
+                                   id="clabe"
+                                   type="password"
+                                   inputmode="numeric"
+                                   pattern="[0-9]{18}"
+                                   maxlength="18"
+                                   autocomplete="off"
+                                   placeholder="18 dígitos">
+
+                            <button class="btn btn-secundario"
+                                    type="button"
+                                    id="verClabe"
+                                    aria-label="Mostrar u ocultar CLABE">
+
+                                <i class="bi bi-eye"></i>
+
+                            </button>
+
+                        </div>
+
+                        <div class="form-text">
+                            CLABE de 18 dígitos para transferencias.
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Número de cuenta
+                        </label>
+
+                        <input class="form-control"
+                               id="cuenta"
+                               inputmode="numeric"
+                               pattern="[0-9]{1,20}"
+                               maxlength="20"
+                               autocomplete="off">
+
+                    </div>
+
+                    <div class="col-12">
+
+                        <label class="form-label">
+                            Concepto de pago sugerido
+                        </label>
+
+                        <input class="form-control"
+                               id="concepto"
+                               maxlength="100">
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- PREFERENCIAS DE AGENDA -->
+
+            <section class="tarjeta mb-4">
+
+                <div class="d-flex align-items-center gap-3 mb-4">
+
+                    <div class="icono-seccion">
+                        <i class="bi bi-calendar-week"></i>
+                    </div>
+
+                    <div>
+                        <h3 class="titulo-seccion">
+                            Preferencias de agenda
+                        </h3>
+                        <small class="subtitulo">
+                            Organización de celebraciones y traslados
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Duración predeterminada *
+                        </label>
+
+                        <div class="input-group">
+
+                            <input type="number"
+                                   class="form-control"
+                                   id="duracionPredeterminada"
+                                   min="1"
+                                   max="1440"
+                                   required>
+
+                            <span class="input-group-text">
+                                Minutos
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Margen de traslado *
+                        </label>
+
+                        <div class="input-group">
+
+                            <input type="number"
+                                   class="form-control"
+                                   id="margenTraslado"
+                                   min="0"
+                                   max="1440"
+                                   required>
+
+                            <span class="input-group-text">
+                                Minutos
+                            </span>
+
+                        </div>
+
+                        <div class="form-text">
+                            Tiempo reservado entre celebraciones.
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Hora predeterminada
+                        </label>
+
+                        <input class="form-control"
+                               id="horaPredeterminada"
+                               type="time"
+                               required>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Zona horaria
+                        </label>
+
+                        <input class="form-control"
+                               value="Centro de México"
+                               readonly>
+
+                    </div>
+
+                </div>
+
+                <div class="alert alert-light border mt-4 mb-0">
+
+                    <i class="bi bi-info-circle"></i>
+
+                    Las preferencias se guardan en Firebase.
+                    Su aplicación automática requiere conectar
+                    los módulos de agenda y contratos.
+
+                </div>
+
+            </section>
+
+            <!-- POLITICAS CONTRACTUALES -->
+
+            <section class="tarjeta mb-4">
+
+                <div class="d-flex align-items-center gap-3 mb-3">
+
+                    <div class="icono-seccion">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </div>
+
+                    <div>
+                        <h3 class="titulo-seccion">
+                            Políticas contractuales
+                        </h3>
+                        <small class="subtitulo">
+                            Condiciones establecidas en los contratos
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="politica">
+
+                    <i class="bi bi-cash-stack"></i>
+
+                    <div>
+                        <h6>Anticipos</h6>
+                        <p>No se solicitan anticipos para contratar servicios musicales.</p>
+                    </div>
+
+                </div>
+
+                <div class="politica">
+
+                    <i class="bi bi-wallet2"></i>
+
+                    <div>
+                        <h6>Pago en efectivo</h6>
+                        <p>El importe completo deberá liquidarse antes del inicio de la celebración.</p>
+                    </div>
+
+                </div>
+
+                <div class="politica">
+
+                    <i class="bi bi-bank"></i>
+
+                    <div>
+                        <h6>Transferencias bancarias</h6>
+                        <p>El pago deberá realizarse con un mínimo de dos horas de anticipación y deberá enviarse el comprobante correspondiente.</p>
+                    </div>
+
+                </div>
+
+                <div class="politica">
+
+                    <i class="bi bi-calendar-check"></i>
+
+                    <div>
+                        <h6>Cancelación anticipada</h6>
+                        <p>Con más de 72 horas de anticipación no se aplicará penalización.</p>
+                    </div>
+
+                </div>
+
+                <div class="politica">
+
+                    <i class="bi bi-exclamation-circle"></i>
+
+                    <div>
+                        <h6>Cancelación fuera del plazo</h6>
+                        <p>Con 72 horas o menos se aplicará una penalización del 100 % del importe contratado, pagadera en una sola exhibición mediante transferencia o depósito bancario.</p>
+                    </div>
+
+                </div>
+
+                <div class="politica">
+
+                    <i class="bi bi-person-check"></i>
+
+                    <div>
+                        <h6>Sustitución del músico</h6>
+                        <p>En caso de emergencia, Voz Angelical buscará un sustituto capacitado sin costos adicionales para el cliente.</p>
+                    </div>
+
+                </div>
+
+                <div class="politica">
+
+                    <i class="bi bi-arrow-return-left"></i>
+
+                    <div>
+                        <h6>Imposibilidad de prestar el servicio</h6>
+                        <p>Si no se consigue un sustituto, se cancelará sin penalización para el contratante y se devolverán los importes recibidos.</p>
+                    </div>
+
+                </div>
+
+                <div class="alert alert-light border mt-3 mb-0">
+
+                    Las políticas son de consulta. Para modificarlas
+                    será necesario actualizar la versión de las
+                    cláusulas del generador de contratos.
+
+                </div>
+
+            </section>
+
+            <!-- GUARDAR CAMBIOS -->
+
+            <div class="barra-guardado mb-4">
+
+                <div>
+
+                    <i class="bi bi-cloud-check"></i>
+
+                    <span id="estadoCambios">
+                        Cargando configuración...
+                    </span>
+
+                </div>
+
+                <div class="botones">
+
+                    <button class="btn btn-secundario"
+                            type="button"
+                            id="descartarCambios">
+
+                        Descartar cambios
+
+                    </button>
+
+                    <button class="btn btn-dorado"
+                            type="submit"
+                            id="guardarConfiguracion"
+                            disabled>
+
+                        <i class="bi bi-save"></i>
+                        Guardar configuración
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        <!-- COPIA DE SEGURIDAD -->
+
+        <section class="tarjeta mb-4">
+
+            <div class="d-flex align-items-center gap-3 mb-4">
+
+                <div class="icono-seccion">
+                    <i class="bi bi-database"></i>
+                </div>
+
+                <div>
+                    <h3 class="titulo-seccion">
+                        Copias de seguridad
+                    </h3>
+                    <small class="subtitulo">
+                        Protección de los registros administrativos
+                    </small>
+                </div>
+
+            </div>
+
+            <div class="respaldo">
+
+                <i class="bi bi-cloud-arrow-down"></i>
+
+                <h5>Exportar base de datos</h5>
+
+                <p class="subtitulo">
+
+                    Descarga una copia de clientes, contratos,
+                    celebraciones, servicios, configuración
+                    y contadores en formato JSON.
+
+                </p>
+
+                <div class="form-check d-inline-block text-start mb-3">
+
+                    <input class="form-check-input"
+                           type="checkbox"
+                           id="incluirBanco">
+
+                    <label class="form-check-label"
+                           for="incluirBanco">
+
+                        Incluir datos bancarios en la copia
+
+                    </label>
+
+                </div>
+
+                <br>
+
+                <button class="btn btn-dorado"
+                        id="descargarRespaldo"
+                        disabled>
+
+                    <i class="bi bi-download"></i>
+                    Descargar copia de seguridad
+
+                </button>
+
+                <p class="subtitulo mt-3 mb-0"
+                   id="ultimoRespaldo">
+
+                    No se ha generado una copia en esta sesión.
+
+                </p>
+
+            </div>
+
+            <div class="alert alert-warning mt-3 mb-0">
+
+                <i class="bi bi-lock"></i>
+
+                Guarda el respaldo en un lugar seguro.
+                Contiene información privada de tus clientes.
+                No lo publiques en GitHub ni lo compartas
+                con personas no autorizadas.
+
+            </div>
+
+        </section>
+
+        <!-- INFORMACION DEL SISTEMA -->
+
+        <section class="tarjeta">
+
+            <div class="d-flex align-items-center gap-3 mb-4">
+
+                <div class="icono-seccion">
+                    <i class="bi bi-info-circle"></i>
+                </div>
+
+                <div>
+                    <h3 class="titulo-seccion">
+                        Información del sistema
+                    </h3>
+                    <small class="subtitulo">
+                        Plataforma administrativa Voz Angelical
+                    </small>
+                </div>
+
+            </div>
+
+            <div class="table-responsive">
+
+                <table class="table align-middle">
+
+                    <tbody>
+
+                        <tr>
+                            <td>Nombre del sistema</td>
+                            <td class="text-end fw-semibold">
+                                Voz Angelical
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Versión</td>
+                            <td class="text-end">1.0</td>
+                        </tr>
+
+                        <tr>
+                            <td>Base de datos</td>
+                            <td class="text-end">Cloud Firestore</td>
+                        </tr>
+
+                        <tr>
+                            <td>Autenticación</td>
+                            <td class="text-end">Firebase Authentication</td>
+                        </tr>
+
+                        <tr>
+                            <td>Moneda</td>
+                            <td class="text-end">MXN</td>
+                        </tr>
+
+                        <tr>
+                            <td>Conexión con Firebase</td>
+                            <td class="text-end" id="estadoConexion">
+                                Verificando...
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Última modificación</td>
+                            <td class="text-end" id="ultimaModificacion">
+                                Sin modificaciones
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <footer class="footer">
+            VOZ ANGELICAL — Sistema Integral de Gestión Musical
+        </footer>
+
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script type="module">
+
+import { auth, db } from "./firebase.js";
+
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+import {
+    collection,
+    doc,
+    getDocFromServer,
+    getDocsFromServer,
+    runTransaction,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const UID_ADMIN = "TsWLtI74pTcivOzAC7gtiaaOzJx1";
+
+const $ = id => document.getElementById(id);
+
+const referencia = doc(db, "configuracion", "general");
+
+let configuracionGuardada = null;
+let versionGuardada = 0;
+let cambiosPendientes = false;
+let datosListos = false;
+let guardando = false;
+
+/* CONFIGURACION INICIAL */
+
+const valoresIniciales = {
+
+    nombreComercial: "Voz Angelical",
+    representante: "",
+    rfc: "",
+    estado: "Tlaxcala",
+    domicilio: "",
+
+    descripcion:
+        "Servicios musicales profesionales para misas y rosarios.",
+
+    whatsapp: "2461243905",
+    correo: "",
+    facebook: "Voz Angelical",
+    instagram: "@vozangelical01",
+    sitioWeb: "",
+
+    banco: "",
+    titular: "",
+    clabe: "",
+    cuenta: "",
+    concepto: "VOZ ANGELICAL",
+
+    duracionPredeterminada: 60,
+    margenTraslado: 30,
+    horaPredeterminada: "12:00",
+
+    zonaHoraria: "America/Mexico_City",
+    moneda: "MXN"
+};
+
+const campos = [
+
+    "nombreComercial",
+    "representante",
+    "rfc",
+    "estado",
+    "domicilio",
+    "descripcion",
+    "whatsapp",
+    "correo",
+    "facebook",
+    "instagram",
+    "sitioWeb",
+    "banco",
+    "titular",
+    "clabe",
+    "cuenta",
+    "concepto",
+    "duracionPredeterminada",
+    "margenTraslado",
+    "horaPredeterminada"
+];
+
+/* MENSAJES */
+
+function mostrarMensaje(texto, tipo = "success") {
+
+    const mensaje = $("mensaje");
+
+    mensaje.className = "alert alert-" + tipo;
+
+    mensaje.textContent = texto;
+
+    mensaje.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+function ocultarMensaje() {
+    $("mensaje").className = "alert d-none";
+}
+
+/* AUTENTICACION */
+
+onAuthStateChanged(auth, async usuario => {
+
+    if (!usuario) {
+
+        location.replace("index.html");
+        return;
+    }
+
+    if (usuario.uid !== UID_ADMIN) {
+
+        await signOut(auth);
+
+        location.replace("index.html");
+        return;
+    }
+
+    $("correoUsuario").textContent = usuario.email;
+
+    await cargarConfiguracion();
+});
+
+$("cerrarSesion").onclick = async () => {
+
+    if (guardando) return;
+
+    if (cambiosPendientes &&
+        !confirm("Hay cambios sin guardar. ¿Deseas salir?")) {
+
+        return;
+    }
+
+    if (confirm("¿Deseas cerrar sesión?")) {
+
+        try {
+
+            await signOut(auth);
+
+            cambiosPendientes = false;
+
+            location.replace("index.html");
+
+        } catch (error) {
+
+            mostrarMensaje(error.message, "danger");
+        }
+    }
+};
+
+/* MENU RESPONSIVO */
+
+$("abrirMenu").onclick = () => {
+
+    $("sidebar").classList.toggle("abierto");
+
+    $("overlay").classList.toggle("activo");
+};
+
+$("overlay").onclick = () => {
+
+    $("sidebar").classList.remove("abierto");
+
+    $("overlay").classList.remove("activo");
+};
+
+/* CARGAR CONFIGURACION */
+
+async function cargarConfiguracion() {
+
+    datosListos = false;
+
+    $("guardarConfiguracion").disabled = true;
+    $("descargarRespaldo").disabled = true;
+
+    try {
+
+        const snapshot = await getDocFromServer(referencia);
+
+        configuracionGuardada = {
+
+            ...valoresIniciales,
+
+            ...(snapshot.exists() ? snapshot.data() : {})
+        };
+
+        versionGuardada = Number(
+            configuracionGuardada.version || 0
+        );
+
+        aplicarConfiguracion(configuracionGuardada);
+
+        datosListos = true;
+
+        $("estadoConexion").textContent =
+            "Conexión verificada";
+
+        $("estadoConexion").className =
+            "text-end text-success fw-semibold";
+
+        $("descargarRespaldo").disabled = false;
+
+        establecerCambios(!snapshot.exists());
+
+        if (!snapshot.exists()) {
+
+            $("estadoCambios").textContent =
+                "Configuración inicial sin guardar";
+        }
+
+    } catch (error) {
+
+        $("estadoConexion").textContent =
+            "Error de conexión";
+
+        $("estadoConexion").className =
+            "text-end text-danger";
+
+        mostrarMensaje(
+            "No se pudo cargar la configuración: " +
+            error.message,
+            "danger"
+        );
+
+    } finally {
+
+        $("pantallaCarga").classList.add("d-none");
+    }
+}
+
+/* MOSTRAR CONFIGURACION */
+
+function aplicarConfiguracion(datos) {
+
+    campos.forEach(campo => {
+
+        $(campo).value = datos[campo] ?? "";
+    });
+
+    $("nombrePerfil").textContent =
+        datos.nombreComercial || "Voz Angelical";
+
+    if (datos.actualizadoEn?.toDate) {
+
+        $("ultimaModificacion").textContent =
+            datos.actualizadoEn.toDate().toLocaleString("es-MX", {
+                timeZone: "America/Mexico_City"
+            });
+
+    } else {
+
+        $("ultimaModificacion").textContent =
+            "Sin modificaciones";
+    }
+}
+
+/* DETECTAR CAMBIOS */
+
+function establecerCambios(valor) {
+
+    cambiosPendientes = valor;
+
+    $("guardarConfiguracion").disabled =
+        !datosListos || !valor || guardando;
+
+    $("estadoCambios").textContent = valor
+        ? "Tienes cambios sin guardar"
+        : "Todos los cambios están guardados";
+
+    $("estadoCambios").style.color = valor
+        ? "#985514"
+        : "#287A41";
+}
+
+$("formConfiguracion").addEventListener("input", () => {
+
+    if (!datosListos) return;
+
+    establecerCambios(true);
+
+    $("nombrePerfil").textContent =
+        $("nombreComercial").value.trim() || "Voz Angelical";
+});
+
+window.addEventListener("beforeunload", evento => {
+
+    if (cambiosPendientes || guardando) {
+
+        evento.preventDefault();
+
+        evento.returnValue = "";
+    }
+});
+
+/* MOSTRAR U OCULTAR CLABE */
+
+$("verClabe").onclick = () => {
+
+    const campo = $("clabe");
+
+    const mostrar = campo.type === "password";
+
+    campo.type = mostrar ? "text" : "password";
+
+    $("verClabe").innerHTML = mostrar
+        ? '<i class="bi bi-eye-slash"></i>'
+        : '<i class="bi bi-eye"></i>';
+};
+
+/* SOLO NUMEROS */
+
+["whatsapp", "clabe", "cuenta"].forEach(id => {
+
+    $(id).addEventListener("input", () => {
+
+        $(id).value = $(id).value.replace(/\D/g, "");
+    });
+});
+
+/* VALIDAR CLABE MEXICANA */
+
+function validarClabe(clabe) {
+
+    if (!clabe) return true;
+
+    if (!/^\d{18}$/.test(clabe)) return false;
+
+    const factores = [3, 7, 1];
+
+    let suma = 0;
+
+    for (let i = 0; i < 17; i++) {
+
+        suma += (
+            Number(clabe[i]) * factores[i % 3]
+        ) % 10;
+    }
+
+    const digito = (10 - (suma % 10)) % 10;
+
+    return digito === Number(clabe[17]);
+}
+
+/* OBTENER DATOS DEL FORMULARIO */
+
+function obtenerDatos() {
+
+    const datos = {};
+
+    campos.forEach(campo => {
+
+        datos[campo] = $(campo).value.trim();
+    });
+
+    datos.duracionPredeterminada =
+        Number(datos.duracionPredeterminada);
+
+    datos.margenTraslado =
+        Number(datos.margenTraslado);
+
+    datos.rfc = datos.rfc.toUpperCase();
+
+    datos.zonaHoraria = "America/Mexico_City";
+
+    datos.moneda = "MXN";
+
+    if (!datos.nombreComercial) {
+
+        throw new Error(
+            "Escribe el nombre comercial del negocio."
+        );
+    }
+
+    if (datos.whatsapp &&
+        !/^\d{10}$/.test(datos.whatsapp)) {
+
+        throw new Error(
+            "El WhatsApp debe contener 10 dígitos."
+        );
+    }
+
+    if (!validarClabe(datos.clabe)) {
+
+        throw new Error(
+            "La CLABE no es válida. Revisa los 18 dígitos."
+        );
+    }
+
+    if (datos.clabe && (!datos.banco || !datos.titular)) {
+
+        throw new Error(
+            "Selecciona el banco y escribe el titular de la cuenta."
+        );
+    }
+
+    if (!Number.isInteger(datos.duracionPredeterminada) ||
+        datos.duracionPredeterminada < 1 ||
+        datos.duracionPredeterminada > 1440) {
+
+        throw new Error(
+            "La duración predeterminada no es válida."
+        );
+    }
+
+    if (!Number.isInteger(datos.margenTraslado) ||
+        datos.margenTraslado < 0 ||
+        datos.margenTraslado > 1440) {
+
+        throw new Error(
+            "El margen de traslado no es válido."
+        );
+    }
+
+    return datos;
+}
+
+/* GUARDAR CONFIGURACION */
+
+$("formConfiguracion").onsubmit = async evento => {
+
+    evento.preventDefault();
+
+    if (!datosListos || guardando) return;
+
+    ocultarMensaje();
+
+    guardando = true;
+
+    const boton = $("guardarConfiguracion");
+
+    boton.disabled = true;
+
+    boton.innerHTML =
+        '<span class="spinner-border spinner-border-sm"></span> Guardando...';
+
+    // Evita modificar campos durante el guardado.
+
+    campos.forEach(id => $(id).disabled = true);
+
+    $("descartarCambios").disabled = true;
+
+    try {
+
+        const datos = obtenerDatos();
+
+        await runTransaction(db, async tx => {
+
+            const actual = await tx.get(referencia);
+
+            const versionActual = Number(
+                actual.data()?.version || 0
+            );
+
+            if (versionActual !== versionGuardada) {
+
+                throw new Error(
+                    "La configuración fue modificada desde otra sesión. " +
+                    "Recarga la página antes de guardar."
+                );
+            }
+
+            tx.set(referencia, {
+
+                ...datos,
+
+                version: versionActual + 1,
+
+                creadoEn:
+                    actual.data()?.creadoEn ||
+                    serverTimestamp(),
+
+                actualizadoEn: serverTimestamp(),
+
+                actualizadoPor: auth.currentUser.uid
+
+            }, { merge: true });
+
+        });
+
+        cambiosPendientes = false;
+
+        await cargarConfiguracion();
+
+        if (datosListos) {
+
+            mostrarMensaje(
+                "La configuración se guardó correctamente."
+            );
+        }
+
+    } catch (error) {
+
+        mostrarMensaje(
+            "No se pudieron guardar los cambios: " +
+            error.message,
+            "danger"
+        );
+
+    } finally {
+
+        guardando = false;
+
+        campos.forEach(id => $(id).disabled = false);
+
+        $("descartarCambios").disabled = false;
+
+        boton.innerHTML =
+            '<i class="bi bi-save"></i> Guardar configuración';
+
+        boton.disabled =
+            !datosListos || !cambiosPendientes;
+    }
+};
+
+/* DESCARTAR CAMBIOS */
+
+$("descartarCambios").onclick = () => {
+
+    if (!datosListos || guardando) return;
+
+    if (cambiosPendientes &&
+        !confirm("¿Deseas descartar los cambios sin guardar?")) {
+
+        return;
+    }
+
+    aplicarConfiguracion(configuracionGuardada);
+
+    establecerCambios(versionGuardada === 0);
+
+    ocultarMensaje();
+};
+
+/* COPIA DE SEGURIDAD */
+
+$("descargarRespaldo").onclick = async () => {
+
+    if (!datosListos || guardando) return;
+
+    if (!confirm(
+        "La copia contiene información privada de clientes. " +
+        "¿Deseas descargarla?"
+    )) return;
+
+    const incluirBanco = $("incluirBanco").checked;
+
+    const boton = $("descargarRespaldo");
+
+    boton.disabled = true;
+
+    boton.innerHTML =
+        '<span class="spinner-border spinner-border-sm"></span> Generando respaldo...';
+
+    try {
+
+        const colecciones = [
+
+            "clientes",
+            "servicios",
+            "eventos",
+            "contratos",
+            "configuracion",
+            "contadores",
+            "usuarios"
+        ];
+
+        const respaldo = {
+
+            sistema: "Voz Angelical",
+
+            versionFormato: 1,
+
+            fechaExportacion: new Date().toISOString(),
+
+            incluyeDatosBancarios: incluirBanco,
+
+            colecciones: {}
+        };
+
+        for (const nombre of colecciones) {
+
+            const consulta = await getDocsFromServer(
+                collection(db, nombre)
+            );
+
+            respaldo.colecciones[nombre] =
+                consulta.docs.map(documento => {
+
+                    const datos = documento.data();
+
+                    if (nombre === "configuracion" &&
+                        !incluirBanco) {
+
+                        delete datos.banco;
+                        delete datos.titular;
+                        delete datos.clabe;
+                        delete datos.cuenta;
+                    }
+
+                    return {
+                        id: documento.id,
+                        datos
+                    };
+                });
+        }
+
+        const contenido = JSON.stringify(
+            respaldo,
+            null,
+            2
+        );
+
+        const archivo = new Blob(
+            [contenido],
+            { type: "application/json" }
+        );
+
+        const url = URL.createObjectURL(archivo);
+
+        const enlace = document.createElement("a");
+
+        enlace.href = url;
+
+        enlace.download =
+            "Respaldo-Voz-Angelical-" +
+            new Date().toISOString()
+                .replace(/[:.]/g, "-") +
+            ".json";
+
+        document.body.appendChild(enlace);
+
+        enlace.click();
+
+        enlace.remove();
+
+        setTimeout(() => {
+
+            URL.revokeObjectURL(url);
+
+        }, 1000);
+
+        $("ultimoRespaldo").textContent =
+            "Última exportación solicitada: " +
+            new Date().toLocaleString("es-MX");
+
+        mostrarMensaje(
+            "Copia de seguridad generada. Revisa tus descargas."
+        );
+
+    } catch (error) {
+
+        mostrarMensaje(
+            "No se pudo generar la copia: " +
+            error.message,
+            "danger"
+        );
+
+    } finally {
+
+        boton.disabled = !datosListos;
+
+        boton.innerHTML =
+            '<i class="bi bi-download"></i> Descargar copia de seguridad';
+    }
+};
+
+</script>
+
+</body>
+</html>

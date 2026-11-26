@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#B48A42">
+
+    <title>Voz Angelical | Acceso al sistema</title>
+
+    <link rel="icon" href="logo.png">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+
+    <!-- Tipografías -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        :root {
+            --dorado: #B48A42;
+            --dorado-claro: #DCC18A;
+            --dorado-oscuro: #8A632B;
+            --marfil: #F5EFE4;
+            --blanco: #FFFFFF;
+            --cafe: #30271D;
+            --texto-secundario: #796C59;
+            --borde: #E6D8C1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            color: var(--cafe);
+            background: radial-gradient(
+                ellipse at top left,
+                #FFFFFF,
+                #F5EFE4 55%,
+                #E8D8BB
+            );
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+
+        .contenedor-principal {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 35px 20px;
+        }
+
+        .tarjeta-login {
+            width: 100%;
+            max-width: 1050px;
+            min-height: 650px;
+            background: var(--blanco);
+            border: 1px solid var(--borde);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(95, 67, 25, 0.15);
+            animation: aparecer 0.9s ease;
+        }
+
+        /* PANEL INSTITUCIONAL */
+
+        .panel-marca {
+            position: relative;
+            background: linear-gradient(
+                145deg,
+                #FCF9F2,
+                #F5EFE4,
+                #EAD9B9
+            );
+            padding: 50px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            min-height: 650px;
+        }
+
+        .panel-marca::before {
+            content: "";
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border: 1px solid rgba(180, 138, 66, 0.18);
+            border-radius: 50%;
+            top: -220px;
+            right: -170px;
+        }
+
+        .panel-marca::after {
+            content: "";
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border: 1px solid rgba(180, 138, 66, 0.18);
+            border-radius: 50%;
+            bottom: -200px;
+            left: -160px;
+        }
+
+        .contenido-marca {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            width: 230px;
+            max-width: 100%;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+            margin-bottom: 25px;
+        }
+
+        .nombre-marca {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: 3px;
+        }
+
+        .subtitulo-marca {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--dorado-oscuro);
+            margin-top: 12px;
+            line-height: 1.8;
+        }
+
+        .separador {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            color: var(--dorado);
+            margin: 25px auto;
+            max-width: 250px;
+        }
+
+        .separador::before,
+        .separador::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            background: var(--dorado-claro);
+        }
+
+        .descripcion-marca {
+            font-size: 14px;
+            line-height: 1.9;
+            color: var(--texto-secundario);
+            max-width: 330px;
+            margin: auto;
+        }
+
+        .etiqueta-privada {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--dorado-claro);
+            padding: 9px 18px;
+            border-radius: 50px;
+            margin-top: 30px;
+            font-size: 11px;
+            color: var(--dorado-oscuro);
+        }
+
+        /* PANEL DE INICIO DE SESIÓN */
+
+        .panel-login {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 55px 60px;
+        }
+
+        .icono-acceso {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 18px;
+            background: var(--marfil);
+            color: var(--dorado-oscuro);
+            font-size: 26px;
+            margin-bottom: 25px;
+        }
+
+        .titulo-login {
+            font-family: 'Cinzel', serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--dorado-oscuro);
+            margin-bottom: 12px;
+        }
+
+        .descripcion-login {
+            font-size: 13px;
+            color: var(--texto-secundario);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 9px;
+        }
+
+        .campo {
+            position: relative;
+            margin-bottom: 22px;
+        }
+
+        .campo .icono-campo {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dorado-oscuro);
+            font-size: 17px;
+        }
+
+        .form-control {
+            min-height: 54px;
+            border-radius: 11px;
+            border: 1px solid var(--borde);
+            background: #FDFBF7;
+            padding-left: 46px;
+            padding-right: 45px;
+            font-size: 13px;
+            color: var(--cafe);
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--dorado);
+            box-shadow: 0 0 0 4px rgba(180, 138, 66, 0.12);
+            background: var(--blanco);
+        }
+
+        .form-control::placeholder {
+            color: #A89D8C;
+        }
+
+        .mostrar-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--dorado-oscuro);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .form-check-label {
+            font-size: 12px;
+            color: var(--texto-secundario);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--dorado-oscuro);
+            border-color: var(--dorado-oscuro);
+        }
+
+        .form-check-input:focus {
+            box-shadow: 0 0 0 3px rgba(180, 138, 66, 0.15);
+        }
+
+        .recuperar {
+            font-size: 12px;
+            color: var(--dorado-oscuro);
+            text-decoration: none;
+            font-weight: 500;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .recuperar:hover {
+            text-decoration: underline;
+        }
+
+        /* BOTÓN PRINCIPAL */
+
+        .btn-ingresar {
+            width: 100%;
+            min-height: 54px;
+            border: none;
+            border-radius: 11px;
+            background: linear-gradient(
+                135deg,
+                #8A632B,
+                #A77C35
+            );
+            color: var(--blanco);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 25px;
+            transition: 0.3s;
+            box-shadow: 0 7px 18px rgba(138, 99, 43, 0.20);
+        }
+
+        .btn-ingresar:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(138, 99, 43, 0.30);
+            color: var(--blanco);
+        }
+
+        .btn-ingresar:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+
+        .mensaje {
+            display: none;
+            font-size: 12px;
+            line-height: 1.7;
+            margin-top: 20px;
+            padding: 13px;
+            border-radius: 10px;
+        }
+
+        /* PIE DE PÁGINA */
+
+        .pie-login {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid var(--borde);
+            text-align: center;
+        }
+
+        .seguridad {
+            font-size: 11px;
+            color: var(--texto-secundario);
+        }
+
+        .copyright {
+            font-size: 10px;
+            color: var(--texto-secundario);
+            margin-top: 10px;
+            line-height: 1.8;
+        }
+
+        .version {
+            font-size: 10px;
+            color: var(--dorado-oscuro);
+            margin-top: 5px;
+        }
+
+        /* VENTANA DE RECUPERACIÓN */
+
+        .modal-content {
+            border: 1px solid var(--borde);
+            border-radius: 20px;
+        }
+
+        .modal-title {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+            font-size: 19px;
+        }
+
+        .modal-body p {
+            font-size: 13px;
+            color: var(--texto-secundario);
+            line-height: 1.8;
+        }
+
+        /* ANIMACIONES */
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* DISEÑO RESPONSIVO */
+
+        @media (max-width: 991px) {
+
+            .panel-login {
+                padding: 40px 30px;
+            }
+
+            .nombre-marca {
+                font-size: 29px;
+            }
+
+        }
+
+        @media (max-width: 767px) {
+
+            .contenedor-principal {
+                padding: 20px 15px;
+            }
+
+            .panel-marca {
+                min-height: auto;
+                padding: 30px 20px;
+            }
+
+            .logo {
+                width: 135px;
+                margin-bottom: 15px;
+            }
+
+            .nombre-marca {
+                font-size: 27px;
+            }
+
+            .descripcion-marca,
+            .etiqueta-privada,
+            .separador {
+                display: none;
+            }
+
+            .panel-login {
+                padding: 35px 25px;
+            }
+
+            .titulo-login {
+                font-size: 26px;
+            }
+
+            .icono-acceso {
+                width: 48px;
+                height: 48px;
+                font-size: 22px;
+                margin-bottom: 18px;
+            }
+
+            .tarjeta-login {
+                border-radius: 18px;
+                min-height: auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <main class="contenedor-principal">
+
+        <div class="tarjeta-login">
+
+            <div class="row g-0">
+
+                <!-- PANEL DE IDENTIDAD -->
+
+                <section class="col-md-6 panel-marca">
+
+                    <div class="contenido-marca">
+
+                        <img src="logo.png"
+                             alt="Logo de Voz Angelical"
+                             class="logo">
+
+                        <h1 class="nombre-marca">
+                            VOZ ANGELICAL
+                        </h1>
+
+                        <p class="subtitulo-marca">
+                            Servicios musicales<br>
+                            para misas y rosarios
+                        </p>
+
+                        <div class="separador">
+                            <i class="bi bi-stars"></i>
+                        </div>
+
+                        <p class="descripcion-marca">
+                            Sistema integral de gestión musical.
+                            Administra tus celebraciones,
+                            clientes, servicios y contratos
+                            desde un mismo lugar.
+                        </p>
+
+                        <div class="etiqueta-privada">
+
+                            <i class="bi bi-shield-lock"></i>
+
+                            Plataforma administrativa privada
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- PANEL DE ACCESO -->
+
+                <section class="col-md-6 panel-login">
+
+                    <div class="icono-acceso">
+                        <i class="bi bi-person-lock"></i>
+                    </div>
+
+                    <h2 class="titulo-login">
+                        Bienvenido
+                    </h2>
+
+                    <p class="descripcion-login">
+                        Inicia sesión con tus credenciales
+                        para acceder al sistema administrativo
+                        de Voz Angelical.
+                    </p>
+
+                    <form id="formLogin">
+
+                        <!-- CORREO -->
+
+                        <label for="correo" class="form-label">
+                            Correo electrónico
+                        </label>
+
+                        <div class="campo">
+
+                            <i class="bi bi-envelope icono-campo"></i>
+
+                            <input type="email"
+                                   id="correo"
+                                   class="form-control"
+                                   placeholder="Ingresa tu correo"
+                                   autocomplete="username"
+                                   required>
+
+                        </div>
+
+                        <!-- CONTRASEÑA -->
+
+                        <label for="password" class="form-label">
+                            Contraseña
+                        </label>
+
+                        <div class="campo">
+
+                            <i class="bi bi-lock icono-campo"></i>
+
+                            <input type="password"
+                                   id="password"
+                                   class="form-control"
+                                   placeholder="Ingresa tu contraseña"
+                                   autocomplete="current-password"
+                                   required>
+
+                            <button type="button"
+                                    class="mostrar-password"
+                                    id="mostrarPassword"
+                                    aria-label="Mostrar contraseña">
+
+                                <i class="bi bi-eye"
+                                   id="iconoPassword"></i>
+
+                            </button>
+
+                        </div>
+
+                        <!-- OPCIONES -->
+
+                        <div class="d-flex justify-content-between
+                                    align-items-center flex-wrap gap-2">
+
+                            <div class="form-check">
+
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       id="recordarme">
+
+                                <label class="form-check-label"
+                                       for="recordarme">
+
+                                    Recordar sesión
+
+                                </label>
+
+                            </div>
+
+                            <button type="button"
+                                    class="recuperar"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalRecuperar">
+
+                                ¿Olvidaste tu contraseña?
+
+                            </button>
+
+                        </div>
+
+                        <!-- BOTÓN -->
+
+                        <button type="submit"
+                                class="btn btn-ingresar"
+                                id="btnIngresar">
+
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+
+                            Iniciar sesión
+
+                        </button>
+
+                        <!-- MENSAJES -->
+
+                        <div id="mensaje"
+                             class="mensaje"
+                             role="alert"
+                             aria-live="polite">
+                        </div>
+
+                    </form>
+
+                    <!-- PIE DE PÁGINA -->
+
+                    <footer class="pie-login">
+
+                        <div class="seguridad">
+
+                            <i class="bi bi-shield-check me-1"></i>
+
+                            Acceso exclusivo para personal autorizado
+
+                        </div>
+
+                        <div class="copyright">
+
+                            &copy; <span id="anio"></span>
+                            Voz Angelical.<br>
+
+                            Todos los derechos reservados.
+
+                        </div>
+
+                        <div class="version">
+                            Sistema de Gestión Musical | V.1.0
+                        </div>
+
+                    </footer>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- MODAL RECUPERAR CONTRASEÑA -->
+
+    <div class="modal fade"
+         id="modalRecuperar"
+         tabindex="-1"
+         aria-labelledby="tituloRecuperar"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="tituloRecuperar">
+                        Recuperar contraseña
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
+
+                </div>
+
+                <div class="modal-body p-4">
+
+                    <p>
+                        Ingresa el correo electrónico asociado
+                        a tu cuenta para solicitar un enlace
+                        de recuperación de contraseña.
+                    </p>
+
+                    <form id="formRecuperar">
+
+                        <label for="correoRecuperar"
+                               class="form-label">
+
+                            Correo electrónico
+
+                        </label>
+
+                        <div class="campo">
+
+                            <i class="bi bi-envelope icono-campo"></i>
+
+                            <input type="email"
+                                   id="correoRecuperar"
+                                   class="form-control"
+                                   placeholder="Correo electrónico"
+                                   required>
+
+                        </div>
+
+                        <button type="submit"
+                                id="btnRecuperar"
+                                class="btn btn-ingresar mt-0">
+
+                            <i class="bi bi-send me-2"></i>
+
+                            Enviar enlace
+
+                        </button>
+
+                        <div id="mensajeRecuperar"
+                             class="mensaje"
+                             role="alert"
+                             aria-live="polite">
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOOTSTRAP -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+    <!-- FUNCIONES VISUALES -->
+
+    <script>
+
+        document.getElementById("anio").textContent =
+            new Date().getFullYear();
+
+        const mostrarPassword =
+            document.getElementById("mostrarPassword");
+
+        const password =
+            document.getElementById("password");
+
+        const iconoPassword =
+            document.getElementById("iconoPassword");
+
+        mostrarPassword.addEventListener("click", function () {
+
+            const visible = password.type === "password";
+
+            password.type = visible ? "text" : "password";
+
+            iconoPassword.className =
+                visible ? "bi bi-eye-slash" : "bi bi-eye";
+
+            mostrarPassword.setAttribute(
+                "aria-label",
+                visible ? "Ocultar contraseña" : "Mostrar contraseña"
+            );
+
+        });
+
+    </script>
+
+    <!-- AUTENTICACIÓN CON FIREBASE -->
+
+    <script type="module">
+
+        import {
+            signInWithEmailAndPassword,
+            sendPasswordResetEmail,
+            onAuthStateChanged,
+            setPersistence,
+            browserLocalPersistence,
+            browserSessionPersistence
+        } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+        const formLogin =
+            document.getElementById("formLogin");
+
+        const formRecuperar =
+            document.getElementById("formRecuperar");
+
+        const btnIngresar =
+            document.getElementById("btnIngresar");
+
+        const btnRecuperar =
+            document.getElementById("btnRecuperar");
+
+        let auth = null;
+
+        function mostrarMensaje(id, texto, tipo) {
+
+            const mensaje = document.getElementById(id);
+
+            mensaje.className = "mensaje alert alert-" + tipo;
+
+            mensaje.textContent = texto;
+
+            mensaje.style.display = "block";
+
+        }
+
+        // CONEXIÓN CON FIREBASE
+
+        try {
+
+            const firebase = await import("./firebase.js");
+
+            auth = firebase.auth;
+
+            if (!auth) {
+
+                throw new Error("Autenticación no configurada");
+
+            }
+
+            // VERIFICAR SI EXISTE UNA SESIÓN ACTIVA
+
+            onAuthStateChanged(auth, (usuario) => {
+
+                if (usuario) {
+
+                    window.location.replace("inicio.html");
+
+                }
+
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            mostrarMensaje(
+                "mensaje",
+                "El sistema todavía no está conectado a Firebase.",
+                "warning"
+            );
+
+        }
+
+        // INICIAR SESIÓN
+
+        formLogin.addEventListener("submit", async (e) => {
+
+            e.preventDefault();
+
+            if (!auth) {
+
+                mostrarMensaje(
+                    "mensaje",
+                    "Primero debemos configurar Firebase.",
+                    "warning"
+                );
+
+                return;
+
+            }
+
+            const correo =
+                document.getElementById("correo").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            const recordarme =
+                document.getElementById("recordarme").checked;
+
+            btnIngresar.disabled = true;
+
+            btnIngresar.innerHTML = `
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Verificando acceso...
+            `;
+
+            try {
+
+                await setPersistence(
+                    auth,
+                    recordarme
+                        ? browserLocalPersistence
+                        : browserSessionPersistence
+                );
+
+                await signInWithEmailAndPassword(
+                    auth,
+                    correo,
+                    password
+                );
+
+                mostrarMensaje(
+                    "mensaje",
+                    "Acceso correcto. Bienvenido a Voz Angelical.",
+                    "success"
+                );
+
+                window.location.replace("inicio.html");
+
+            } catch (error) {
+
+                let texto = "No fue posible iniciar sesión.";
+
+                switch (error.code) {
+
+                    case "auth/invalid-credential":
+
+                    case "auth/user-not-found":
+
+                    case "auth/wrong-password":
+
+                        texto = "Correo o contraseña incorrectos.";
+
+                        break;
+
+                    case "auth/invalid-email":
+
+                        texto = "El correo electrónico no es válido.";
+
+                        break;
+
+                    case "auth/too-many-requests":
+
+                        texto = "Demasiados intentos. Intenta más tarde.";
+
+                        break;
+
+                    case "auth/network-request-failed":
+
+                        texto = "Verifica tu conexión a Internet.";
+
+                        break;
+
+                    case "auth/user-disabled":
+
+                        texto = "Esta cuenta ha sido deshabilitada.";
+
+                        break;
+
+                }
+
+                mostrarMensaje("mensaje", texto, "danger");
+
+            } finally {
+
+                btnIngresar.disabled = false;
+
+                btnIngresar.innerHTML = `
+                    <i class="bi bi-box-arrow-in-right me-2"></i>
+                    Iniciar sesión
+                `;
+
+            }
+
+        });
+
+        // RECUPERAR CONTRASEÑA
+
+        formRecuperar.addEventListener("submit", async (e) => {
+
+            e.preventDefault();
+
+            if (!auth) {
+
+                mostrarMensaje(
+                    "mensajeRecuperar",
+                    "Firebase todavía no está configurado.",
+                    "warning"
+                );
+
+                return;
+
+            }
+
+            const correo =
+                document.getElementById("correoRecuperar").value.trim();
+
+            btnRecuperar.disabled = true;
+
+            btnRecuperar.innerHTML = `
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Enviando...
+            `;
+
+            try {
+
+                await sendPasswordResetEmail(auth, correo);
+
+                mostrarMensaje(
+                    "mensajeRecuperar",
+                    "Si el correo está registrado, recibirás un enlace de recuperación.",
+                    "success"
+                );
+
+            } catch (error) {
+
+                if (error.code === "auth/user-not-found") {
+
+                    mostrarMensaje(
+                        "mensajeRecuperar",
+                        "Si el correo está registrado, recibirás un enlace de recuperación.",
+                        "success"
+                    );
+
+                } else {
+
+                    mostrarMensaje(
+                        "mensajeRecuperar",
+                        "No fue posible procesar la solicitud. Intenta nuevamente.",
+                        "danger"
+                    );
+
+                }
+
+            } finally {
+
+                btnRecuperar.disabled = false;
+
+                btnRecuperar.innerHTML = `
+                    <i class="bi bi-send me-2"></i>
+                    Enviar enlace
+                `;
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>

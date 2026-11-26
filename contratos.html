@@ -1,0 +1,2526 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contratos | Voz Angelical</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --dorado: #B48A42;
+    --dorado-claro: #DCC18A;
+    --dorado-oscuro: #8A632B;
+    --marfil: #F5EFE4;
+    --blanco: #FFFFFF;
+    --cafe: #30271D;
+    --gris: #796C59;
+    --borde: #E6D8C1;
+    --sidebar: 270px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--marfil);
+    color: var(--cafe);
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+}
+
+/* CARGA */
+
+#pantallaCarga {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--marfil);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#pantallaCarga img {
+    width: 140px;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+}
+
+/* MENU LATERAL */
+
+.sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: var(--sidebar);
+    height: 100dvh;
+    background: white;
+    border-right: 1px solid var(--borde);
+    display: flex;
+    flex-direction: column;
+    z-index: 1045;
+    transition: .3s;
+}
+
+.marca {
+    text-align: center;
+    padding: 25px 15px 20px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.marca img {
+    width: 105px;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+}
+
+.marca h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dorado-oscuro);
+    margin-top: 12px;
+}
+
+.marca p {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gris);
+    margin: 0;
+}
+
+.menu {
+    padding: 20px 15px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.titulo-menu {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--gris);
+    padding: 10px 12px;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    text-decoration: none;
+    color: var(--cafe);
+    padding: 13px 15px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    transition: .25s;
+}
+
+.menu a i {
+    font-size: 18px;
+    color: var(--dorado-oscuro);
+}
+
+.menu a:hover {
+    background: var(--marfil);
+}
+
+.menu a.activo {
+    background: linear-gradient(135deg,#8A632B,#B48A42);
+    color: white;
+}
+
+.menu a.activo i { color: white; }
+
+.sidebar-footer {
+    padding: 18px;
+    border-top: 1px solid var(--borde);
+}
+
+.btn-salir {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #E7CCCC;
+    background: #FFF6F6;
+    color: #A94442;
+    border-radius: 10px;
+}
+
+/* CONTENIDO */
+
+.principal {
+    margin-left: var(--sidebar);
+    min-height: 100vh;
+}
+
+.barra-superior {
+    background: white;
+    min-height: 80px;
+    padding: 15px 30px;
+    border-bottom: 1px solid var(--borde);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.barra-superior h5 {
+    font-family: 'Cinzel', serif;
+    color: var(--dorado-oscuro);
+    font-weight: 700;
+    margin: 0;
+}
+
+.barra-superior small { color: var(--gris); }
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--marfil);
+    color: var(--dorado-oscuro);
+    display: grid;
+    place-items: center;
+    font-size: 23px;
+}
+
+.contenido {
+    padding: 30px;
+    animation: aparecer .5s ease;
+}
+
+.encabezado {
+    background: linear-gradient(120deg,#8A632B,#B48A42,#C6A46A);
+    border-radius: 20px;
+    color: white;
+    padding: 35px;
+    margin-bottom: 25px;
+}
+
+.encabezado h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.encabezado p {
+    max-width: 650px;
+    line-height: 1.9;
+}
+
+.indicador {
+    height: 100%;
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    padding: 22px;
+}
+
+.indicador i {
+    color: var(--dorado-oscuro);
+    font-size: 25px;
+}
+
+.indicador p {
+    color: var(--gris);
+    margin: 12px 0 5px;
+}
+
+.indicador h3 {
+    color: var(--dorado-oscuro);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.tarjeta {
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: 17px;
+    padding: 25px;
+}
+
+.titulo-seccion {
+    font-family: 'Cinzel', serif;
+    color: var(--dorado-oscuro);
+    font-size: 19px;
+    font-weight: 700;
+}
+
+/* BOTONES */
+
+.btn-dorado {
+    background: var(--dorado-oscuro);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 12px;
+}
+
+.btn-dorado:hover {
+    background: var(--dorado);
+    color: white;
+}
+
+.btn-dorado:disabled {
+    background: #B5A58C;
+    color: white;
+}
+
+.btn-secundario {
+    background: white;
+    border: 1px solid var(--dorado-claro);
+    color: var(--dorado-oscuro);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 12px;
+}
+
+.btn-secundario:hover {
+    background: var(--marfil);
+    color: var(--dorado-oscuro);
+}
+
+/* FORMULARIOS */
+
+.form-label {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.form-control, .form-select {
+    background: #FDFBF7;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    min-height: 44px;
+    font-size: 13px;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--dorado);
+    box-shadow: 0 0 0 3px rgba(180,138,66,.15);
+}
+
+.seccion-formulario {
+    font-family: 'Cinzel', serif;
+    color: var(--dorado-oscuro);
+    font-weight: 700;
+    font-size: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--borde);
+    margin: 20px 0 15px;
+}
+
+.resumen-precio {
+    background: var(--marfil);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+}
+
+.resumen-precio h3 {
+    color: var(--dorado-oscuro);
+    font-weight: 700;
+}
+
+/* MODALES */
+
+.modal-content {
+    border: 1px solid var(--borde);
+    border-radius: 18px;
+}
+
+.modal-title {
+    font-family: 'Cinzel', serif;
+    color: var(--dorado-oscuro);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.modal-footer {
+    background: white;
+    border-top: 1px solid var(--borde);
+    padding: 15px;
+    flex-shrink: 0;
+}
+
+#modalContrato .modal-dialog {
+    height: calc(100dvh - 32px);
+    max-height: calc(100dvh - 32px);
+    margin: 16px auto;
+}
+
+#modalContrato .modal-content {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+#formContrato {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+#modalContrato .modal-body {
+    overflow-y: auto;
+    min-height: 0;
+    flex: 1;
+    padding: 25px;
+}
+
+#modalContrato .modal-header {
+    flex-shrink: 0;
+}
+
+#visorPDF {
+    width: 100%;
+    height: 65vh;
+    border: none;
+    background: #eee;
+}
+
+/* TABLAS */
+
+.table {
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.table thead th {
+    background: #F9F5ED;
+    color: var(--dorado-oscuro);
+    padding: 15px;
+    white-space: nowrap;
+}
+
+.table tbody td {
+    padding: 15px;
+    border-color: #F0EBE2;
+}
+
+.estado {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 6px 10px;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.estado-pendiente {
+    background: #FFF2D5;
+    color: #916A13;
+}
+
+.estado-pagado {
+    background: #E5F4E9;
+    color: #287A41;
+}
+
+.estado-cancelado {
+    background: #FCE5E5;
+    color: #A94442;
+}
+
+.estado-activo {
+    background: #E8F0FC;
+    color: #365F9B;
+}
+
+.acciones {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.acciones button {
+    border: 1px solid var(--borde);
+    background: white;
+    color: var(--dorado-oscuro);
+    border-radius: 7px;
+    padding: 7px 10px;
+}
+
+.acciones button:hover {
+    background: var(--marfil);
+}
+
+.footer {
+    text-align: center;
+    color: var(--gris);
+    padding: 30px 10px;
+    font-size: 11px;
+}
+
+.btn-menu {
+    display: none;
+    background: var(--marfil);
+    border: 1px solid var(--borde);
+    border-radius: 9px;
+    color: var(--dorado-oscuro);
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.35);
+    z-index: 1040;
+}
+
+.overlay.activo { display: block; }
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media(max-width:991px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.abierto { transform: translateX(0); }
+    .principal { margin-left: 0; }
+    .btn-menu { display: block; }
+    .contenido { padding: 20px; }
+}
+
+@media(max-width:576px) {
+    .contenido { padding: 15px; }
+    .encabezado { padding: 22px; }
+    .encabezado h2 { font-size: 23px; }
+    .barra-superior { padding: 15px; }
+    .barra-superior h5 { font-size: 16px; }
+    #correoUsuario { display: none; }
+    .tarjeta { padding: 15px; }
+    .indicador { padding: 15px; }
+    .indicador h3 { font-size: 20px; }
+
+    #modalContrato .modal-dialog {
+        width: calc(100% - 16px);
+        height: calc(100dvh - 16px);
+        max-height: calc(100dvh - 16px);
+        margin: 8px auto;
+    }
+
+    #modalContrato .modal-body { padding: 15px; }
+    .form-control, .form-select { font-size: 16px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    * { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+
+<body>
+
+<div id="pantallaCarga">
+    <img src="logo.png" alt="Voz Angelical">
+    <div class="spinner-border" style="color:#B48A42"></div>
+    <p id="mensajeCarga">Cargando contratos...</p>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="marca">
+        <img src="logo.png" alt="Voz Angelical">
+        <h1>VOZ ANGELICAL</h1>
+        <p>GESTIÓN MUSICAL</p>
+    </div>
+
+    <nav class="menu">
+
+        <div class="titulo-menu">MENÚ PRINCIPAL</div>
+
+        <a href="inicio.html">
+            <i class="bi bi-grid"></i> Inicio
+        </a>
+
+        <a href="agenda.html">
+            <i class="bi bi-calendar-event"></i> Agenda
+        </a>
+
+        <a href="contratos.html" class="activo">
+            <i class="bi bi-file-earmark-text"></i> Contratos
+        </a>
+
+        <a href="clientes.html">
+            <i class="bi bi-people"></i> Clientes
+        </a>
+
+        <a href="servicios.html">
+            <i class="bi bi-music-note-beamed"></i> Servicios
+        </a>
+
+        <a href="estadisticas.html">
+            <i class="bi bi-bar-chart"></i> Estadísticas
+        </a>
+
+        <div class="titulo-menu mt-3">ADMINISTRACIÓN</div>
+
+        <a href="configuracion.html">
+            <i class="bi bi-gear"></i> Configuración
+        </a>
+
+        <a href="usuarios.html">
+            <i class="bi bi-person-gear"></i> Usuarios
+        </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+        <button class="btn-salir" id="cerrarSesion">
+            <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+        </button>
+        <p class="text-center text-muted mt-3 mb-0">
+            Versión 1.0
+        </p>
+    </div>
+
+</aside>
+
+<main class="principal">
+
+    <header class="barra-superior">
+        <div class="d-flex align-items-center gap-3">
+            <button class="btn-menu" id="abrirMenu">
+                <i class="bi bi-list"></i>
+            </button>
+            <div>
+                <h5>Contratos musicales</h5>
+                <small>Administración contractual</small>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+            <span id="correoUsuario"></span>
+            <div class="avatar">
+                <i class="bi bi-person"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="contenido">
+
+        <section class="encabezado">
+            <h2>Gestión de contratos</h2>
+            <p>
+                Genera contratos profesionales, administra las
+                celebraciones contratadas y consulta el estado
+                de cada servicio musical.
+            </p>
+            <button class="btn btn-light mt-2" id="nuevoContrato">
+                <i class="bi bi-plus-circle"></i>
+                Nuevo contrato
+            </button>
+        </section>
+
+        <div class="alert alert-danger d-none" id="errorGeneral"></div>
+
+        <div class="row g-3 mb-4">
+
+            <div class="col-6 col-xl-3">
+                <div class="indicador">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <p>Total de contratos</p>
+                    <h3 id="totalContratos">0</h3>
+                </div>
+            </div>
+
+            <div class="col-6 col-xl-3">
+                <div class="indicador">
+                    <i class="bi bi-file-earmark-check"></i>
+                    <p>Contratos vigentes</p>
+                    <h3 id="totalVigentes">0</h3>
+                </div>
+            </div>
+
+            <div class="col-6 col-xl-3">
+                <div class="indicador">
+                    <i class="bi bi-cash-stack"></i>
+                    <p>Importes pendientes</p>
+                    <h3 id="totalPendiente">$0.00</h3>
+                </div>
+            </div>
+
+            <div class="col-6 col-xl-3">
+                <div class="indicador">
+                    <i class="bi bi-x-circle"></i>
+                    <p>Contratos cancelados</p>
+                    <h3 id="totalCancelados">0</h3>
+                </div>
+            </div>
+
+        </div>
+
+        <section class="tarjeta">
+
+            <h3 class="titulo-seccion">Historial de contratos</h3>
+
+            <div class="row g-3 my-3">
+
+                <div class="col-md-8">
+                    <input type="search"
+                           class="form-control"
+                           id="buscador"
+                           placeholder="Buscar folio, cliente o celebración">
+                </div>
+
+                <div class="col-md-4">
+                    <select class="form-select" id="filtro">
+                        <option value="todos">Todos los contratos</option>
+                        <option value="vigentes">Vigentes</option>
+                        <option value="pendiente">Pagos pendientes</option>
+                        <option value="pagado">Pagados</option>
+                        <option value="cancelado">Cancelados</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Folio</th>
+                            <th>Cliente</th>
+                            <th>Celebración</th>
+                            <th>Fecha</th>
+                            <th>Importe</th>
+                            <th>Pago</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaContratos"></tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <footer class="footer">
+            VOZ ANGELICAL — Sistema Integral de Gestión Musical
+        </footer>
+
+    </div>
+</main>
+
+<!-- FORMULARIO DEL CONTRATO -->
+
+<div class="modal fade" id="modalContrato" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModal">
+                    Nuevo contrato
+                </h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+            </div>
+
+            <form id="formContrato">
+
+                <div class="modal-body">
+
+                    <div class="alert alert-danger d-none" id="errorFormulario"></div>
+
+                    <div id="grupoVincular">
+                        <label class="form-label">
+                            Vincular una celebración existente
+                        </label>
+                        <select class="form-select" id="eventoExistente">
+                            <option value="">
+                                Crear una celebración nueva
+                            </option>
+                        </select>
+                        <small class="text-muted">
+                            Selecciona una celebración de la agenda
+                            para evitar registrarla dos veces.
+                        </small>
+                    </div>
+
+                    <h6 class="seccion-formulario">
+                        I. Datos del contratante
+                    </h6>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-8">
+                            <label class="form-label">Cliente *</label>
+                            <select class="form-select" id="cliente" required></select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Teléfono</label>
+                            <input class="form-control" id="telefono" readonly>
+                        </div>
+
+                    </div>
+
+                    <h6 class="seccion-formulario">
+                        II. Datos de la celebración
+                    </h6>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Tipo de celebración *</label>
+                            <select class="form-select" id="tipoServicio" required>
+                                <option value="">Seleccionar</option>
+                                <option>Misa de difunto</option>
+                                <option>Misa de aniversario</option>
+                                <option>Misa de boda</option>
+                                <option>Misa de XV años</option>
+                                <option>Misa de bautizo</option>
+                                <option>Misa de primera comunión</option>
+                                <option>Misa de confirmación</option>
+                                <option>Misa de acción de gracias</option>
+                                <option>Misa dominical</option>
+                                <option>Rosario</option>
+                                <option>Novena</option>
+                                <option>Otro servicio</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Fecha *</label>
+                            <input type="date" class="form-control" id="fecha" required>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label">Hora *</label>
+                            <input type="time" class="form-control" id="hora" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Iglesia o lugar *</label>
+                            <input class="form-control" id="lugar" required maxlength="200">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Dirección o localidad</label>
+                            <input class="form-control" id="direccion" maxlength="300">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Duración en minutos *</label>
+                            <input type="number" class="form-control"
+                                   id="duracion" min="1" max="1440" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Margen de traslado en minutos</label>
+                            <input type="number" class="form-control"
+                                   id="traslado" min="0" max="1440" required>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="alert alert-secondary mb-0" id="disponibilidad">
+                                Selecciona la fecha y hora para verificar disponibilidad.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <h6 class="seccion-formulario">
+                        III. Servicio musical y pago
+                    </h6>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Paquete musical *</label>
+                            <select class="form-select" id="paquete" required></select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Precio acordado (MXN) *</label>
+                            <input type="number" class="form-control"
+                                   id="precio" min="1" max="1000000" step="0.01" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Método de pago</label>
+                            <select class="form-select" id="metodoPago">
+                                <option value="efectivo">Efectivo</option>
+                                <option value="transferencia">Transferencia bancaria</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Estado del pago</label>
+                            <select class="form-select" id="estadoPago">
+                                <option value="pendiente">Pendiente</option>
+                                <option value="pagado">Pagado</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 d-none" id="grupoFechaPago">
+                            <label class="form-label">Fecha de pago</label>
+                            <input type="date" class="form-control" id="fechaPago">
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Observaciones</label>
+                            <textarea class="form-control" id="observaciones"
+                                      rows="3" maxlength="2000"></textarea>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="resumen-precio">
+                                <p class="mb-1">IMPORTE TOTAL DEL CONTRATO</p>
+                                <h3 id="resumenPrecio">$0.00 MXN</h3>
+                                <small>No se solicitan anticipos.</small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <h6 class="seccion-formulario">
+                        IV. Condiciones contractuales
+                    </h6>
+
+                    <div class="alert alert-light border">
+                        <p><strong>Pago en efectivo:</strong> antes del inicio de la celebración.</p>
+                        <p><strong>Transferencia:</strong> mínimo dos horas antes de la celebración.</p>
+                        <p><strong>Cancelación con más de 72 horas:</strong> sin penalización.</p>
+                        <p><strong>Cancelación con 72 horas o menos:</strong> pago del importe completo mediante transferencia o depósito bancario.</p>
+                        <p class="mb-0"><strong>Emergencias:</strong> Voz Angelical buscará un músico sustituto.</p>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button"
+                            class="btn btn-secundario"
+                            data-bs-dismiss="modal">
+                        Cerrar
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-secundario"
+                            id="vistaPrevia">
+                        <i class="bi bi-eye"></i> Vista previa
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-dorado"
+                            id="guardarContrato">
+                        <i class="bi bi-save"></i> Guardar contrato
+                    </button>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- VISOR PDF -->
+
+<div class="modal fade" id="modalPDF" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Documento contractual</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body p-2">
+                <iframe id="visorPDF" title="Vista previa del contrato"></iframe>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secundario" data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+                <button class="btn btn-secundario" id="compartirPDF">
+                    <i class="bi bi-share"></i> Compartir
+                </button>
+                <button class="btn btn-dorado" id="descargarPDF">
+                    <i class="bi bi-download"></i> Descargar PDF
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- CANCELACION -->
+
+<div class="modal fade" id="modalCancelar" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Cancelar contrato</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form id="formCancelar">
+
+                <div class="modal-body">
+
+                    <div class="alert alert-warning">
+                        La cancelación liberará el horario en la agenda.
+                    </div>
+
+                    <label class="form-label">¿Quién solicita la cancelación?</label>
+                    <select class="form-select mb-3" id="origenCancelacion">
+                        <option value="cliente">Contratante</option>
+                        <option value="vozangelical">Voz Angelical</option>
+                    </select>
+
+                    <label class="form-label">Motivo *</label>
+                    <textarea class="form-control mb-3"
+                              id="motivoCancelacion"
+                              required maxlength="1000"></textarea>
+
+                    <div class="resumen-precio">
+                        <p id="horasCancelacion"></p>
+                        <small>Penalización total</small>
+                        <h3 id="montoPenalizacion">$0.00</h3>
+                        <p id="detallePenalizacion" class="mb-0"></p>
+                    </div>
+
+                    <div class="alert alert-danger d-none mt-3" id="errorCancelacion"></div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secundario"
+                            data-bs-dismiss="modal">
+                        Regresar
+                    </button>
+                    <button type="submit"
+                            class="btn btn-danger"
+                            id="confirmarCancelacion">
+                        Confirmar cancelación
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script type="module">
+
+import { auth, db } from "./firebase.js";
+
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+import {
+    collection,
+    doc,
+    onSnapshot,
+    getDocFromServer,
+    getDocsFromServer,
+    runTransaction,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const UID_ADMIN = "TsWLtI74pTcivOzAC7gtiaaOzJx1";
+
+const $ = id => document.getElementById(id);
+
+const modalContrato = new bootstrap.Modal($("modalContrato"));
+const modalPDF = new bootstrap.Modal($("modalPDF"));
+const modalCancelar = new bootstrap.Modal($("modalCancelar"));
+
+let clientes = [];
+let servicios = [];
+let eventos = [];
+let contratos = [];
+
+let contratoEditando = null;
+let contratoCancelando = null;
+let documentoPDF = null;
+let urlPDF = null;
+let regresarFormulario = false;
+let datosListos = false;
+
+const parametros = new URLSearchParams(location.search);
+
+const moneda = valor => Number(valor || 0).toLocaleString("es-MX", {
+    style: "currency",
+    currency: "MXN"
+});
+
+function hoy() {
+    const fecha = new Date();
+    return [
+        fecha.getFullYear(),
+        String(fecha.getMonth() + 1).padStart(2, "0"),
+        String(fecha.getDate()).padStart(2, "0")
+    ].join("-");
+}
+
+function fechaBonita(fecha) {
+    if (!fecha) return "Sin fecha";
+
+    if (typeof fecha !== "string") {
+        fecha = fecha.toDate ? fecha.toDate() : new Date(fecha);
+        return fecha.toLocaleDateString("es-MX");
+    }
+
+    return fecha.split("-").reverse().join("/");
+}
+
+function mostrarError(id, mensaje) {
+    $(id).textContent = mensaje;
+    $(id).classList.toggle("d-none", !mensaje);
+}
+
+function fechaInicio(evento) {
+    return new Date(`${evento.fecha}T${evento.hora}:00`);
+}
+
+function saldoContrato(c) {
+    if (c.estado === "cancelado") {
+        return Math.max(
+            0,
+            Number(c.penalizacion || 0) -
+            Number(c.penalizacionPagada || 0)
+        );
+    }
+
+    return c.estadoPago === "pagado" ? 0 : Number(c.precio || 0);
+}
+
+/* AUTENTICACION */
+
+onAuthStateChanged(auth, async usuario => {
+
+    if (!usuario) {
+        location.replace("index.html");
+        return;
+    }
+
+    if (usuario.uid !== UID_ADMIN) {
+        await signOut(auth);
+        location.replace("index.html");
+        return;
+    }
+
+    $("correoUsuario").textContent = usuario.email;
+
+    iniciarEscuchas();
+});
+
+$("cerrarSesion").onclick = async () => {
+    if (confirm("¿Deseas cerrar sesión?")) {
+        await signOut(auth);
+        location.replace("index.html");
+    }
+};
+
+/* MENU RESPONSIVO */
+
+$("abrirMenu").onclick = () => {
+    $("sidebar").classList.toggle("abierto");
+    $("overlay").classList.toggle("activo");
+};
+
+$("overlay").onclick = () => {
+    $("sidebar").classList.remove("abierto");
+    $("overlay").classList.remove("activo");
+};
+
+/* FIREBASE */
+
+function iniciarEscuchas() {
+
+    const cargados = new Set();
+
+    function escuchar(nombre, asignar) {
+
+        onSnapshot(collection(db, nombre), snapshot => {
+
+            asignar(snapshot.docs.map(d => ({
+                ...d.data(),
+                id: d.id
+            })));
+
+            cargados.add(nombre);
+
+            renderizar();
+
+            if (cargados.size === 4 && !datosListos) {
+
+                datosListos = true;
+                $("pantallaCarga").classList.add("d-none");
+
+                if (parametros.get("contratoId")) {
+                    editarContrato(parametros.get("contratoId"));
+                } else if (parametros.get("accion") === "nuevo") {
+                    abrirNuevo(parametros.get("clienteId"));
+                }
+            }
+
+        }, error => {
+
+            $("pantallaCarga").classList.add("d-none");
+            mostrarError("errorGeneral", error.message);
+        });
+    }
+
+    escuchar("clientes", datos => clientes = datos);
+    escuchar("servicios", datos => servicios = datos);
+    escuchar("eventos", datos => eventos = datos);
+    escuchar("contratos", datos => contratos = datos);
+}
+
+/* TABLA */
+
+function renderizar() {
+
+    $("totalContratos").textContent = contratos.length;
+
+    $("totalVigentes").textContent = contratos.filter(
+        c => c.estado !== "cancelado"
+    ).length;
+
+    $("totalCancelados").textContent = contratos.filter(
+        c => c.estado === "cancelado"
+    ).length;
+
+    $("totalPendiente").textContent = moneda(
+        contratos.reduce((suma, c) => suma + saldoContrato(c), 0)
+    );
+
+    const texto = $("buscador").value.toLowerCase().trim();
+    const filtro = $("filtro").value;
+
+    const lista = contratos.filter(c => {
+
+        const coincide = [
+            c.folio,
+            c.clienteNombre,
+            c.tipoServicio,
+            c.lugar
+        ].join(" ").toLowerCase().includes(texto);
+
+        if (!coincide) return false;
+
+        if (filtro === "vigentes") return c.estado !== "cancelado";
+        if (filtro === "cancelado") return c.estado === "cancelado";
+        if (filtro === "pendiente") return saldoContrato(c) > 0;
+
+        if (filtro === "pagado") {
+            return c.estado === "cancelado"
+                ? Number(c.penalizacion || 0) > 0 && saldoContrato(c) === 0
+                : c.estadoPago === "pagado";
+        }
+
+        return true;
+
+    }).sort((a, b) => (b.folio || "").localeCompare(a.folio || ""));
+
+    const tabla = $("tablaContratos");
+    tabla.replaceChildren();
+
+    if (!lista.length) {
+
+        const fila = tabla.insertRow();
+        const celda = fila.insertCell();
+
+        celda.colSpan = 8;
+        celda.className = "text-center text-muted py-5";
+        celda.textContent = "No hay contratos registrados.";
+
+        return;
+    }
+
+    lista.forEach(c => {
+
+        const fila = tabla.insertRow();
+
+        [
+            c.folio,
+            c.clienteNombre,
+            c.tipoServicio,
+            fechaBonita(c.fecha),
+            moneda(c.precio)
+        ].forEach(valor => {
+            fila.insertCell().textContent = valor || "—";
+        });
+
+        const pago = fila.insertCell();
+        const etiquetaPago = document.createElement("span");
+
+        const pendiente = saldoContrato(c) > 0;
+
+        etiquetaPago.className = "estado estado-" +
+            (pendiente ? "pendiente" : "pagado");
+
+        etiquetaPago.textContent = pendiente
+            ? "Pendiente"
+            : c.estado === "cancelado" && !c.penalizacion
+                ? "Sin penalización"
+                : "Pagado";
+
+        pago.append(etiquetaPago);
+
+        const estado = fila.insertCell();
+        const etiquetaEstado = document.createElement("span");
+
+        etiquetaEstado.className = "estado estado-" +
+            (c.estado === "cancelado" ? "cancelado" : "activo");
+
+        etiquetaEstado.textContent =
+            c.estado === "cancelado" ? "Cancelado" : "Vigente";
+
+        estado.append(etiquetaEstado);
+
+        const acciones = fila.insertCell();
+        acciones.className = "acciones";
+
+        function boton(icono, titulo, accion) {
+
+            const b = document.createElement("button");
+
+            b.type = "button";
+            b.title = titulo;
+            b.setAttribute("aria-label", titulo);
+            b.innerHTML = `<i class="bi ${icono}"></i>`;
+            b.onclick = accion;
+
+            acciones.append(b);
+        }
+
+        boton("bi-file-earmark-pdf", "Consultar PDF", () => abrirPDF(c));
+
+        if (c.estado !== "cancelado") {
+
+            boton("bi-pencil", "Editar contrato", () => editarContrato(c.id));
+
+            boton("bi-x-circle", "Cancelar contrato", () => abrirCancelacion(c));
+
+        } else if (saldoContrato(c) > 0) {
+
+            boton("bi-cash", "Registrar pago de penalización",
+                () => pagarPenalizacion(c));
+        }
+
+    });
+}
+
+$("buscador").oninput = renderizar;
+$("filtro").onchange = renderizar;
+
+/* SELECTORES */
+
+function agregarOpcion(select, valor, texto) {
+    select.add(new Option(texto, valor));
+}
+
+function llenarSelectores(anterior = null) {
+
+    $("cliente").replaceChildren(new Option("Seleccionar cliente", ""));
+
+    clientes.forEach(c => {
+        agregarOpcion($("cliente"), c.id, c.nombre);
+    });
+
+    if (anterior && !clientes.some(c => c.id === anterior.clienteId)) {
+        agregarOpcion($("cliente"), anterior.clienteId, anterior.clienteNombre);
+    }
+
+    $("paquete").replaceChildren(new Option("Seleccionar paquete", ""));
+
+    servicios.filter(s => s.activo !== false).forEach(s => {
+        agregarOpcion($("paquete"), s.id, `${s.nombre} — ${moneda(s.precio)}`);
+    });
+
+    if (anterior && !Array.from($("paquete").options)
+        .some(o => o.value === anterior.paqueteId)) {
+
+        agregarOpcion($("paquete"), anterior.paqueteId,
+            `${anterior.paqueteNombre} — Histórico`);
+    }
+
+    $("eventoExistente").replaceChildren(
+        new Option("Crear una celebración nueva", "")
+    );
+
+    eventos.filter(e =>
+        !e.contratoId && e.estado !== "cancelado" &&
+        e.estado !== "realizado"
+    ).forEach(e => {
+
+        agregarOpcion(
+            $("eventoExistente"),
+            e.id,
+            `${fechaBonita(e.fecha)} ${e.hora} — ${e.clienteNombre} — ${e.tipoServicio}`
+        );
+    });
+}
+
+$("cliente").onchange = () => {
+    const c = clientes.find(c => c.id === $("cliente").value);
+    $("telefono").value = c?.telefono || "";
+};
+
+$("paquete").onchange = () => {
+
+    const s = servicios.find(s => s.id === $("paquete").value);
+
+    if (s) $("precio").value = s.precio;
+
+    actualizarPrecio();
+};
+
+function actualizarPrecio() {
+    $("resumenPrecio").textContent = moneda($("precio").value) + " MXN";
+}
+
+$("precio").oninput = actualizarPrecio;
+
+function actualizarPago() {
+
+    const pagado = $("estadoPago").value === "pagado";
+
+    $("grupoFechaPago").classList.toggle("d-none", !pagado);
+    $("fechaPago").required = pagado;
+
+    if (pagado && !$("fechaPago").value) {
+        $("fechaPago").value = hoy();
+    }
+
+    if (!pagado) $("fechaPago").value = "";
+}
+
+$("estadoPago").onchange = actualizarPago;
+
+/* FORMULARIO */
+
+function abrirNuevo(clienteId = "") {
+
+    if (!datosListos) return;
+
+    contratoEditando = null;
+
+    $("formContrato").reset();
+    llenarSelectores();
+
+    $("tituloModal").textContent = "Nuevo contrato";
+    $("grupoVincular").classList.remove("d-none");
+
+    $("fecha").value = hoy();
+    $("hora").value = "12:00";
+    $("duracion").value = 60;
+    $("traslado").value = 30;
+
+    if (clienteId) {
+        $("cliente").value = clienteId;
+        $("cliente").onchange();
+    }
+
+    mostrarError("errorFormulario", "");
+
+    actualizarPago();
+    actualizarPrecio();
+    verificarDisponibilidad();
+
+    modalContrato.show();
+}
+
+$("nuevoContrato").onclick = () => abrirNuevo();
+
+function cargarDatos(c) {
+
+    llenarSelectores(c);
+
+    $("cliente").value = c.clienteId || "";
+    $("telefono").value = c.clienteTelefono || "";
+    $("paquete").value = c.paqueteId || "";
+
+    [
+        "tipoServicio", "fecha", "hora", "lugar",
+        "direccion", "duracion", "traslado",
+        "precio", "metodoPago", "estadoPago",
+        "fechaPago", "observaciones"
+    ].forEach(campo => {
+
+        $(campo).value = c[campo] ??
+            (campo === "traslado" ? 30 :
+             campo === "duracion" ? 60 : "");
+    });
+
+    actualizarPago();
+    actualizarPrecio();
+    verificarDisponibilidad();
+}
+
+function editarContrato(id) {
+
+    const c = contratos.find(c => c.id === id);
+
+    if (!c) {
+        alert("No se encontró el contrato.");
+        return;
+    }
+
+    if (c.estado === "cancelado") {
+        abrirPDF(c);
+        return;
+    }
+
+    contratoEditando = c;
+
+    $("formContrato").reset();
+
+    $("tituloModal").textContent = `Editar contrato ${c.folio}`;
+    $("grupoVincular").classList.add("d-none");
+
+    cargarDatos(c);
+    mostrarError("errorFormulario", "");
+
+    modalContrato.show();
+}
+
+$("eventoExistente").onchange = () => {
+
+    const id = $("eventoExistente").value;
+    const evento = eventos.find(e => e.id === id);
+
+    if (evento) {
+        cargarDatos(evento);
+        $("eventoExistente").value = id;
+    }
+
+    verificarDisponibilidad();
+};
+
+/* DETECCION DE CONFLICTOS */
+
+function detectarConflictos(nuevo, lista, excluirId = "") {
+
+    const inicio = fechaInicio(nuevo).getTime();
+    const fin = inicio + Number(nuevo.duracion || 60) * 60000;
+
+    if (!Number.isFinite(inicio)) return [];
+
+    return lista.filter(e => {
+
+        if (e.id === excluirId || e.estado === "cancelado") return false;
+
+        const inicioOtro = fechaInicio(e).getTime();
+
+        if (!Number.isFinite(inicioOtro)) return false;
+
+        const finOtro = inicioOtro + Number(e.duracion || 60) * 60000;
+
+        const margen = Math.max(
+            Number(nuevo.traslado || 0),
+            Number(e.traslado || 0)
+        ) * 60000;
+
+        return inicio < finOtro + margen &&
+               fin + margen > inicioOtro;
+    });
+}
+
+function verificarDisponibilidad() {
+
+    const nuevo = {
+        fecha: $("fecha").value,
+        hora: $("hora").value,
+        duracion: Number($("duracion").value),
+        traslado: Number($("traslado").value)
+    };
+
+    const aviso = $("disponibilidad");
+
+    if (!nuevo.fecha || !nuevo.hora || nuevo.duracion <= 0) {
+
+        aviso.className = "alert alert-secondary mb-0";
+        aviso.textContent = "Selecciona una fecha, hora y duración válidas.";
+
+        return;
+    }
+
+    const conflictos = detectarConflictos(
+        nuevo,
+        eventos,
+        contratoEditando?.eventoId || $("eventoExistente").value
+    );
+
+    aviso.className = conflictos.length
+        ? "alert alert-warning mb-0"
+        : "alert alert-success mb-0";
+
+    aviso.textContent = conflictos.length
+        ? "Conflicto de horario: " + conflictos.map(
+            e => `${e.tipoServicio}, ${e.hora}, ${e.lugar}`
+        ).join(" | ")
+        : "Horario disponible según las celebraciones registradas.";
+}
+
+["fecha", "hora", "duracion", "traslado"].forEach(id => {
+    $(id).addEventListener("input", verificarDisponibilidad);
+});
+
+/* OBTENER DATOS */
+
+function obtenerDatos() {
+
+    const anterior = contratoEditando ||
+        eventos.find(e => e.id === $("eventoExistente").value);
+
+    const cliente = clientes.find(c => c.id === $("cliente").value);
+    const paquete = servicios.find(s => s.id === $("paquete").value);
+
+    const mismoCliente = anterior?.clienteId === $("cliente").value;
+    const mismoPaquete = anterior?.paqueteId === $("paquete").value;
+
+    if (!cliente && !mismoCliente) {
+        throw new Error("Selecciona un cliente válido.");
+    }
+
+    if ((!paquete || paquete.activo === false) && !mismoPaquete) {
+        throw new Error("Selecciona un paquete activo.");
+    }
+
+    const precio = Number($("precio").value);
+
+    if (!Number.isFinite(precio) || precio <= 0 || precio > 1000000) {
+        throw new Error("El precio no es válido.");
+    }
+
+    const duracion = Number($("duracion").value);
+    const traslado = Number($("traslado").value);
+
+    if (!Number.isInteger(duracion) || duracion < 1 || duracion > 1440 ||
+        !Number.isInteger(traslado) || traslado < 0 || traslado > 1440) {
+        throw new Error("La duración o el margen de traslado no son válidos.");
+    }
+
+    if (!$("lugar").value.trim()) {
+        throw new Error("Escribe el lugar de la celebración.");
+    }
+
+    const detalle = mismoPaquete && anterior.paqueteDetalle
+        ? anterior.paqueteDetalle
+        : {
+            numero: paquete.numero,
+            nombre: paquete.nombre,
+            voces: paquete.voces,
+            instrumento: paquete.instrumento || "Piano",
+            audio: paquete.audio === true,
+            precioBase: Number(paquete.precio)
+        };
+
+    return {
+
+        clienteId: $("cliente").value,
+        clienteNombre: mismoCliente
+            ? anterior.clienteNombre : cliente.nombre,
+        clienteTelefono: mismoCliente
+            ? anterior.clienteTelefono || "" : cliente.telefono || "",
+
+        paqueteId: $("paquete").value,
+        paqueteNombre: detalle.nombre,
+        paqueteDetalle: detalle,
+
+        tipoServicio: $("tipoServicio").value,
+        fecha: $("fecha").value,
+        hora: $("hora").value,
+        lugar: $("lugar").value.trim(),
+        direccion: $("direccion").value.trim(),
+        duracion,
+        traslado,
+        precio,
+
+        metodoPago: $("metodoPago").value,
+        estadoPago: $("estadoPago").value,
+        fechaPago: $("estadoPago").value === "pagado"
+            ? $("fechaPago").value : "",
+
+        observaciones: $("observaciones").value.trim(),
+
+        estado: anterior?.estado === "realizado"
+            ? "realizado" : "programado",
+
+        versionClausulas: 1
+    };
+}
+
+/* GUARDAR CONTRATO Y EVENTO */
+
+$("formContrato").onsubmit = async e => {
+
+    e.preventDefault();
+
+    if (!datosListos) return;
+
+    const boton = $("guardarContrato");
+
+    boton.disabled = true;
+    boton.textContent = "Guardando...";
+
+    mostrarError("errorFormulario", "");
+
+    try {
+
+        const datos = obtenerDatos();
+
+        if (!Number.isFinite(fechaInicio(datos).getTime())) {
+            throw new Error("Fecha u hora inválida.");
+        }
+
+        if (datos.estadoPago === "pagado" &&
+            !confirm("¿Confirmas que recibiste y verificaste el pago completo?")) {
+            return;
+        }
+
+        const vinculadoId = contratoEditando?.eventoId ||
+            $("eventoExistente").value;
+
+        const controlRef = doc(db, "contadores", "agenda");
+        const contadorRef = doc(db, "contadores", "contratos");
+
+        const control = await getDocFromServer(controlRef);
+        const versionAgenda = Number(control.data()?.version || 0);
+
+        const consulta = await getDocsFromServer(collection(db, "eventos"));
+
+        const lista = consulta.docs.map(d => ({
+            ...d.data(),
+            id: d.id
+        }));
+
+        const conflictos = detectarConflictos(datos, lista, vinculadoId);
+
+        if (conflictos.length) {
+
+            const aceptar = confirm(
+                "Existe un conflicto de horario.\n\n" +
+                conflictos.map(e => `${e.tipoServicio} — ${e.hora} — ${e.lugar}`).join("\n") +
+                "\n\n¿Confirmas que cuentas con personal musical suficiente?"
+            );
+
+            if (!aceptar) return;
+        }
+
+        datos.conflictoAutorizado = conflictos.length > 0;
+        datos.conflictosIds = conflictos.map(e => e.id);
+
+        const contratoRef = contratoEditando
+            ? doc(db, "contratos", contratoEditando.id)
+            : doc(collection(db, "contratos"));
+
+        const eventoRef = vinculadoId
+            ? doc(db, "eventos", vinculadoId)
+            : doc(collection(db, "eventos"));
+
+        let folioGuardado = "";
+
+        await runTransaction(db, async tx => {
+
+            const controlActual = await tx.get(controlRef);
+            const contador = await tx.get(contadorRef);
+            const contratoAnterior = await tx.get(contratoRef);
+            const eventoAnterior = await tx.get(eventoRef);
+            const clienteActual = await tx.get(doc(db, "clientes", datos.clienteId));
+            const paqueteActual = await tx.get(doc(db, "servicios", datos.paqueteId));
+
+            if (Number(controlActual.data()?.version || 0) !== versionAgenda) {
+                throw new Error("La agenda cambió. Vuelve a intentar para verificar el horario.");
+            }
+
+            if (contratoEditando) {
+
+                if (!contratoAnterior.exists() ||
+                    contratoAnterior.data().estado === "cancelado") {
+                    throw new Error("El contrato ya no está disponible para edición.");
+                }
+
+                if (contratoAnterior.data().actualizadoEn?.toMillis() !==
+                    contratoEditando.actualizadoEn?.toMillis()) {
+                    throw new Error("El contrato fue modificado. Cierra y vuelve a abrirlo.");
+                }
+            }
+
+            if (vinculadoId && !eventoAnterior.exists()) {
+                throw new Error("La celebración seleccionada ya no existe.");
+            }
+
+            if (eventoAnterior.exists()) {
+
+                const anterior = eventoAnterior.data();
+
+                if (anterior.estado === "cancelado") {
+                    throw new Error("La celebración fue cancelada.");
+                }
+
+                if (anterior.contratoId && anterior.contratoId !== contratoRef.id) {
+                    throw new Error("La celebración ya tiene otro contrato.");
+                }
+            }
+
+            const anterior = contratoAnterior.data() || eventoAnterior.data();
+
+            if (!clienteActual.exists() && anterior?.clienteId !== datos.clienteId) {
+                throw new Error("El cliente ya no existe.");
+            }
+
+            if ((!paqueteActual.exists() || paqueteActual.data().activo === false) &&
+                anterior?.paqueteId !== datos.paqueteId) {
+                throw new Error("El paquete ya no está disponible.");
+            }
+
+            let folio;
+
+            if (contratoAnterior.exists()) {
+
+                folio = contratoAnterior.data().folio;
+
+            } else {
+
+                const siguiente = Number(contador.data()?.ultimo || 0) + 1;
+
+                folio = "VA-" + String(siguiente).padStart(4, "0");
+
+                tx.set(contadorRef, {
+                    ultimo: siguiente,
+                    actualizadoEn: serverTimestamp()
+                }, { merge: true });
+            }
+
+            folioGuardado = folio;
+
+            const estadoEvento = eventoAnterior.data()?.estado === "realizado"
+                ? "realizado" : datos.estado;
+
+            tx.set(contratoRef, {
+
+                ...datos,
+                estado: estadoEvento,
+                folio,
+                eventoId: eventoRef.id,
+                creadoEn: contratoAnterior.data()?.creadoEn || serverTimestamp(),
+                actualizadoEn: serverTimestamp()
+
+            }, { merge: true });
+
+            tx.set(eventoRef, {
+
+                ...datos,
+                estado: estadoEvento,
+                contratoId: contratoRef.id,
+                folioContrato: folio,
+                creadoEn: eventoAnterior.data()?.creadoEn || serverTimestamp(),
+                actualizadoEn: serverTimestamp()
+
+            }, { merge: true });
+
+            tx.set(controlRef, {
+                version: versionAgenda + 1,
+                actualizadoEn: serverTimestamp()
+            }, { merge: true });
+
+        });
+
+        modalContrato.hide();
+
+        alert(`Contrato ${folioGuardado} guardado correctamente.`);
+
+    } catch (error) {
+
+        mostrarError("errorFormulario", error.message);
+
+    } finally {
+
+        boton.disabled = false;
+        boton.innerHTML = '<i class="bi bi-save"></i> Guardar contrato';
+    }
+};
+
+/* CANCELACIONES */
+
+function calcularCancelacion(c, origen, ahora = new Date()) {
+
+    const horas = (fechaInicio(c).getTime() - ahora.getTime()) / 3600000;
+
+    const penalizacion = origen === "cliente" && horas <= 72
+        ? Number(c.precio) : 0;
+
+    const recibido = c.estadoPago === "pagado" ? Number(c.precio) : 0;
+
+    return {
+        horas,
+        penalizacion,
+        penalizacionPagada: Math.min(recibido, penalizacion),
+        reembolsoPendiente: Math.max(0, recibido - penalizacion),
+        saldo: Math.max(0, penalizacion - recibido)
+    };
+}
+
+function abrirCancelacion(c) {
+
+    contratoCancelando = c;
+
+    $("formCancelar").reset();
+
+    mostrarError("errorCancelacion", "");
+
+    actualizarCancelacion();
+
+    modalCancelar.show();
+}
+
+function actualizarCancelacion() {
+
+    if (!contratoCancelando) return;
+
+    const r = calcularCancelacion(
+        contratoCancelando,
+        $("origenCancelacion").value
+    );
+
+    $("horasCancelacion").textContent = r.horas >= 0
+        ? `Anticipación: ${r.horas.toFixed(2)} horas`
+        : "La hora de inicio ya pasó.";
+
+    $("montoPenalizacion").textContent = moneda(r.penalizacion);
+
+    $("detallePenalizacion").textContent =
+        `Saldo por pagar: ${moneda(r.saldo)}. ` +
+        `Reembolso pendiente: ${moneda(r.reembolsoPendiente)}. ` +
+        (r.saldo > 0
+            ? "Pago único por transferencia o depósito bancario."
+            : "");
+}
+
+$("origenCancelacion").onchange = actualizarCancelacion;
+
+$("formCancelar").onsubmit = async e => {
+
+    e.preventDefault();
+
+    const c = contratoCancelando;
+
+    if (!c) return;
+
+    $("confirmarCancelacion").disabled = true;
+
+    try {
+
+        const origen = $("origenCancelacion").value;
+        const motivo = $("motivoCancelacion").value.trim();
+
+        if (!motivo) throw new Error("Escribe el motivo de cancelación.");
+
+        const momento = new Date();
+
+        const resultado = calcularCancelacion(c, origen, momento);
+
+        if (!confirm(
+            `Penalización: ${moneda(resultado.penalizacion)}\n` +
+            `Reembolso pendiente: ${moneda(resultado.reembolsoPendiente)}\n\n` +
+            "¿Confirmas la cancelación?"
+        )) return;
+
+        const contratoRef = doc(db, "contratos", c.id);
+        const eventoRef = doc(db, "eventos", c.eventoId);
+        const controlRef = doc(db, "contadores", "agenda");
+
+        await runTransaction(db, async tx => {
+
+            const contratoActual = await tx.get(contratoRef);
+            const eventoActual = await tx.get(eventoRef);
+            const control = await tx.get(controlRef);
+
+            if (!contratoActual.exists() ||
+                contratoActual.data().estado === "cancelado") {
+                throw new Error("El contrato ya fue cancelado.");
+            }
+
+            if (!eventoActual.exists() ||
+                eventoActual.data().contratoId !== c.id) {
+                throw new Error("No se encontró la celebración vinculada.");
+            }
+
+            if (contratoActual.data().actualizadoEn?.toMillis() !==
+                c.actualizadoEn?.toMillis()) {
+                throw new Error("El contrato cambió. Vuelve a abrir la cancelación.");
+            }
+
+            if (eventoActual.data().estado === "realizado") {
+                throw new Error("No se puede cancelar una celebración realizada.");
+            }
+
+            const r = calcularCancelacion(
+                contratoActual.data(), origen, momento
+            );
+
+            tx.update(contratoRef, {
+
+                estado: "cancelado",
+                origenCancelacion: origen,
+                motivoCancelacion: motivo,
+                fechaCancelacion: serverTimestamp(),
+                horasAnticipacion: r.horas,
+                penalizacion: r.penalizacion,
+                penalizacionPagada: r.penalizacionPagada,
+                reembolsoPendiente: r.reembolsoPendiente,
+                actualizadoEn: serverTimestamp()
+            });
+
+            tx.update(eventoRef, {
+
+                estado: "cancelado",
+                motivoCancelacion: motivo,
+                fechaCancelacion: serverTimestamp(),
+                penalizacion: r.penalizacion,
+                actualizadoEn: serverTimestamp()
+            });
+
+            tx.set(controlRef, {
+                version: Number(control.data()?.version || 0) + 1,
+                actualizadoEn: serverTimestamp()
+            }, { merge: true });
+        });
+
+        modalCancelar.hide();
+
+        alert("Contrato cancelado. El horario ha sido liberado.");
+
+    } catch (error) {
+
+        mostrarError("errorCancelacion", error.message);
+
+    } finally {
+
+        $("confirmarCancelacion").disabled = false;
+    }
+};
+
+/* PAGO DE PENALIZACIONES */
+
+async function pagarPenalizacion(c) {
+
+    const metodo = prompt(
+        "Escribe el método de pago recibido:\ntransferencia o deposito"
+    );
+
+    if (metodo === null) return;
+
+    const valor = metodo.trim().toLowerCase();
+
+    if (!["transferencia", "deposito", "depósito"].includes(valor)) {
+        alert("Método de pago no permitido.");
+        return;
+    }
+
+    if (!confirm(
+        `¿Confirmas que verificaste el pago único de ${moneda(saldoContrato(c))}?`
+    )) return;
+
+    try {
+
+        await runTransaction(db, async tx => {
+
+            const ref = doc(db, "contratos", c.id);
+            const actual = await tx.get(ref);
+
+            if (!actual.exists() || actual.data().estado !== "cancelado") {
+                throw new Error("Contrato no disponible.");
+            }
+
+            if (saldoContrato(actual.data()) <= 0) {
+                throw new Error("La penalización ya fue liquidada.");
+            }
+
+            tx.update(ref, {
+                penalizacionPagada: Number(actual.data().penalizacion),
+                metodoPagoPenalizacion: valor === "depósito" ? "deposito" : valor,
+                fechaPagoPenalizacion: serverTimestamp(),
+                actualizadoEn: serverTimestamp()
+            });
+        });
+
+        alert("Pago de penalización registrado.");
+
+    } catch (error) {
+
+        alert(error.message);
+    }
+}
+
+/* GENERADOR PDF */
+
+async function cargarLogo() {
+
+    return new Promise(resolve => {
+
+        const img = new Image();
+
+        img.onload = () => {
+
+            try {
+
+                const canvas = document.createElement("canvas");
+
+                canvas.width = 400;
+                canvas.height = 400;
+
+                const ctx = canvas.getContext("2d");
+
+                ctx.fillStyle = "#FFFFFF";
+                ctx.fillRect(0, 0, 400, 400);
+
+                const escala = Math.min(
+                    400 / img.width,
+                    400 / img.height
+                );
+
+                const w = img.width * escala;
+                const h = img.height * escala;
+
+                ctx.drawImage(img, (400-w)/2, (400-h)/2, w, h);
+
+                resolve(canvas.toDataURL("image/png"));
+
+            } catch {
+                resolve(null);
+            }
+        };
+
+        img.onerror = () => resolve(null);
+        img.src = "logo.png";
+    });
+}
+
+async function generarPDF(c) {
+
+    const { jsPDF } = window.jspdf;
+
+    const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4"
+    });
+
+    const logo = await cargarLogo();
+
+    let y = 18;
+
+    const dorado = [138,99,43];
+
+    function nuevaPagina() {
+
+        pdf.addPage();
+        y = 20;
+
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(10);
+        pdf.setTextColor(...dorado);
+        pdf.text("VOZ ANGELICAL | " + (c.folio || "BORRADOR"), 18, y);
+
+        y += 10;
+    }
+
+    function espacio(alto) {
+        if (y + alto > 275) nuevaPagina();
+    }
+
+    function texto(contenido, tamano = 10) {
+
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(tamano);
+        pdf.setTextColor(48,39,29);
+
+        const lineas = pdf.splitTextToSize(String(contenido), 174);
+
+        for (const linea of lineas) {
+
+            espacio(5);
+
+            pdf.setFont("helvetica", "normal");
+            pdf.setFontSize(tamano);
+            pdf.setTextColor(48,39,29);
+            pdf.text(linea, 18, y);
+
+            y += 5;
+        }
+
+        y += 2;
+    }
+
+    function titulo(contenido) {
+
+        espacio(17);
+
+        pdf.setFillColor(245,239,228);
+        pdf.roundedRect(18, y-5, 174, 9, 2, 2, "F");
+
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(11);
+        pdf.setTextColor(...dorado);
+
+        pdf.text(contenido, 21, y+1);
+
+        y += 13;
+    }
+
+    if (logo) {
+        pdf.addImage(logo, "PNG", 88, 10, 34, 34);
+        y = 50;
+    }
+
+    pdf.setFont("times", "bold");
+    pdf.setFontSize(25);
+    pdf.setTextColor(...dorado);
+    pdf.text("VOZ ANGELICAL", 105, y, { align: "center" });
+
+    y += 7;
+
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(9);
+    pdf.text("SERVICIOS MUSICALES PARA MISAS Y ROSARIOS",
+        105, y, { align: "center" });
+
+    y += 6;
+
+    pdf.setDrawColor(180,138,66);
+    pdf.line(18, y, 192, y);
+
+    y += 10;
+
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(12);
+    pdf.setTextColor(48,39,29);
+
+    pdf.text("CONTRATO DE PRESTACIÓN", 105, y, { align: "center" });
+    y += 6;
+    pdf.text("DE SERVICIOS MUSICALES", 105, y, { align: "center" });
+
+    y += 9;
+
+    texto("Folio: " + (c.folio || "BORRADOR SIN VALIDEZ CONTRACTUAL"));
+
+    if (c.estado === "cancelado") {
+        texto("ESTADO: CONTRATO CANCELADO");
+    }
+
+    titulo("I. DATOS DEL CONTRATANTE");
+
+    texto("Nombre: " + c.clienteNombre);
+    texto("Teléfono: " + (c.clienteTelefono || "No especificado"));
+
+    titulo("II. DATOS DE LA CELEBRACIÓN");
+
+    texto("Celebración: " + c.tipoServicio);
+    texto("Fecha: " + fechaBonita(c.fecha) + "     Hora: " + c.hora);
+    texto("Lugar: " + c.lugar);
+    texto("Dirección: " + (c.direccion || "No especificada"));
+    texto("Duración: " + c.duracion + " minutos");
+
+    titulo("III. SERVICIO CONTRATADO");
+
+    texto("Paquete musical: " + c.paqueteNombre);
+
+    texto(
+        "Incluye: " + (c.paqueteDetalle?.voces || "") +
+        " voz(es), " + (c.paqueteDetalle?.instrumento || "piano") +
+        (c.paqueteDetalle?.audio ? " y equipo de audio." : ".")
+    );
+
+    espacio(22);
+
+    pdf.setFillColor(245,239,228);
+    pdf.roundedRect(18, y, 174, 19, 3, 3, "F");
+
+    pdf.setTextColor(...dorado);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(11);
+    pdf.text("IMPORTE TOTAL", 24, y+11);
+
+    pdf.setFontSize(15);
+    pdf.text(moneda(c.precio) + " MXN", 186, y+11, { align: "right" });
+
+    y += 26;
+
+    texto("Método de pago acordado: " +
+        (c.metodoPago === "efectivo" ? "Efectivo" : "Transferencia bancaria"));
+
+    titulo("IV. CLÁUSULAS Y CONDICIONES");
+
+    texto(
+        "PRIMERA. PRESTACIÓN DEL SERVICIO. Voz Angelical se compromete " +
+        "a proporcionar el servicio musical conforme al paquete, fecha, " +
+        "horario, lugar y duración establecidos en el presente contrato."
+    );
+
+    texto(
+        "SEGUNDA. CONDICIONES DE PAGO. El contratante se compromete " +
+        "a liquidar la totalidad del importe acordado por la prestación " +
+        "del servicio musical, conforme a las siguientes condiciones:"
+    );
+
+    texto(
+        "a) Pago en efectivo: deberá realizarse en su totalidad antes " +
+        "del inicio de la celebración."
+    );
+
+    texto(
+        "b) Pago mediante transferencia bancaria: deberá realizarse " +
+        "con un mínimo de dos horas de anticipación al inicio de la " +
+        "celebración. Asimismo, el contratante deberá enviar el comprobante " +
+        "de pago a Voz Angelical para su correspondiente verificación."
+    );
+
+    texto("No se solicitarán anticipos para la contratación del servicio.");
+
+    texto(
+        "TERCERA. CANCELACIÓN DEL SERVICIO. Si el contratante cancela " +
+        "con más de 72 horas de anticipación al inicio de la celebración, " +
+        "no estará obligado a realizar ningún pago."
+    );
+
+    texto(
+        "Si la cancelación se realiza con 72 horas o menos de anticipación, " +
+        "el contratante deberá liquidar el 100% del importe total acordado, " +
+        "en una sola exhibición mediante transferencia electrónica o depósito " +
+        "bancario, enviando el comprobante correspondiente para su verificación."
+    );
+
+    texto(
+        "Los importes previamente recibidos se aplicarán a la penalización, " +
+        "cuando corresponda, sin exigir un pago duplicado."
+    );
+
+    texto(
+        "CUARTA. SUSTITUCIÓN DEL PERSONAL MUSICAL. En caso de enfermedad, " +
+        "accidente, emergencia o fuerza mayor que impida la asistencia del " +
+        "personal originalmente asignado, Voz Angelical se compromete a " +
+        "buscar un sustituto capacitado, respetando las características del " +
+        "paquete contratado y sin generar costos adicionales para el contratante."
+    );
+
+    texto(
+        "Si no fuera posible conseguir un sustituto y el servicio no pudiera " +
+        "prestarse, se cancelará sin penalización para el contratante y se " +
+        "devolverán los importes recibidos."
+    );
+
+    texto(
+        "QUINTA. MODIFICACIONES. Cualquier modificación de fecha, horario, " +
+        "lugar o características del servicio deberá acordarse entre ambas partes."
+    );
+
+    if (c.observaciones) {
+
+        titulo("V. OBSERVACIONES");
+
+        texto(c.observaciones);
+    }
+
+    if (c.estado === "cancelado") {
+
+        titulo("REGISTRO DE CANCELACIÓN");
+
+        texto("Motivo: " + (c.motivoCancelacion || ""));
+        texto("Penalización: " + moneda(c.penalizacion));
+        texto("Saldo pendiente: " + moneda(saldoContrato(c)));
+        texto("Reembolso registrado como pendiente: " + moneda(c.reembolsoPendiente));
+    }
+
+    espacio(48);
+
+    y += 12;
+
+    pdf.setDrawColor(138,99,43);
+    pdf.line(20, y, 95, y);
+    pdf.line(115, y, 190, y);
+
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(10);
+    pdf.setTextColor(48,39,29);
+
+    pdf.text("Firma del contratante", 57, y+6, { align: "center" });
+    pdf.text("Representante de Voz Angelical", 152, y+6, { align: "center" });
+
+    y += 20;
+
+    texto("Fecha de firma: __________________________");
+
+    const paginas = pdf.getNumberOfPages();
+
+    for (let i = 1; i <= paginas; i++) {
+
+        pdf.setPage(i);
+
+        pdf.setDrawColor(180,138,66);
+        pdf.line(18, 281, 192, 281);
+
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(8);
+        pdf.setTextColor(...dorado);
+
+        pdf.text("Voz Angelical | WhatsApp: 246 124 3905", 18, 286);
+        pdf.text(`${i} / ${paginas}`, 192, 286, { align: "right" });
+
+        if (!c.folio) {
+
+            pdf.setFontSize(8);
+            pdf.text("BORRADOR", 192, 8, { align: "right" });
+        }
+    }
+
+    return pdf;
+}
+
+/* VISTA PREVIA Y DESCARGA */
+
+async function abrirPDF(c, desdeFormulario = false) {
+
+    try {
+
+        const pdf = await generarPDF(c);
+
+        documentoPDF = {
+            pdf,
+            nombre: `Voz-Angelical-${c.folio || "Borrador"}.pdf`
+        };
+
+        if (urlPDF) URL.revokeObjectURL(urlPDF);
+
+        urlPDF = URL.createObjectURL(pdf.output("blob"));
+
+        $("visorPDF").src = urlPDF;
+
+        if (desdeFormulario) {
+
+            regresarFormulario = true;
+
+            $("modalContrato").addEventListener("hidden.bs.modal", () => {
+                modalPDF.show();
+            }, { once: true });
+
+            modalContrato.hide();
+
+        } else {
+
+            regresarFormulario = false;
+            modalPDF.show();
+        }
+
+    } catch (error) {
+
+        alert("No se pudo generar el PDF: " + error.message);
+    }
+}
+
+$("vistaPrevia").onclick = async () => {
+
+    if (!$("formContrato").reportValidity()) return;
+
+    try {
+
+        const datos = obtenerDatos();
+
+        await abrirPDF({
+            ...datos,
+            folio: ""
+        }, true);
+
+    } catch (error) {
+
+        mostrarError("errorFormulario", error.message);
+    }
+};
+
+$("modalPDF").addEventListener("hidden.bs.modal", () => {
+
+    $("visorPDF").src = "about:blank";
+
+    if (urlPDF) {
+        URL.revokeObjectURL(urlPDF);
+        urlPDF = null;
+    }
+
+    if (regresarFormulario) {
+
+        regresarFormulario = false;
+        modalContrato.show();
+    }
+});
+
+$("descargarPDF").onclick = () => {
+
+    if (documentoPDF) {
+        documentoPDF.pdf.save(documentoPDF.nombre);
+    }
+};
+
+$("compartirPDF").onclick = async () => {
+
+    if (!documentoPDF) return;
+
+    const archivo = new File(
+        [documentoPDF.pdf.output("blob")],
+        documentoPDF.nombre,
+        { type: "application/pdf" }
+    );
+
+    try {
+
+        if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
+
+            await navigator.share({
+                title: "Contrato Voz Angelical",
+                files: [archivo]
+            });
+
+        } else {
+
+            documentoPDF.pdf.save(documentoPDF.nombre);
+
+            alert("Descarga realizada. Puedes adjuntar el PDF manualmente en WhatsApp.");
+        }
+
+    } catch (error) {
+
+        if (error.name !== "AbortError") {
+            alert("No se pudo compartir el documento.");
+        }
+    }
+};
+
+</script>
+
+</body>
+</html>

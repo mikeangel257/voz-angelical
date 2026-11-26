@@ -1,0 +1,3614 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Agenda | Voz Angelical</title>
+    <link rel="icon" href="logo.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+    <style>
+
+    :root {
+        --dorado: #B48A42;
+        --dorado-claro: #DCC18A;
+        --dorado-oscuro: #8A632B;
+        --marfil: #F5EFE4;
+        --blanco: #FFFFFF;
+        --cafe: #30271D;
+        --gris: #796C59;
+        --borde: #E6D8C1;
+        --sidebar: 270px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: var(--marfil);
+        font-family: 'Poppins', sans-serif;
+        color: var(--cafe);
+    }
+
+    /* PANTALLA DE CARGA */
+
+    #pantallaCarga {
+        position: fixed;
+        inset: 0;
+        background: var(--marfil);
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        padding: 25px;
+        text-align: center;
+    }
+
+    #pantallaCarga img {
+        width: 140px;
+        border-radius: 50%;
+        mix-blend-mode: multiply;
+    }
+
+    #pantallaCarga h4 {
+        font-family: 'Cinzel', serif;
+        color: var(--dorado-oscuro);
+    }
+
+    /* MENU LATERAL */
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: var(--sidebar);
+        height: 100dvh;
+        background: white;
+        border-right: 1px solid var(--borde);
+        display: flex;
+        flex-direction: column;
+        z-index: 1050;
+        transition: transform .3s ease;
+    }
+
+    .marca {
+        text-align: center;
+        padding: 25px 15px 20px;
+        border-bottom: 1px solid var(--borde);
+    }
+
+    .marca img {
+        width: 105px;
+        border-radius: 50%;
+        mix-blend-mode: multiply;
+    }
+
+    .marca h1 {
+        font-family: 'Cinzel', serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--dorado-oscuro);
+        margin-top: 12px;
+        letter-spacing: 1px;
+    }
+
+    .marca p {
+        font-size: 9px;
+        letter-spacing: 2px;
+        color: var(--gris);
+        margin: 0;
+    }
+
+    .menu {
+        padding: 20px 15px;
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .titulo-menu {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        color: var(--gris);
+        padding: 10px 12px;
+        font-weight: 600;
+    }
+
+    .menu a {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        text-decoration: none;
+        color: var(--cafe);
+        font-size: 13px;
+        padding: 13px 15px;
+        margin-bottom: 5px;
+        border-radius: 10px;
+        transition: .25s;
+    }
+
+    .menu a i {
+        font-size: 18px;
+        color: var(--dorado-oscuro);
+    }
+
+    .menu a:hover {
+        background: var(--marfil);
+        transform: translateX(3px);
+    }
+
+    .menu a.activo {
+        background: linear-gradient(
+            135deg,
+            #8A632B,
+            #B48A42
+        );
+        color: white;
+        box-shadow: 0 5px 15px rgba(138,99,43,.18);
+    }
+
+    .menu a.activo i {
+        color: white;
+    }
+
+    .sidebar-footer {
+        padding: 18px;
+        border-top: 1px solid var(--borde);
+    }
+
+    .btn-salir {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #E7CCCC;
+        background: #FFF6F6;
+        color: #A94442;
+        border-radius: 10px;
+        font-size: 13px;
+        transition: .25s;
+    }
+
+    .btn-salir:hover {
+        background: #A94442;
+        color: white;
+    }
+
+    .version {
+        font-size: 10px;
+        text-align: center;
+        color: var(--gris);
+        margin-top: 12px;
+    }
+
+    /* CONTENIDO PRINCIPAL */
+
+    .principal {
+        margin-left: var(--sidebar);
+        min-height: 100vh;
+    }
+
+    .barra-superior {
+        min-height: 80px;
+        background: white;
+        border-bottom: 1px solid var(--borde);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 30px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        gap: 15px;
+    }
+
+    .barra-superior h5 {
+        font-family: 'Cinzel', serif;
+        color: var(--dorado-oscuro);
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .barra-superior small {
+        color: var(--gris);
+        font-size: 11px;
+    }
+
+    .avatar {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: var(--marfil);
+        color: var(--dorado-oscuro);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 23px;
+        flex-shrink: 0;
+    }
+
+    .contenido {
+        padding: 30px;
+        animation: aparecer .7s ease;
+    }
+
+    /* ENCABEZADO */
+
+    .encabezado {
+        background: linear-gradient(
+            120deg,
+            #8A632B,
+            #B48A42,
+            #C6A46A
+        );
+        color: white;
+        padding: 35px;
+        border-radius: 20px;
+        margin-bottom: 28px;
+        box-shadow: 0 10px 25px rgba(138,99,43,.15);
+    }
+
+    .encabezado h2 {
+        font-family: 'Cinzel', serif;
+        font-size: 30px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .encabezado p {
+        font-size: 13px;
+        line-height: 1.9;
+        max-width: 650px;
+        margin: 0;
+    }
+
+    /* INDICADORES */
+
+    .indicador {
+        background: white;
+        border: 1px solid var(--borde);
+        border-radius: 16px;
+        padding: 22px;
+        height: 100%;
+        transition: .3s;
+    }
+
+    .indicador:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(138,99,43,.08);
+    }
+
+    .indicador i {
+        color: var(--dorado-oscuro);
+        font-size: 25px;
+    }
+
+    .indicador p {
+        font-size: 12px;
+        color: var(--gris);
+        margin: 12px 0 5px;
+    }
+
+    .indicador h3 {
+        color: var(--dorado-oscuro);
+        font-size: 27px;
+        font-weight: 600;
+        margin: 0;
+        overflow-wrap: anywhere;
+    }
+
+    /* TARJETAS */
+
+    .tarjeta {
+        background: white;
+        border: 1px solid var(--borde);
+        border-radius: 17px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(95,67,25,.04);
+    }
+
+    .titulo-seccion {
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        color: var(--dorado-oscuro);
+        font-size: 19px;
+    }
+
+    .subtitulo {
+        font-size: 12px;
+        color: var(--gris);
+    }
+
+    /* BOTONES */
+
+    .btn-dorado {
+        background: var(--dorado-oscuro);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 18px;
+        font-size: 12px;
+        font-weight: 500;
+        transition: .25s;
+    }
+
+    .btn-dorado:hover,
+    .btn-dorado:focus {
+        background: var(--dorado);
+        color: white;
+    }
+
+    .btn-dorado:disabled {
+        background: #B5A58C;
+        color: white;
+        opacity: .75;
+        cursor: not-allowed;
+    }
+
+    .btn-secundario {
+        background: white;
+        border: 1px solid var(--dorado-claro);
+        color: var(--dorado-oscuro);
+        border-radius: 10px;
+        padding: 12px 18px;
+        font-size: 12px;
+        transition: .25s;
+    }
+
+    .btn-secundario:hover {
+        background: var(--marfil);
+        color: var(--dorado-oscuro);
+    }
+
+    /* CALENDARIO */
+
+    #calendario {
+        font-size: 12px;
+
+        --fc-border-color: #E6D8C1;
+        --fc-button-bg-color: #8A632B;
+        --fc-button-border-color: #8A632B;
+        --fc-button-hover-bg-color: #B48A42;
+        --fc-button-hover-border-color: #B48A42;
+        --fc-button-active-bg-color: #65451D;
+        --fc-button-active-border-color: #65451D;
+        --fc-today-bg-color: #F5EFE4;
+    }
+
+    .fc .fc-toolbar-title {
+        font-family: 'Cinzel', serif;
+        color: var(--dorado-oscuro);
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    .fc .fc-button {
+        font-size: 11px;
+        padding: 9px 13px;
+        border-radius: 7px;
+    }
+
+    .fc .fc-col-header-cell-cushion,
+    .fc .fc-daygrid-day-number {
+        color: var(--cafe);
+        text-decoration: none;
+    }
+
+    .fc-event {
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 3px;
+    }
+
+    .fc .fc-daygrid-day:hover {
+        background: rgba(180,138,66,.06);
+        cursor: pointer;
+    }
+
+    .fc .fc-daygrid-event {
+        white-space: normal;
+    }
+
+    .leyenda {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 18px;
+        font-size: 11px;
+        color: var(--gris);
+    }
+
+    .punto {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+
+    /* FORMULARIOS */
+
+    .form-label {
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 7px;
+    }
+
+    .form-control,
+    .form-select {
+        background: #FDFBF7;
+        border: 1px solid var(--borde);
+        border-radius: 10px;
+        min-height: 45px;
+        font-size: 13px;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--dorado);
+        box-shadow: 0 0 0 3px rgba(180,138,66,.15);
+        background: white;
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .alert {
+        font-size: 12px;
+        border-radius: 10px;
+    }
+
+    /* VENTANAS MODALES */
+
+    .modal {
+        z-index: 1060;
+    }
+
+    .modal-backdrop {
+        z-index: 1055;
+    }
+
+    .modal-content {
+        border: 1px solid var(--borde);
+        border-radius: 20px;
+        background: white;
+    }
+
+    .modal-title {
+        font-family: 'Cinzel', serif;
+        color: var(--dorado-oscuro);
+        font-size: 19px;
+        font-weight: 700;
+    }
+
+    .modal-header {
+        padding: 20px 25px;
+        border-bottom: 1px solid var(--borde);
+    }
+
+    .modal-footer {
+        border-top: 1px solid var(--borde);
+        background: white;
+        padding: 15px 25px;
+    }
+
+    /* =========================================
+       CORRECCION DEL FORMULARIO DE CELEBRACIONES
+       ========================================= */
+
+    #modalEvento .modal-dialog {
+        height: calc(100dvh - 40px);
+        max-height: calc(100dvh - 40px);
+        margin: 20px auto;
+        align-items: center;
+    }
+
+    #modalEvento .modal-content {
+        display: flex;
+        flex-direction: column;
+        max-height: 100%;
+        overflow: hidden;
+    }
+
+    #modalEvento .modal-header {
+        flex: 0 0 auto;
+        background: white;
+        z-index: 2;
+    }
+
+    #formEvento {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: hidden;
+        margin: 0;
+    }
+
+    #modalEvento .modal-body {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
+        scrollbar-color: var(--dorado-claro) var(--marfil);
+    }
+
+    #modalEvento .modal-footer {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 10px;
+        background: white;
+        border-top: 1px solid var(--borde);
+        padding: 15px 25px;
+        box-shadow: 0 -5px 15px rgba(0,0,0,.04);
+        z-index: 2;
+    }
+
+    #guardarEvento {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 45px;
+        background: var(--dorado-oscuro);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 20px;
+        font-weight: 500;
+        font-size: 12px;
+        cursor: pointer;
+        transition: .25s;
+    }
+
+    #guardarEvento:hover {
+        background: var(--dorado);
+        color: white;
+    }
+
+    #guardarEvento:disabled {
+        background: #B5A58C;
+        opacity: .8;
+        cursor: not-allowed;
+    }
+
+    #modalEvento .modal-body::-webkit-scrollbar {
+        width: 7px;
+    }
+
+    #modalEvento .modal-body::-webkit-scrollbar-track {
+        background: var(--marfil);
+    }
+
+    #modalEvento .modal-body::-webkit-scrollbar-thumb {
+        background: var(--dorado-claro);
+        border-radius: 10px;
+    }
+
+    /* DISPONIBILIDAD */
+
+    .disponibilidad {
+        border-radius: 12px;
+        padding: 17px;
+        font-size: 12px;
+        line-height: 1.8;
+        overflow-wrap: anywhere;
+    }
+
+    .disponible {
+        background: #E5F4E9;
+        border: 1px solid #C7E5D0;
+        color: #287A41;
+    }
+
+    .ocupado {
+        background: #FFF0E2;
+        border: 1px solid #EAC7A5;
+        color: #985514;
+    }
+
+    .sin-verificar {
+        background: #F5F5F5;
+        border: 1px solid #DDDDDD;
+        color: #666666;
+    }
+
+    /* TABLA DE CELEBRACIONES */
+
+    .table {
+        font-size: 12px;
+        vertical-align: middle;
+        margin-bottom: 0;
+    }
+
+    .table thead th {
+        background: #F9F5ED;
+        color: var(--dorado-oscuro);
+        font-size: 11px;
+        white-space: nowrap;
+        padding: 15px;
+        border-bottom: 1px solid var(--borde);
+    }
+
+    .table tbody td {
+        padding: 15px;
+        border-color: #F0EBE2;
+        color: var(--cafe);
+    }
+
+    .table tbody tr:hover td {
+        background: #FCFAF6;
+    }
+
+    .estado {
+        display: inline-block;
+        border-radius: 20px;
+        padding: 6px 11px;
+        font-size: 10px;
+        white-space: nowrap;
+    }
+
+    .estado-programado {
+        background: #FFF2D5;
+        color: #916A13;
+    }
+
+    .estado-realizado {
+        background: #E5F4E9;
+        color: #287A41;
+    }
+
+    .estado-cancelado {
+        background: #FCE5E5;
+        color: #A94442;
+    }
+
+    /* PIE DE PAGINA */
+
+    .footer {
+        text-align: center;
+        padding: 30px 10px 10px;
+        color: var(--gris);
+        font-size: 11px;
+        line-height: 1.9;
+    }
+
+    /* MENU RESPONSIVO */
+
+    .btn-menu {
+        display: none;
+        width: 40px;
+        height: 40px;
+        background: var(--marfil);
+        border: 1px solid var(--borde);
+        color: var(--dorado-oscuro);
+        border-radius: 9px;
+        font-size: 22px;
+        flex-shrink: 0;
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,.35);
+        z-index: 1040;
+    }
+
+    .overlay.activo {
+        display: block;
+    }
+
+    /* ANIMACIONES */
+
+    @keyframes aparecer {
+
+        from {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    }
+
+    /* TABLETAS */
+
+    @media(max-width: 991px) {
+
+        .sidebar {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.abierto {
+            transform: translateX(0);
+        }
+
+        .principal {
+            margin-left: 0;
+        }
+
+        .btn-menu {
+            display: block;
+        }
+
+        .contenido {
+            padding: 20px;
+        }
+
+        .barra-superior {
+            padding: 15px 20px;
+        }
+
+    }
+
+    /* TELEFONOS */
+
+    @media(max-width: 576px) {
+
+        .contenido {
+            padding: 15px;
+        }
+
+        .encabezado {
+            padding: 25px;
+        }
+
+        .encabezado h2 {
+            font-size: 23px;
+        }
+
+        .tarjeta {
+            padding: 15px;
+        }
+
+        .datos-usuario {
+            display: none;
+        }
+
+        .barra-superior {
+            padding: 15px;
+        }
+
+        .barra-superior h5 {
+            font-size: 15px;
+        }
+
+        .indicador {
+            padding: 17px;
+        }
+
+        .indicador h3 {
+            font-size: 21px;
+        }
+
+        .fc .fc-toolbar {
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .fc .fc-toolbar-title {
+            font-size: 16px;
+        }
+
+        .fc .fc-button {
+            font-size: 10px;
+            padding: 7px;
+        }
+
+        #calendario {
+            font-size: 10px;
+        }
+
+        #modalEvento .modal-dialog {
+            width: calc(100% - 16px);
+            height: calc(100dvh - 16px);
+            max-height: calc(100dvh - 16px);
+            margin: 8px auto;
+        }
+
+        #modalEvento .modal-content {
+            border-radius: 15px;
+        }
+
+        #modalEvento .modal-header {
+            padding: 15px;
+        }
+
+        #modalEvento .modal-title {
+            font-size: 16px;
+        }
+
+        #modalEvento .modal-body {
+            padding: 15px !important;
+        }
+
+        #modalEvento .modal-footer {
+            padding: 12px;
+            gap: 8px;
+        }
+
+        #modalEvento .modal-footer > * {
+            margin: 0;
+        }
+
+        #modalEvento .modal-footer .btn-secundario {
+            flex: 1;
+        }
+
+        #guardarEvento {
+            flex: 2;
+            min-height: 45px;
+            padding: 12px;
+        }
+
+        .form-control,
+        .form-select {
+            font-size: 16px;
+        }
+
+    }
+
+    /* ACCESIBILIDAD */
+
+    @media(prefers-reduced-motion: reduce) {
+
+        * {
+            animation: none !important;
+            transition: none !important;
+        }
+
+    }
+
+</style>
+</head>
+
+<body>
+
+    <!-- PANTALLA DE CARGA -->
+
+    <div id="pantallaCarga">
+
+        <img src="logo.png" alt="Voz Angelical">
+
+        <div class="spinner-border"
+             id="spinnerCarga"
+             style="color:#B48A42;">
+        </div>
+
+        <h4>Voz Angelical</h4>
+
+        <small id="mensajeCarga">
+            Verificando acceso...
+        </small>
+
+        <a href="index.html"
+           id="volverLogin"
+           class="btn btn-dorado d-none">
+
+            Volver al inicio de sesión
+
+        </a>
+
+    </div>
+
+    <div id="aplicacion" hidden>
+
+        <div class="overlay" id="overlay"></div>
+
+        <!-- MENU LATERAL -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="marca">
+
+                <img src="logo.png" alt="Logo">
+
+                <h1>VOZ ANGELICAL</h1>
+
+                <p>GESTIÓN MUSICAL</p>
+
+            </div>
+
+            <nav class="menu">
+
+                <div class="titulo-menu">
+                    MENÚ PRINCIPAL
+                </div>
+
+                <a href="inicio.html">
+                    <i class="bi bi-grid-1x2"></i>
+                    Inicio
+                </a>
+
+                <a href="agenda.html" class="activo">
+                    <i class="bi bi-calendar3"></i>
+                    Agenda
+                </a>
+
+                <a href="contratos.html">
+                    <i class="bi bi-file-earmark-text"></i>
+                    Contratos
+                </a>
+
+                <a href="clientes.html">
+                    <i class="bi bi-people"></i>
+                    Clientes
+                </a>
+
+                <a href="servicios.html">
+                    <i class="bi bi-music-note-beamed"></i>
+                    Servicios
+                </a>
+
+                <a href="estadisticas.html">
+                    <i class="bi bi-bar-chart-line"></i>
+                    Estadísticas
+                </a>
+
+                <div class="titulo-menu mt-3">
+                    ADMINISTRACIÓN
+                </div>
+
+                <a href="configuracion.html">
+                    <i class="bi bi-gear"></i>
+                    Configuración
+                </a>
+
+                <a href="usuarios.html">
+                    <i class="bi bi-shield-lock"></i>
+                    Usuarios
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <button class="btn-salir" id="cerrarSesion">
+
+                    <i class="bi bi-box-arrow-right me-2"></i>
+                    Cerrar sesión
+
+                </button>
+
+                <div class="version">
+                    Voz Angelical | Versión 1.0
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+
+        <main class="principal">
+
+            <header class="barra-superior">
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <button class="btn-menu"
+                            id="abrirMenu"
+                            aria-label="Abrir menú">
+
+                        <i class="bi bi-list"></i>
+
+                    </button>
+
+                    <div>
+
+                        <h5>Agenda musical</h5>
+
+                        <small>
+                            Calendario y disponibilidad
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div class="avatar">
+                        <i class="bi bi-person"></i>
+                    </div>
+
+                    <div class="datos-usuario">
+
+                        <strong style="font-size:12px;">
+                            Administrador
+                        </strong>
+
+                        <br>
+
+                        <small id="correoUsuario"></small>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+            <div class="contenido">
+
+                <section class="encabezado">
+
+                    <h2>
+
+                        <i class="bi bi-calendar-event me-2"></i>
+
+                        Agenda de celebraciones
+
+                    </h2>
+
+                    <p>
+                        Organiza tus compromisos musicales,
+                        consulta tu disponibilidad y evita
+                        conflictos de horario desde un mismo lugar.
+                    </p>
+
+                </section>
+
+                <div id="mensajeGeneral"
+                     class="alert d-none"
+                     role="alert">
+                </div>
+
+                <!-- INDICADORES -->
+
+                <div class="row g-3 mb-4">
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <i class="bi bi-calendar3"></i>
+
+                            <p>Eventos del mes</p>
+
+                            <h3 id="totalMes">—</h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <i class="bi bi-calendar-check"></i>
+
+                            <p>Programados</p>
+
+                            <h3 id="totalProgramados">—</h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <i class="bi bi-check-circle"></i>
+
+                            <p>Realizados</p>
+
+                            <h3 id="totalRealizados">—</h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <i class="bi bi-wallet2"></i>
+
+                            <p>Pagos pendientes</p>
+
+                            <h3 id="totalPendientes">—</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- CALENDARIO -->
+
+                <section class="tarjeta mb-4">
+
+                    <div class="d-flex justify-content-between
+                                align-items-center flex-wrap gap-3 mb-4">
+
+                        <div>
+
+                            <h3 class="titulo-seccion">
+                                Calendario musical
+                            </h3>
+
+                            <p class="subtitulo mb-0">
+                                Selecciona una fecha para registrar una celebración.
+                            </p>
+
+                        </div>
+
+                        <button class="btn btn-dorado"
+                                id="nuevoEvento"
+                                disabled>
+
+                            <i class="bi bi-calendar-plus me-2"></i>
+
+                            Nueva celebración
+
+                        </button>
+
+                    </div>
+
+                    <div class="leyenda mb-4">
+
+                        <span>
+                            <span class="punto"
+                                  style="background:#B48A42;">
+                            </span>
+                            Programado
+                        </span>
+
+                        <span>
+                            <span class="punto"
+                                  style="background:#39804B;">
+                            </span>
+                            Realizado
+                        </span>
+
+                        <span>
+                            <span class="punto"
+                                  style="background:#A94442;">
+                            </span>
+                            Cancelado
+                        </span>
+
+                    </div>
+
+                    <div id="calendario"></div>
+
+                </section>
+
+                <!-- LISTADO -->
+
+                <section class="tarjeta">
+
+                    <div class="d-flex justify-content-between
+                                align-items-center flex-wrap gap-3 mb-4">
+
+                        <h3 class="titulo-seccion mb-0">
+                            Celebraciones registradas
+                        </h3>
+
+                        <select id="filtroEstado"
+                                class="form-select"
+                                style="max-width:200px;">
+
+                            <option value="todos">
+                                Todos los estados
+                            </option>
+
+                            <option value="programado">
+                                Programados
+                            </option>
+
+                            <option value="realizado">
+                                Realizados
+                            </option>
+
+                            <option value="cancelado">
+                                Cancelados
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <input type="search"
+                           id="buscador"
+                           class="form-control mb-4"
+                           placeholder="Buscar cliente, celebración o lugar...">
+
+                    <div class="table-responsive">
+
+                        <table class="table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Fecha y hora</th>
+                                    <th>Celebración</th>
+                                    <th>Cliente</th>
+                                    <th>Lugar</th>
+                                    <th>Importe</th>
+                                    <th>Pago</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="tablaEventos"></tbody>
+
+                        </table>
+
+                    </div>
+
+                    <p id="mensajeVacio"
+                       class="text-center subtitulo py-4">
+
+                        Cargando celebraciones...
+
+                    </p>
+
+                </section>
+
+                <footer class="footer">
+
+                    &copy; <span id="anio"></span> Voz Angelical.
+
+                    Todos los derechos reservados.
+
+                    <br>
+
+                    Sistema Integral de Gestión Musical | V.1.0
+
+                </footer>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- MODAL DE EVENTOS -->
+
+    <div class="modal fade"
+         id="modalEvento"
+         tabindex="-1"
+         aria-labelledby="tituloModal">
+
+        <div class="modal-dialog modal-lg
+                    modal-dialog-centered modal-dialog-scrollable">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="tituloModal">
+                        Nueva celebración
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
+
+                </div>
+
+                <form id="formEvento">
+
+                    <div class="modal-body p-4">
+
+                        <input type="hidden" id="eventoId">
+
+                        <div class="row g-3">
+
+                            <!-- CLIENTE -->
+
+                            <div class="col-12">
+
+                                <label class="form-label" for="cliente">
+                                    Cliente *
+                                </label>
+
+                                <select id="cliente"
+                                        class="form-select"
+                                        required>
+                                </select>
+
+                                <a href="clientes.html?accion=nuevo"
+                                   class="subtitulo d-inline-block mt-2">
+
+                                    <i class="bi bi-person-plus"></i>
+
+                                    Registrar nuevo cliente
+
+                                </a>
+
+                            </div>
+
+                            <!-- TIPO DE CELEBRACION -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label" for="tipoServicio">
+                                    Tipo de celebración *
+                                </label>
+
+                                <select id="tipoServicio"
+                                        class="form-select"
+                                        required>
+
+                                    <option value="">Seleccionar</option>
+                                    <option>Misa de difunto</option>
+                                    <option>Misa de aniversario</option>
+                                    <option>Misa de boda</option>
+                                    <option>Misa de XV años</option>
+                                    <option>Misa de bautizo</option>
+                                    <option>Misa de primera comunión</option>
+                                    <option>Misa de confirmación</option>
+                                    <option>Misa de acción de gracias</option>
+                                    <option>Misa dominical</option>
+                                    <option>Rosario</option>
+                                    <option>Novena</option>
+                                    <option>Otro servicio</option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label" for="paquete">
+                                    Paquete musical *
+                                </label>
+
+                                <select id="paquete"
+                                        class="form-select"
+                                        required>
+                                </select>
+
+                            </div>
+
+                            <!-- FECHA Y HORA -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label" for="fecha">
+                                    Fecha *
+                                </label>
+
+                                <input type="date"
+                                       id="fecha"
+                                       class="form-control"
+                                       required>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label" for="hora">
+                                    Hora de inicio *
+                                </label>
+
+                                <input type="time"
+                                       id="hora"
+                                       class="form-control"
+                                       required>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label" for="duracion">
+                                    Duración en minutos *
+                                </label>
+
+                                <input type="number"
+                                       id="duracion"
+                                       class="form-control"
+                                       value="60"
+                                       min="1"
+                                       max="1440"
+                                       step="1"
+                                       required>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label" for="traslado">
+                                    Margen de traslado (minutos)
+                                </label>
+
+                                <input type="number"
+                                       id="traslado"
+                                       class="form-control"
+                                       value="30"
+                                       min="0"
+                                       max="1440"
+                                       step="1"
+                                       required>
+
+                            </div>
+
+                            <!-- DISPONIBILIDAD -->
+
+                            <div class="col-12">
+
+                                <div id="avisoDisponibilidad"
+                                     class="disponibilidad sin-verificar">
+
+                                    Selecciona la fecha y hora para
+                                    consultar la disponibilidad.
+
+                                </div>
+
+                            </div>
+
+                            <!-- UBICACION -->
+
+                            <div class="col-12">
+
+                                <label class="form-label" for="lugar">
+                                    Iglesia o lugar del evento *
+                                </label>
+
+                                <input type="text"
+                                       id="lugar"
+                                       class="form-control"
+                                       maxlength="250"
+                                       required>
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <label class="form-label" for="direccion">
+                                    Dirección o referencia
+                                </label>
+
+                                <input type="text"
+                                       id="direccion"
+                                       class="form-control"
+                                       maxlength="300">
+
+                            </div>
+
+                            <!-- PRECIO -->
+
+                            <div class="col-md-6">
+
+                                <label class="form-label" for="precio">
+                                    Importe total (MXN) *
+                                </label>
+
+                                <input type="number"
+                                       id="precio"
+                                       class="form-control"
+                                       min="1"
+                                       max="1000000"
+                                       step="0.01"
+                                       required>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label" for="metodoPago">
+                                    Método de pago *
+                                </label>
+
+                                <select id="metodoPago"
+                                        class="form-select"
+                                        required>
+
+                                    <option value="efectivo">
+                                        Efectivo
+                                    </option>
+
+                                    <option value="transferencia">
+                                        Transferencia bancaria
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label" for="estadoPago">
+                                    Estado del pago
+                                </label>
+
+                                <select id="estadoPago"
+                                        class="form-select">
+
+                                    <option value="pendiente">
+                                        Pendiente
+                                    </option>
+
+                                    <option value="pagado">
+                                        Pagado
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6"
+                                 id="campoFechaPago"
+                                 hidden>
+
+                                <label class="form-label" for="fechaPago">
+                                    Fecha de pago
+                                </label>
+
+                                <input type="date"
+                                       id="fechaPago"
+                                       class="form-control">
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <label class="form-label" for="estadoEvento">
+                                    Estado de la celebración
+                                </label>
+
+                                <select id="estadoEvento"
+                                        class="form-select">
+
+                                    <option value="programado">
+                                        Programado
+                                    </option>
+
+                                    <option value="realizado">
+                                        Realizado
+                                    </option>
+
+                                    <option value="cancelado">
+                                        Cancelado
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <label class="form-label" for="observaciones">
+                                    Observaciones
+                                </label>
+
+                                <textarea id="observaciones"
+                                          class="form-control"
+                                          maxlength="1500"
+                                          rows="4"></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <div id="mensajeModal"
+                             class="alert d-none mt-3">
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button"
+                                class="btn btn-secundario"
+                                data-bs-dismiss="modal">
+
+                            Cerrar
+
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-dorado"
+                                id="guardarEvento">
+
+                            <i class="bi bi-floppy me-2"></i>
+
+                            Guardar celebración
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- LIBRERIAS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/locales-all.global.min.js"></script>
+
+    <!-- FIREBASE -->
+
+    <script type="module">
+
+        import {
+
+            onAuthStateChanged,
+            signOut
+
+        } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+        import {
+
+            collection,
+            doc,
+            onSnapshot,
+            getDocsFromServer,
+            runTransaction,
+            serverTimestamp
+
+        } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+        const UID_ADMIN =
+            "TsWLtI74pTcivOzAC7gtiaaOzJx1";
+
+        const $ = id => document.getElementById(id);
+
+        let auth;
+        let db;
+        let calendario;
+
+        let autorizado = false;
+
+        let eventos = [];
+        let clientes = [];
+        let servicios = [];
+
+        let suscripciones = [];
+
+        let aperturaAutomatica = false;
+
+        let cargado = {
+
+            eventos: false,
+            clientes: false,
+            servicios: false
+
+        };
+
+        const modal = new bootstrap.Modal(
+            $("modalEvento")
+        );
+
+        // MENU RESPONSIVO
+
+        $("abrirMenu").addEventListener("click", () => {
+
+            $("sidebar").classList.add("abierto");
+
+            $("overlay").classList.add("activo");
+
+        });
+
+        $("overlay").addEventListener("click", cerrarMenu);
+
+        function cerrarMenu() {
+
+            $("sidebar").classList.remove("abierto");
+
+            $("overlay").classList.remove("activo");
+
+        }
+
+        document.addEventListener("keydown", e => {
+
+            if (e.key === "Escape") cerrarMenu();
+
+        });
+
+        $("anio").textContent =
+            new Date().getFullYear();
+
+        // FUNCIONES AUXILIARES
+
+        function texto(id, valor) {
+
+            $(id).textContent = valor;
+
+        }
+
+        function mensaje(id, contenido, tipo) {
+
+            $(id).className = "alert alert-" + tipo;
+
+            $(id).textContent = contenido;
+
+        }
+
+        function ocultarMensaje(id) {
+
+            $(id).classList.add("d-none");
+
+        }
+
+        function moneda(valor) {
+
+            return Number(valor || 0).toLocaleString(
+                "es-MX",
+                {
+                    style: "currency",
+                    currency: "MXN"
+                }
+            );
+
+        }
+
+        function normalizar(valor) {
+
+            return String(valor || "")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+                .trim();
+
+        }
+
+        function fechaLocal(fecha = new Date()) {
+
+            const anio = fecha.getFullYear();
+
+            const mes = String(
+                fecha.getMonth() + 1
+            ).padStart(2, "0");
+
+            const dia = String(
+                fecha.getDate()
+            ).padStart(2, "0");
+
+            return `${anio}-${mes}-${dia}`;
+
+        }
+
+        function fechaTexto(fecha) {
+
+            const valor = new Date(fecha + "T00:00:00");
+
+            return Number.isNaN(valor.getTime())
+
+                ? "Sin fecha"
+
+                : valor.toLocaleDateString("es-MX");
+
+        }
+
+        function crearElemento(etiqueta, clase, contenido) {
+
+            const elemento = document.createElement(etiqueta);
+
+            if (clase) elemento.className = clase;
+
+            if (contenido !== undefined) {
+
+                elemento.textContent = contenido;
+
+            }
+
+            return elemento;
+
+        }
+
+        function datosListos() {
+
+            return autorizado &&
+                Object.values(cargado).every(Boolean);
+
+        }
+
+        // CALCULAR HORARIOS
+
+        function intervalo(evento) {
+
+            if (!evento.fecha || !evento.hora) {
+
+                return null;
+
+            }
+
+            const inicio = new Date(
+
+                evento.fecha + "T" + evento.hora
+
+            ).getTime();
+
+            const duracion = Number(evento.duracion || 60);
+
+            const traslado = Number(evento.traslado ?? 30);
+
+            if (
+
+                !Number.isFinite(inicio) ||
+
+                !Number.isFinite(duracion) ||
+
+                !Number.isFinite(traslado) ||
+
+                duracion <= 0 ||
+
+                traslado < 0
+
+            ) {
+
+                return null;
+
+            }
+
+            return {
+
+                inicio,
+
+                fin: inicio + duracion * 60000,
+
+                traslado: traslado * 60000
+
+            };
+
+        }
+
+        // DETECTAR CONFLICTOS
+
+        function detectarConflictos(nuevo, registros) {
+
+            if (nuevo.estado === "cancelado") return [];
+
+            const horarioNuevo = intervalo(nuevo);
+
+            if (!horarioNuevo) return [];
+
+            return registros.filter(evento => {
+
+                if (
+
+                    evento.id === nuevo.id ||
+
+                    evento.estado === "cancelado"
+
+                ) {
+
+                    return false;
+
+                }
+
+                const horario = intervalo(evento);
+
+                if (!horario) return false;
+
+                // Se utiliza el margen mayor entre ambos eventos.
+
+                const margen = Math.max(
+
+                    horarioNuevo.traslado,
+
+                    horario.traslado
+
+                );
+
+                return (
+
+                    horarioNuevo.inicio < horario.fin + margen &&
+
+                    horarioNuevo.fin + margen > horario.inicio
+
+                );
+
+            });
+
+        }
+
+        function horarioFormulario() {
+
+            return {
+
+                id: $("eventoId").value,
+
+                fecha: $("fecha").value,
+
+                hora: $("hora").value,
+
+                duracion: Number($("duracion").value),
+
+                traslado: Number($("traslado").value),
+
+                estado: $("estadoEvento").value
+
+            };
+
+        }
+
+        function actualizarDisponibilidad() {
+
+            const aviso = $("avisoDisponibilidad");
+
+            const nuevo = horarioFormulario();
+
+            if (!cargado.eventos || !intervalo(nuevo)) {
+
+                aviso.className =
+                    "disponibilidad sin-verificar";
+
+                aviso.textContent =
+                    "Selecciona un horario válido para consultar disponibilidad.";
+
+                return;
+
+            }
+
+            if (nuevo.estado === "cancelado") {
+
+                aviso.className =
+                    "disponibilidad sin-verificar";
+
+                aviso.textContent =
+                    "Los eventos cancelados no ocupan horarios.";
+
+                return;
+
+            }
+
+            const conflictos = detectarConflictos(
+
+                nuevo,
+
+                eventos
+
+            );
+
+            aviso.replaceChildren();
+
+            if (!conflictos.length) {
+
+                aviso.className =
+                    "disponibilidad disponible";
+
+                aviso.textContent =
+                    "✓ Horario disponible según los eventos cargados. Se verificará nuevamente al guardar.";
+
+                return;
+
+            }
+
+            aviso.className =
+                "disponibilidad ocupado";
+
+            aviso.append(
+
+                crearElemento(
+
+                    "strong",
+
+                    "",
+
+                    "⚠ Conflicto de horario o tiempo de traslado"
+
+                )
+
+            );
+
+            conflictos.forEach(evento => {
+
+                aviso.append(
+
+                    crearElemento(
+
+                        "div",
+
+                        "mt-2",
+
+                        evento.tipoServicio + " | " +
+
+                        fechaTexto(evento.fecha) + " | " +
+
+                        evento.hora + " | " +
+
+                        evento.lugar
+
+                    )
+
+                );
+
+            });
+
+        }
+
+        [
+            "fecha",
+            "hora",
+            "duracion",
+            "traslado",
+            "estadoEvento"
+
+        ].forEach(id => {
+
+            $(id).addEventListener(
+
+                "input",
+
+                actualizarDisponibilidad
+
+            );
+
+        });
+
+        // INICIALIZAR CALENDARIO
+
+        function iniciarCalendario() {
+
+            calendario = new FullCalendar.Calendar(
+
+                $("calendario"),
+
+                {
+
+                    locale: "es",
+
+                    timeZone: "local",
+
+                    initialView: "dayGridMonth",
+
+                    firstDay: 1,
+
+                    height: "auto",
+
+                    nowIndicator: true,
+
+                    editable: false,
+
+                    dayMaxEvents: true,
+
+                    headerToolbar: {
+
+                        left: "prev,next today",
+
+                        center: "title",
+
+                        right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+
+                    },
+
+                    buttonText: {
+
+                        today: "Hoy",
+
+                        month: "Mes",
+
+                        week: "Semana",
+
+                        day: "Día",
+
+                        list: "Lista"
+
+                    },
+
+                    eventTimeFormat: {
+
+                        hour: "2-digit",
+
+                        minute: "2-digit",
+
+                        hour12: false
+
+                    },
+
+                    dateClick: info => {
+
+                        abrirNuevoEvento(
+
+                            info.dateStr.slice(0, 10),
+
+                            info.allDay
+
+                                ? "12:00"
+
+                                : info.dateStr.slice(11, 16)
+
+                        );
+
+                    },
+
+                    eventClick: info => {
+
+                        editarEvento(info.event.id);
+
+                    }
+
+                }
+
+            );
+
+            calendario.render();
+
+        }
+
+        function actualizarCalendario() {
+
+            if (!calendario) return;
+
+            calendario.removeAllEvents();
+
+            eventos.forEach(evento => {
+
+                const horario = intervalo(evento);
+
+                if (!horario) return;
+
+                let color = "#B48A42";
+
+                if (evento.estado === "realizado") {
+
+                    color = "#39804B";
+
+                }
+
+                if (evento.estado === "cancelado") {
+
+                    color = "#A94442";
+
+                }
+
+                calendario.addEvent({
+
+                    id: evento.id,
+
+                    title:
+
+                        evento.tipoServicio +
+
+                        " - " +
+
+                        evento.clienteNombre,
+
+                    start: new Date(horario.inicio),
+
+                    end: new Date(horario.fin),
+
+                    backgroundColor: color,
+
+                    borderColor: color,
+
+                    textColor: "#FFFFFF"
+
+                });
+
+            });
+
+        }
+
+        // SELECTORES DE CLIENTES Y PAQUETES
+
+        function cargarSelectores(evento = null) {
+
+            const selectCliente = $("cliente");
+
+            const selectPaquete = $("paquete");
+
+            selectCliente.replaceChildren();
+
+            selectPaquete.replaceChildren();
+
+            selectCliente.append(
+
+                new Option("Seleccionar cliente", "")
+
+            );
+
+            selectPaquete.append(
+
+                new Option("Seleccionar paquete", "")
+
+            );
+
+            clientes
+
+                .slice()
+
+                .sort((a, b) =>
+
+                    a.nombre.localeCompare(b.nombre, "es")
+
+                )
+
+                .forEach(cliente => {
+
+                    selectCliente.append(
+
+                        new Option(
+
+                            cliente.nombre + " - " + cliente.telefono,
+
+                            cliente.id
+
+                        )
+
+                    );
+
+                });
+
+            servicios
+
+                .filter(servicio =>
+
+                    servicio.activo === true ||
+
+                    servicio.id === evento?.paqueteId
+
+                )
+
+                .sort((a, b) => a.numero - b.numero)
+
+                .forEach(servicio => {
+
+                    selectPaquete.append(
+
+                        new Option(
+
+                            servicio.nombre +
+
+                            " - " +
+
+                            moneda(servicio.precio) +
+
+                            (servicio.activo ? "" : " (Inactivo)"),
+
+                            servicio.id
+
+                        )
+
+                    );
+
+                });
+
+            if (evento) {
+
+                if (
+
+                    evento.clienteId &&
+
+                    !clientes.some(c => c.id === evento.clienteId)
+
+                ) {
+
+                    selectCliente.append(
+
+                        new Option(
+
+                            evento.clienteNombre + " (Registro no disponible)",
+
+                            evento.clienteId
+
+                        )
+
+                    );
+
+                }
+
+                if (
+
+                    evento.paqueteId &&
+
+                    !servicios.some(s => s.id === evento.paqueteId)
+
+                ) {
+
+                    selectPaquete.append(
+
+                        new Option(
+
+                            evento.paqueteNombre + " (Paquete anterior)",
+
+                            evento.paqueteId
+
+                        )
+
+                    );
+
+                }
+
+            }
+
+        }
+
+        $("paquete").addEventListener("change", () => {
+
+            const paquete = servicios.find(
+
+                servicio => servicio.id === $("paquete").value
+
+            );
+
+            $("precio").value = paquete
+
+                ? paquete.precio
+
+                : "";
+
+        });
+
+        // ESTADO DE PAGO
+
+        function actualizarPago() {
+
+            const pagado = $("estadoPago").value === "pagado";
+
+            $("campoFechaPago").hidden = !pagado;
+
+            $("fechaPago").required = pagado;
+
+            if (pagado && !$("fechaPago").value) {
+
+                $("fechaPago").value = fechaLocal();
+
+            }
+
+        }
+
+        $("estadoPago").addEventListener(
+
+            "change",
+
+            actualizarPago
+
+        );
+
+        // NUEVO EVENTO
+
+        function abrirNuevoEvento(
+
+            fecha = fechaLocal(),
+
+            hora = "12:00",
+
+            clienteId = ""
+
+        ) {
+
+            if (!datosListos()) {
+
+                mensaje(
+
+                    "mensajeGeneral",
+
+                    "Espera a que se carguen los datos de Firebase.",
+
+                    "warning"
+
+                );
+
+                return;
+
+            }
+
+            $("formEvento").reset();
+
+            $("eventoId").value = "";
+
+            cargarSelectores();
+
+            $("fecha").value = fecha;
+
+            $("hora").value = hora;
+
+            $("duracion").value = 60;
+
+            $("traslado").value = 30;
+
+            $("cliente").value = clienteId;
+
+            $("fechaPago").value = "";
+
+            texto("tituloModal", "Nueva celebración");
+
+            ocultarMensaje("mensajeModal");
+
+            actualizarPago();
+
+            actualizarDisponibilidad();
+
+            modal.show();
+
+        }
+
+        $("nuevoEvento").addEventListener(
+
+            "click",
+
+            () => abrirNuevoEvento()
+
+        );
+
+        // EDITAR EVENTO
+
+        function editarEvento(id) {
+
+            if (!datosListos()) return;
+
+            const evento = eventos.find(
+
+                registro => registro.id === id
+
+            );
+
+            if (!evento) return;
+
+            // Los eventos vinculados a contratos se administrarán
+            // desde el módulo de contratos para mantener coherencia.
+
+            if (evento.contratoId) {
+
+                window.location.href =
+
+                    "contratos.html?contratoId=" +
+
+                    encodeURIComponent(evento.contratoId);
+
+                return;
+
+            }
+
+            $("formEvento").reset();
+
+            cargarSelectores(evento);
+
+            $("eventoId").value = evento.id;
+
+            $("cliente").value = evento.clienteId || "";
+
+            $("paquete").value = evento.paqueteId || "";
+
+            $("tipoServicio").value = evento.tipoServicio || "";
+
+            $("fecha").value = evento.fecha || "";
+
+            $("hora").value = evento.hora || "";
+
+            $("duracion").value = evento.duracion || 60;
+
+            $("traslado").value = evento.traslado ?? 30;
+
+            $("lugar").value = evento.lugar || "";
+
+            $("direccion").value = evento.direccion || "";
+
+            $("precio").value = evento.precio;
+
+            $("metodoPago").value = evento.metodoPago || "efectivo";
+
+            $("estadoPago").value = evento.estadoPago || "pendiente";
+
+            $("fechaPago").value = evento.fechaPago || "";
+
+            $("estadoEvento").value = evento.estado || "programado";
+
+            $("observaciones").value = evento.observaciones || "";
+
+            texto("tituloModal", "Editar celebración");
+
+            ocultarMensaje("mensajeModal");
+
+            actualizarPago();
+
+            actualizarDisponibilidad();
+
+            modal.show();
+
+        }
+
+        // GUARDAR EVENTO
+
+        $("formEvento").addEventListener("submit", async e => {
+
+            e.preventDefault();
+
+            if (!datosListos()) return;
+
+            const id = $("eventoId").value;
+
+            const anterior = eventos.find(
+
+                evento => evento.id === id
+
+            );
+
+            const clienteId = $("cliente").value;
+
+            const paqueteId = $("paquete").value;
+
+            const cliente = clientes.find(
+
+                registro => registro.id === clienteId
+
+            );
+
+            const paquete = servicios.find(
+
+                registro => registro.id === paqueteId
+
+            );
+
+            const mismoCliente =
+
+                anterior?.clienteId === clienteId;
+
+            const mismoPaquete =
+
+                anterior?.paqueteId === paqueteId;
+
+            if (
+
+                (!cliente && !mismoCliente) ||
+
+                (!paquete && !mismoPaquete) ||
+
+                (!mismoPaquete && paquete?.activo !== true)
+
+            ) {
+
+                mensaje(
+
+                    "mensajeModal",
+
+                    "Selecciona un cliente y un paquete disponible.",
+
+                    "warning"
+
+                );
+
+                return;
+
+            }
+
+            const datos = {
+
+                clienteId,
+
+                clienteNombre:
+
+                    mismoCliente
+
+                        ? anterior.clienteNombre
+
+                        : cliente.nombre,
+
+                clienteTelefono:
+
+                    mismoCliente
+
+                        ? anterior.clienteTelefono || ""
+
+                        : cliente.telefono || "",
+
+                paqueteId,
+
+                paqueteNombre:
+
+                    mismoPaquete
+
+                        ? anterior.paqueteNombre
+
+                        : paquete.nombre,
+
+                paqueteDetalle:
+
+                    mismoPaquete
+
+                        ? anterior.paqueteDetalle || {}
+
+                        : {
+
+                            numero: paquete.numero,
+
+                            nombre: paquete.nombre,
+
+                            voces: paquete.voces,
+
+                            instrumento: paquete.instrumento,
+
+                            audio: paquete.audio,
+
+                            precioBase: paquete.precio
+
+                        },
+
+                tipoServicio: $("tipoServicio").value,
+
+                fecha: $("fecha").value,
+
+                hora: $("hora").value,
+
+                duracion: Number($("duracion").value),
+
+                traslado: Number($("traslado").value),
+
+                lugar: $("lugar").value.trim(),
+
+                direccion: $("direccion").value.trim(),
+
+                precio: Math.round(
+
+                    Number($("precio").value) * 100
+
+                ) / 100,
+
+                metodoPago: $("metodoPago").value,
+
+                estadoPago: $("estadoPago").value,
+
+                fechaPago:
+
+                    $("estadoPago").value === "pagado"
+
+                        ? $("fechaPago").value
+
+                        : "",
+
+                estado: $("estadoEvento").value,
+
+                observaciones: $("observaciones").value.trim()
+
+            };
+
+            if (
+
+                !datos.lugar ||
+
+                !intervalo(datos) ||
+
+                !Number.isInteger(datos.duracion) ||
+
+                !Number.isInteger(datos.traslado) ||
+
+                datos.duracion > 1440 ||
+
+                datos.traslado > 1440 ||
+
+                !Number.isFinite(datos.precio) ||
+
+                datos.precio <= 0 ||
+
+                datos.precio > 1000000 ||
+
+                (
+
+                    datos.estadoPago === "pagado" &&
+
+                    (
+
+                        !datos.fechaPago ||
+
+                        datos.fechaPago > fechaLocal()
+
+                    )
+
+                )
+
+            ) {
+
+                mensaje(
+
+                    "mensajeModal",
+
+                    "Revisa los datos y la fecha de pago.",
+
+                    "warning"
+
+                );
+
+                return;
+
+            }
+
+            const boton = $("guardarEvento");
+
+            boton.disabled = true;
+
+            boton.textContent = "Verificando disponibilidad...";
+
+            ocultarMensaje("mensajeModal");
+
+            try {
+
+                // Consulta actualizada al servidor.
+                // No se guarda si no puede verificarse.
+
+                const snapshot = await getDocsFromServer(
+
+                    collection(db, "eventos")
+
+                );
+
+                const registros = snapshot.docs.map(documento => ({
+
+                    ...documento.data(),
+
+                    id: documento.id
+
+                }));
+
+                const conflictos = detectarConflictos(
+
+                    { ...datos, id },
+
+                    registros
+
+                );
+
+                if (conflictos.length) {
+
+                    const detalles = conflictos.map(evento =>
+
+                        evento.tipoServicio +
+
+                        " - " +
+
+                        fechaTexto(evento.fecha) +
+
+                        " a las " +
+
+                        evento.hora +
+
+                        " - " +
+
+                        evento.lugar
+
+                    ).join("\n");
+
+                    const continuar = confirm(
+
+                        "ATENCIÓN: CONFLICTO DE HORARIO\n\n" +
+
+                        detalles +
+
+                        "\n\n¿Deseas registrar el evento de todos modos? " +
+
+                        "Confirma únicamente si tienes músicos disponibles para cubrirlo."
+
+                    );
+
+                    if (!continuar) return;
+
+                }
+
+                boton.textContent = "Guardando celebración...";
+
+                const referencia = id
+
+                    ? doc(db, "eventos", id)
+
+                    : doc(collection(db, "eventos"));
+
+                // Control de modificaciones concurrentes de la agenda.
+                // Todos los futuros módulos que escriban eventos
+                // deberán utilizar este mismo documento de control.
+
+                const control = doc(
+
+                    db,
+
+                    "contadores",
+
+                    "agenda"
+
+                );
+
+                await runTransaction(db, async transaction => {
+
+                    const controlActual = await transaction.get(control);
+
+                    const version = Number(
+
+                        controlActual.data()?.version || 0
+
+                    );
+
+                    const eventoActual = id
+
+                        ? await transaction.get(referencia)
+
+                        : null;
+
+                    if (
+
+                        id &&
+
+                        (
+
+                            !eventoActual.exists() ||
+
+                            eventoActual.data().contratoId
+
+                        )
+
+                    ) {
+
+                        throw new Error(
+
+                            "El evento cambió o está vinculado a un contrato."
+
+                        );
+
+                    }
+
+                    const clienteActual = await transaction.get(
+
+                        doc(db, "clientes", clienteId)
+
+                    );
+
+                    const paqueteActual = await transaction.get(
+
+                        doc(db, "servicios", paqueteId)
+
+                    );
+
+                    if (!clienteActual.exists() && !mismoCliente) {
+
+                        throw new Error("El cliente ya no existe.");
+
+                    }
+
+                    if (
+
+                        !mismoPaquete &&
+
+                        (
+
+                            !paqueteActual.exists() ||
+
+                            paqueteActual.data().activo !== true
+
+                        )
+
+                    ) {
+
+                        throw new Error("El paquete ya no está disponible.");
+
+                    }
+
+                    // Comparar los eventos previamente consultados
+                    // con sus versiones actuales.
+
+                    for (const registro of registros) {
+
+                        const actual = await transaction.get(
+
+                            doc(db, "eventos", registro.id)
+
+                        );
+
+                        if (
+
+                            !actual.exists() ||
+
+                            actual.data().actualizadoEn?.toMillis() !==
+
+                            registro.actualizadoEn?.toMillis()
+
+                        ) {
+
+                            throw new Error(
+
+                                "La agenda cambió. Revisa la disponibilidad nuevamente."
+
+                            );
+
+                        }
+
+                    }
+
+                    // Verificar que no aparecieron eventos nuevos
+                    // desde la consulta anterior.
+
+                    const comprobacion = await getDocsFromServer(
+
+                        collection(db, "eventos")
+
+                    );
+
+                    const idsAnteriores = registros
+
+                        .map(registro => registro.id)
+
+                        .sort()
+
+                        .join(",");
+
+                    const idsActuales = comprobacion.docs
+
+                        .map(documento => documento.id)
+
+                        .sort()
+
+                        .join(",");
+
+                    if (idsAnteriores !== idsActuales) {
+
+                        throw new Error(
+
+                            "Se registró otro evento. Intenta nuevamente."
+
+                        );
+
+                    }
+
+                    const datosGuardar = {
+
+                        ...datos,
+
+                        conflictoAutorizado: conflictos.length > 0,
+
+                        conflictosIds: conflictos.map(evento => evento.id),
+
+                        actualizadoEn: serverTimestamp()
+
+                    };
+
+                    if (id) {
+
+                        transaction.update(
+
+                            referencia,
+
+                            datosGuardar
+
+                        );
+
+                    } else {
+
+                        transaction.set(
+
+                            referencia,
+
+                            {
+
+                                ...datosGuardar,
+
+                                creadoEn: serverTimestamp()
+
+                            }
+
+                        );
+
+                    }
+
+                    transaction.set(
+
+                        control,
+
+                        {
+
+                            version: version + 1,
+
+                            actualizadoEn: serverTimestamp()
+
+                        },
+
+                        { merge: true }
+
+                    );
+
+                });
+
+                modal.hide();
+
+                mensaje(
+
+                    "mensajeGeneral",
+
+                    id
+
+                        ? "Celebración actualizada correctamente."
+
+                        : "Celebración registrada correctamente.",
+
+                    "success"
+
+                );
+
+                calendario.gotoDate(datos.fecha);
+
+            } catch (error) {
+
+                console.error(error);
+
+                mensaje(
+
+                    "mensajeModal",
+
+                    "No fue posible guardar la celebración. " +
+
+                    error.message,
+
+                    "danger"
+
+                );
+
+            } finally {
+
+                boton.disabled = false;
+
+                boton.textContent = "Guardar celebración";
+
+            }
+
+        });
+
+        // INDICADORES
+
+        function actualizarIndicadores() {
+
+            if (!cargado.eventos) return;
+
+            const mes = fechaLocal().slice(0, 7);
+
+            const activos = eventos.filter(
+
+                evento => evento.estado !== "cancelado"
+
+            );
+
+            texto(
+
+                "totalMes",
+
+                activos.filter(evento =>
+
+                    evento.fecha?.startsWith(mes)
+
+                ).length
+
+            );
+
+            texto(
+
+                "totalProgramados",
+
+                eventos.filter(evento =>
+
+                    evento.estado === "programado"
+
+                ).length
+
+            );
+
+            texto(
+
+                "totalRealizados",
+
+                eventos.filter(evento =>
+
+                    evento.estado === "realizado"
+
+                ).length
+
+            );
+
+            texto(
+
+                "totalPendientes",
+
+                moneda(
+
+                    activos.filter(evento =>
+
+                        evento.estadoPago === "pendiente"
+
+                    ).reduce((total, evento) =>
+
+                        total + Number(evento.precio || 0), 0
+
+                    )
+
+                )
+
+            );
+
+        }
+
+        // MOSTRAR TABLA
+
+        function mostrarTabla() {
+
+            if (!cargado.eventos) return;
+
+            const filtro = $("filtroEstado").value;
+
+            const busqueda = normalizar($("buscador").value);
+
+            const registros = eventos
+
+                .filter(evento => {
+
+                    const coincideEstado =
+
+                        filtro === "todos" ||
+
+                        evento.estado === filtro;
+
+                    const contenido = normalizar([
+
+                        evento.clienteNombre,
+
+                        evento.tipoServicio,
+
+                        evento.lugar
+
+                    ].join(" "));
+
+                    return coincideEstado &&
+
+                        contenido.includes(busqueda);
+
+                })
+
+                .sort((a, b) =>
+
+                    (intervalo(b)?.inicio || 0) -
+
+                    (intervalo(a)?.inicio || 0)
+
+                );
+
+            const tabla = $("tablaEventos");
+
+            tabla.replaceChildren();
+
+            $("mensajeVacio").hidden = registros.length > 0;
+
+            texto(
+
+                "mensajeVacio",
+
+                "No hay celebraciones que mostrar."
+
+            );
+
+            registros.forEach(evento => {
+
+                const fila = crearElemento("tr");
+
+                const datos = [
+
+                    fechaTexto(evento.fecha) + " | " + evento.hora,
+
+                    evento.tipoServicio,
+
+                    evento.clienteNombre,
+
+                    evento.lugar,
+
+                    moneda(evento.precio),
+
+                    evento.estadoPago === "pagado"
+
+                        ? "Pagado"
+
+                        : "Pendiente"
+
+                ];
+
+                datos.forEach(valor => {
+
+                    fila.append(
+
+                        crearElemento("td", "", valor)
+
+                    );
+
+                });
+
+                const celdaEstado = crearElemento("td");
+
+                const estado = evento.estado || "programado";
+
+                celdaEstado.append(
+
+                    crearElemento(
+
+                        "span",
+
+                        "estado estado-" + estado,
+
+                        estado.charAt(0).toUpperCase() +
+
+                        estado.slice(1)
+
+                    )
+
+                );
+
+                const acciones = crearElemento("td");
+
+                const editar = crearElemento(
+
+                    "button",
+
+                    "btn btn-secundario",
+
+                    "Editar"
+
+                );
+
+                editar.type = "button";
+
+                editar.addEventListener(
+
+                    "click",
+
+                    () => editarEvento(evento.id)
+
+                );
+
+                acciones.append(editar);
+
+                fila.append(celdaEstado, acciones);
+
+                tabla.append(fila);
+
+            });
+
+        }
+
+        $("filtroEstado").addEventListener(
+
+            "change",
+
+            mostrarTabla
+
+        );
+
+        $("buscador").addEventListener(
+
+            "input",
+
+            mostrarTabla
+
+        );
+
+        // ESCUCHAR FIRESTORE
+
+        function escuchar(nombre, callback) {
+
+            const cancelar = onSnapshot(
+
+                collection(db, nombre),
+
+                snapshot => {
+
+                    if (!autorizado) return;
+
+                    const registros = snapshot.docs.map(
+
+                        documento => ({
+
+                            ...documento.data(),
+
+                            id: documento.id
+
+                        })
+
+                    );
+
+                    cargado[nombre] = true;
+
+                    callback(registros);
+
+                    comprobarCarga();
+
+                },
+
+                error => {
+
+                    console.error(error);
+
+                    cargado[nombre] = false;
+
+                    $("nuevoEvento").disabled = true;
+
+                    mensaje(
+
+                        "mensajeGeneral",
+
+                        "No fue posible consultar " + nombre +
+
+                        ". Revisa la conexión y los permisos.",
+
+                        "danger"
+
+                    );
+
+                    if (nombre === "eventos") {
+
+                        eventos = [];
+
+                        calendario?.removeAllEvents();
+
+                        $("tablaEventos").replaceChildren();
+
+                        $("mensajeVacio").hidden = false;
+
+                        texto(
+
+                            "mensajeVacio",
+
+                            "Agenda no disponible."
+
+                        );
+
+                        [
+
+                            "totalMes",
+
+                            "totalProgramados",
+
+                            "totalRealizados",
+
+                            "totalPendientes"
+
+                        ].forEach(id => texto(id, "—"));
+
+                    }
+
+                    actualizarDisponibilidad();
+
+                }
+
+            );
+
+            suscripciones.push(cancelar);
+
+        }
+
+        function comprobarCarga() {
+
+            $("nuevoEvento").disabled = !datosListos();
+
+            if (!datosListos() || aperturaAutomatica) return;
+
+            const parametros = new URLSearchParams(
+
+                window.location.search
+
+            );
+
+            if (parametros.get("accion") === "nuevo") {
+
+                aperturaAutomatica = true;
+
+                abrirNuevoEvento(
+
+                    fechaLocal(),
+
+                    "12:00",
+
+                    parametros.get("clienteId") || ""
+
+                );
+
+                history.replaceState(
+
+                    null,
+
+                    "",
+
+                    window.location.pathname
+
+                );
+
+            }
+
+        }
+
+        function detenerSuscripciones() {
+
+            suscripciones.forEach(cancelar => cancelar());
+
+            suscripciones = [];
+
+        }
+
+        function cargarDatos() {
+
+            detenerSuscripciones();
+
+            escuchar("eventos", registros => {
+
+                eventos = registros;
+
+                actualizarCalendario();
+
+                actualizarIndicadores();
+
+                mostrarTabla();
+
+                actualizarDisponibilidad();
+
+            });
+
+            escuchar("clientes", registros => {
+
+                clientes = registros;
+
+            });
+
+            escuchar("servicios", registros => {
+
+                servicios = registros;
+
+            });
+
+        }
+
+        // CERRAR SESION
+
+        $("cerrarSesion").addEventListener("click", async () => {
+
+            if (!confirm("¿Deseas cerrar sesión?")) return;
+
+            try {
+
+                await signOut(auth);
+
+                window.location.replace("index.html");
+
+            } catch (error) {
+
+                mensaje(
+
+                    "mensajeGeneral",
+
+                    "No fue posible cerrar sesión.",
+
+                    "danger"
+
+                );
+
+            }
+
+        });
+
+        function errorAcceso(contenido) {
+
+            autorizado = false;
+
+            detenerSuscripciones();
+
+            $("aplicacion").hidden = true;
+
+            $("pantallaCarga").style.display = "flex";
+
+            $("spinnerCarga").classList.add("d-none");
+
+            $("volverLogin").classList.remove("d-none");
+
+            texto("mensajeCarga", contenido);
+
+        }
+
+        // CONEXION Y SEGURIDAD
+
+        try {
+
+            const firebase = await import("./firebase.js");
+
+            auth = firebase.auth;
+
+            db = firebase.db;
+
+            if (!auth || !db) {
+
+                throw new Error("Firebase no configurado");
+
+            }
+
+            onAuthStateChanged(auth, async usuario => {
+
+                autorizado = false;
+
+                detenerSuscripciones();
+
+                if (!usuario) {
+
+                    $("aplicacion").hidden = true;
+
+                    window.location.replace("index.html");
+
+                    return;
+
+                }
+
+                if (usuario.uid !== UID_ADMIN) {
+
+                    $("aplicacion").hidden = true;
+
+                    try {
+
+                        await signOut(auth);
+
+                    } catch (error) {
+
+                        errorAcceso("Usuario no autorizado.");
+
+                    }
+
+                    return;
+
+                }
+
+                autorizado = true;
+
+                texto(
+
+                    "correoUsuario",
+
+                    usuario.email || "Administrador"
+
+                );
+
+                $("pantallaCarga").style.display = "none";
+
+                $("aplicacion").hidden = false;
+
+                if (!calendario) {
+
+                    iniciarCalendario();
+
+                }
+
+                cargarDatos();
+
+            }, error => {
+
+                console.error(error);
+
+                errorAcceso("No se pudo verificar la sesión.");
+
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            errorAcceso(
+
+                "No fue posible iniciar la agenda. Revisa Firebase y las librerías."
+
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>

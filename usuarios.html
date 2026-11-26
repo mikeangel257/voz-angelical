@@ -1,0 +1,2307 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usuarios | Voz Angelical</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --dorado: #B48A42;
+    --dorado-claro: #DCC18A;
+    --dorado-oscuro: #8A632B;
+    --marfil: #F5EFE4;
+    --blanco: #FFFFFF;
+    --cafe: #30271D;
+    --gris: #796C59;
+    --borde: #E6D8C1;
+    --sidebar: 270px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--marfil);
+    color: var(--cafe);
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+}
+
+/* PANTALLA DE CARGA */
+
+#pantallaCarga {
+    position: fixed;
+    inset: 0;
+    background: var(--marfil);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#pantallaCarga img {
+    width: 140px;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+}
+
+/* MENU LATERAL */
+
+.sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: var(--sidebar);
+    height: 100dvh;
+    background: white;
+    border-right: 1px solid var(--borde);
+    display: flex;
+    flex-direction: column;
+    z-index: 1045;
+    transition: .3s ease;
+}
+
+.marca {
+    text-align: center;
+    padding: 25px 15px 20px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.marca img {
+    width: 105px;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+}
+
+.marca h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dorado-oscuro);
+    margin-top: 12px;
+    letter-spacing: 1px;
+}
+
+.marca p {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gris);
+    margin: 0;
+}
+
+.menu {
+    padding: 20px 15px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.titulo-menu {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--gris);
+    padding: 10px 12px;
+    font-weight: 600;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    text-decoration: none;
+    color: var(--cafe);
+    padding: 13px 15px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    transition: .25s;
+}
+
+.menu a i {
+    font-size: 18px;
+    color: var(--dorado-oscuro);
+}
+
+.menu a:hover {
+    background: var(--marfil);
+    transform: translateX(3px);
+}
+
+.menu a.activo {
+    background: linear-gradient(135deg,#8A632B,#B48A42);
+    color: white;
+    box-shadow: 0 5px 15px rgba(138,99,43,.18);
+}
+
+.menu a.activo i {
+    color: white;
+}
+
+.sidebar-footer {
+    padding: 18px;
+    border-top: 1px solid var(--borde);
+}
+
+.btn-salir {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #E7CCCC;
+    background: #FFF6F6;
+    color: #A94442;
+    border-radius: 10px;
+}
+
+.btn-salir:hover {
+    background: #A94442;
+    color: white;
+}
+
+/* CONTENIDO PRINCIPAL */
+
+.principal {
+    margin-left: var(--sidebar);
+    min-height: 100vh;
+}
+
+.barra-superior {
+    min-height: 80px;
+    background: white;
+    border-bottom: 1px solid var(--borde);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    gap: 15px;
+}
+
+.barra-superior h5 {
+    font-family: 'Cinzel', serif;
+    color: var(--dorado-oscuro);
+    font-weight: 700;
+    margin: 0;
+}
+
+.barra-superior small {
+    color: var(--gris);
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--marfil);
+    color: var(--dorado-oscuro);
+    display: grid;
+    place-items: center;
+    font-size: 23px;
+    flex-shrink: 0;
+}
+
+.contenido {
+    padding: 30px;
+    animation: aparecer .6s ease;
+}
+
+/* ENCABEZADO */
+
+.encabezado {
+    background: linear-gradient(120deg,#8A632B,#B48A42,#C6A46A);
+    border-radius: 20px;
+    padding: 35px;
+    color: white;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 25px rgba(138,99,43,.15);
+}
+
+.encabezado h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.encabezado p {
+    line-height: 1.9;
+    max-width: 650px;
+    margin-bottom: 0;
+}
+
+/* TARJETAS */
+
+.tarjeta {
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: 17px;
+    padding: 25px;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(95,67,25,.04);
+}
+
+.titulo-seccion {
+    font-family: 'Cinzel', serif;
+    color: var(--dorado-oscuro);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.subtitulo {
+    font-size: 12px;
+    color: var(--gris);
+    line-height: 1.8;
+}
+
+.icono-seccion {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    background: var(--marfil);
+    color: var(--dorado-oscuro);
+    border-radius: 12px;
+    font-size: 23px;
+    flex-shrink: 0;
+}
+
+/* INDICADORES */
+
+.indicador {
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    padding: 22px;
+    height: 100%;
+    transition: .3s;
+}
+
+.indicador:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(138,99,43,.10);
+}
+
+.indicador p {
+    color: var(--gris);
+    font-size: 12px;
+    margin: 15px 0 5px;
+}
+
+.indicador h3 {
+    color: var(--dorado-oscuro);
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* PERFIL */
+
+.perfil {
+    text-align: center;
+}
+
+.foto-perfil {
+    width: 115px;
+    height: 115px;
+    background: linear-gradient(135deg,#8A632B,#DCC18A);
+    color: white;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    margin: 10px auto 20px;
+    font-size: 55px;
+    border: 5px solid var(--marfil);
+}
+
+.perfil h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--dorado-oscuro);
+    font-size: 23px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.etiqueta {
+    display: inline-block;
+    background: #E5F4E9;
+    color: #287A41;
+    border-radius: 20px;
+    padding: 7px 13px;
+    font-size: 11px;
+}
+
+.dato-perfil {
+    text-align: left;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--borde);
+}
+
+.dato-perfil small {
+    color: var(--gris);
+    display: block;
+    margin-bottom: 5px;
+}
+
+.dato-perfil strong {
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+/* FORMULARIOS */
+
+.form-label {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.form-control {
+    background: #FDFBF7;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    min-height: 45px;
+    font-size: 13px;
+}
+
+.form-control:focus {
+    border-color: var(--dorado);
+    box-shadow: 0 0 0 3px rgba(180,138,66,.15);
+}
+
+.form-control[readonly] {
+    background: #F1EEE8;
+}
+
+.form-text {
+    font-size: 11px;
+    color: var(--gris);
+}
+
+/* BOTONES */
+
+.btn-dorado {
+    background: var(--dorado-oscuro);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 12px;
+}
+
+.btn-dorado:hover {
+    background: var(--dorado);
+    color: white;
+}
+
+.btn-dorado:disabled {
+    background: #B5A58C;
+    color: white;
+}
+
+.btn-secundario {
+    background: white;
+    border: 1px solid var(--dorado-claro);
+    color: var(--dorado-oscuro);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 12px;
+}
+
+.btn-secundario:hover {
+    background: var(--marfil);
+    color: var(--dorado-oscuro);
+}
+
+/* SEGURIDAD */
+
+.opcion-seguridad {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--borde);
+}
+
+.opcion-seguridad:last-child {
+    border-bottom: none;
+}
+
+.opcion-seguridad h6 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.opcion-seguridad p {
+    font-size: 11px;
+    color: var(--gris);
+    margin: 0;
+}
+
+.permiso {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--borde);
+}
+
+.permiso:last-child {
+    border-bottom: none;
+}
+
+.permiso i {
+    color: #287A41;
+    font-size: 17px;
+}
+
+.permiso span {
+    font-size: 12px;
+}
+
+/* CONTRASEÑA */
+
+.medidor {
+    height: 7px;
+    background: #EEE8DE;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#barraFortaleza {
+    height: 100%;
+    width: 0;
+    transition: .3s;
+}
+
+/* TABLA */
+
+.table {
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.table thead th {
+    background: #F9F5ED;
+    color: var(--dorado-oscuro);
+    padding: 14px;
+    white-space: nowrap;
+}
+
+.table tbody td {
+    padding: 14px;
+    border-color: var(--borde);
+}
+
+/* MODALES */
+
+.modal-content {
+    border: none;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(135deg,#8A632B,#B48A42);
+    color: white;
+    padding: 20px;
+}
+
+.modal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.modal-header .btn-close {
+    filter: invert(1);
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--borde);
+    padding: 15px 20px;
+    background: #FDFBF7;
+}
+
+.modal-dialog-scrollable {
+    height: calc(100% - 2rem);
+}
+
+.modal-dialog-scrollable .modal-content {
+    max-height: 100%;
+}
+
+.modal-dialog-scrollable .modal-body {
+    overflow-y: auto;
+}
+
+.modal-footer {
+    flex-shrink: 0;
+}
+
+/* RESPONSIVO */
+
+.btn-menu {
+    display: none;
+    width: 40px;
+    height: 40px;
+    background: var(--marfil);
+    border: 1px solid var(--borde);
+    color: var(--dorado-oscuro);
+    border-radius: 9px;
+    font-size: 22px;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.35);
+    z-index: 1040;
+}
+
+.overlay.activo {
+    display: block;
+}
+
+.footer {
+    text-align: center;
+    padding: 30px 10px 10px;
+    color: var(--gris);
+    font-size: 11px;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media(max-width:991px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.abierto {
+        transform: translateX(0);
+    }
+
+    .principal {
+        margin-left: 0;
+    }
+
+    .btn-menu {
+        display: block;
+    }
+
+    .contenido {
+        padding: 20px;
+    }
+}
+
+@media(max-width:576px) {
+    .contenido {
+        padding: 15px;
+    }
+
+    .encabezado {
+        padding: 25px;
+    }
+
+    .encabezado h2 {
+        font-size: 23px;
+    }
+
+    .tarjeta {
+        padding: 17px;
+    }
+
+    .indicador {
+        padding: 13px;
+    }
+
+    .indicador h3 {
+        font-size: 19px;
+    }
+
+    .barra-superior {
+        padding: 15px;
+    }
+
+    .barra-superior h5 {
+        font-size: 16px;
+    }
+
+    #correoUsuario {
+        display: none;
+    }
+
+    .form-control {
+        font-size: 16px;
+    }
+
+    .opcion-seguridad button {
+        width: 100%;
+    }
+
+    .modal-body {
+        padding: 18px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="pantallaCarga">
+    <img src="logo.png" alt="Voz Angelical">
+    <div class="spinner-border" style="color:#B48A42"></div>
+    <p>Verificando cuenta administrativa...</p>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="marca">
+        <img src="logo.png" alt="Voz Angelical">
+        <h1>VOZ ANGELICAL</h1>
+        <p>GESTIÓN MUSICAL</p>
+    </div>
+
+    <nav class="menu">
+
+        <div class="titulo-menu">MENÚ PRINCIPAL</div>
+
+        <a href="inicio.html">
+            <i class="bi bi-grid"></i> Inicio
+        </a>
+
+        <a href="agenda.html">
+            <i class="bi bi-calendar-event"></i> Agenda
+        </a>
+
+        <a href="contratos.html">
+            <i class="bi bi-file-earmark-text"></i> Contratos
+        </a>
+
+        <a href="clientes.html">
+            <i class="bi bi-people"></i> Clientes
+        </a>
+
+        <a href="servicios.html">
+            <i class="bi bi-music-note-beamed"></i> Servicios
+        </a>
+
+        <a href="estadisticas.html">
+            <i class="bi bi-bar-chart"></i> Estadísticas
+        </a>
+
+        <div class="titulo-menu mt-3">ADMINISTRACIÓN</div>
+
+        <a href="configuracion.html">
+            <i class="bi bi-gear"></i> Configuración
+        </a>
+
+        <a href="usuarios.html" class="activo">
+            <i class="bi bi-person-gear"></i> Usuarios
+        </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+
+        <button class="btn-salir" id="cerrarSesion">
+            <i class="bi bi-box-arrow-right"></i>
+            Cerrar sesión
+        </button>
+
+        <p class="text-center text-muted mt-3 mb-0">
+            Versión 1.0
+        </p>
+
+    </div>
+
+</aside>
+
+<main class="principal">
+
+    <header class="barra-superior">
+
+        <div class="d-flex align-items-center gap-3">
+
+            <button class="btn-menu" id="abrirMenu"
+                    aria-label="Abrir menú">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <div>
+                <h5>Usuarios</h5>
+                <small>Administración de cuentas y seguridad</small>
+            </div>
+
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+
+            <span id="correoUsuario"></span>
+
+            <div class="avatar">
+                <i class="bi bi-person"></i>
+            </div>
+
+        </div>
+
+    </header>
+
+    <div class="contenido">
+
+        <section class="encabezado">
+
+            <h2>Administración de usuarios</h2>
+
+            <p>
+                Gestiona tu cuenta administrativa, actualiza
+                tu información personal y protege el acceso
+                al sistema integral de Voz Angelical.
+            </p>
+
+        </section>
+
+        <div id="mensaje" class="alert d-none" role="alert"></div>
+
+        <!-- INDICADORES -->
+
+        <div class="row g-3 mb-4">
+
+            <div class="col-4">
+
+                <div class="indicador">
+
+                    <div class="icono-seccion">
+                        <i class="bi bi-people"></i>
+                    </div>
+
+                    <p>Usuarios autorizados</p>
+                    <h3>1</h3>
+
+                </div>
+
+            </div>
+
+            <div class="col-4">
+
+                <div class="indicador">
+
+                    <div class="icono-seccion">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+
+                    <p>Administradores</p>
+                    <h3>1</h3>
+
+                </div>
+
+            </div>
+
+            <div class="col-4">
+
+                <div class="indicador">
+
+                    <div class="icono-seccion">
+                        <i class="bi bi-lock"></i>
+                    </div>
+
+                    <p>Tipo de acceso</p>
+                    <h3>Privado</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- PERFIL E INFORMACION PERSONAL -->
+
+        <div class="row g-4 mb-4">
+
+            <div class="col-xl-4">
+
+                <section class="tarjeta perfil">
+
+                    <div class="foto-perfil">
+                        <i class="bi bi-person"></i>
+                    </div>
+
+                    <h3 id="nombrePerfil">Administrador</h3>
+
+                    <p class="subtitulo" id="correoPerfil"></p>
+
+                    <span class="etiqueta">
+                        <i class="bi bi-shield-check"></i>
+                        Cuenta autorizada
+                    </span>
+
+                    <hr>
+
+                    <div class="dato-perfil">
+
+                        <small>Rol de usuario</small>
+                        <strong>Administrador principal</strong>
+
+                    </div>
+
+                    <div class="dato-perfil">
+
+                        <small>Estado de la cuenta</small>
+
+                        <strong class="text-success">
+                            Sesión activa
+                        </strong>
+
+                    </div>
+
+                    <div class="dato-perfil">
+
+                        <small>Fecha de creación</small>
+                        <strong id="fechaCreacion">—</strong>
+
+                    </div>
+
+                    <div class="dato-perfil">
+
+                        <small>Último inicio de sesión</small>
+                        <strong id="ultimoAcceso">—</strong>
+
+                    </div>
+
+                    <div class="dato-perfil">
+
+                        <small>Verificación del correo</small>
+                        <strong id="correoVerificado">—</strong>
+
+                    </div>
+
+                    <div class="dato-perfil">
+
+                        <small>Identificador de usuario</small>
+                        <strong id="uidUsuario">—</strong>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+            <div class="col-xl-8">
+
+                <section class="tarjeta">
+
+                    <div class="d-flex align-items-center gap-3 mb-4">
+
+                        <div class="icono-seccion">
+                            <i class="bi bi-person-vcard"></i>
+                        </div>
+
+                        <div>
+
+                            <h3 class="titulo-seccion mb-1">
+                                Información personal
+                            </h3>
+
+                            <small class="subtitulo">
+                                Datos del administrador
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <form id="formPerfil">
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Nombre completo *
+                                </label>
+
+                                <input class="form-control"
+                                       id="nombre"
+                                       maxlength="150"
+                                       required>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Teléfono
+                                </label>
+
+                                <input class="form-control"
+                                       id="telefono"
+                                       type="tel"
+                                       inputmode="numeric"
+                                       pattern="[0-9]{10}"
+                                       maxlength="10">
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <label class="form-label">
+                                    Correo electrónico
+                                </label>
+
+                                <input class="form-control"
+                                       id="correo"
+                                       type="email"
+                                       readonly>
+
+                                <div class="form-text">
+                                    Correo asociado a Firebase Authentication.
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Cargo
+                                </label>
+
+                                <input class="form-control"
+                                       value="Administrador principal"
+                                       readonly>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Nivel de acceso
+                                </label>
+
+                                <input class="form-control"
+                                       value="Administración completa"
+                                       readonly>
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <label class="form-label">
+                                    Última actualización del perfil
+                                </label>
+
+                                <input class="form-control"
+                                       id="ultimaActualizacion"
+                                       readonly>
+
+                            </div>
+
+                        </div>
+
+                        <div class="alert alert-light border mt-4">
+
+                            <i class="bi bi-info-circle"></i>
+
+                            Los datos personales se guardan en
+                            Firestore. Las contraseñas son administradas
+                            exclusivamente por Firebase Authentication.
+
+                        </div>
+
+                        <div class="text-end mt-4">
+
+                            <button class="btn btn-dorado"
+                                    id="guardarPerfil"
+                                    type="submit"
+                                    disabled>
+
+                                <i class="bi bi-save"></i>
+                                Guardar información
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+            </div>
+
+        </div>
+
+        <!-- SEGURIDAD -->
+
+        <section class="tarjeta mb-4">
+
+            <div class="d-flex align-items-center gap-3 mb-3">
+
+                <div class="icono-seccion">
+                    <i class="bi bi-shield-lock"></i>
+                </div>
+
+                <div>
+
+                    <h3 class="titulo-seccion mb-1">
+                        Seguridad de la cuenta
+                    </h3>
+
+                    <small class="subtitulo">
+                        Protege el acceso al sistema
+                    </small>
+
+                </div>
+
+            </div>
+
+            <div class="opcion-seguridad">
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div class="icono-seccion">
+                        <i class="bi bi-key"></i>
+                    </div>
+
+                    <div>
+                        <h6>Cambiar contraseña</h6>
+                        <p>Actualiza tu contraseña de acceso.</p>
+                    </div>
+
+                </div>
+
+                <button class="btn btn-dorado"
+                        id="abrirContrasena"
+                        disabled>
+
+                    Cambiar contraseña
+
+                </button>
+
+            </div>
+
+            <div class="opcion-seguridad">
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div class="icono-seccion">
+                        <i class="bi bi-envelope-arrow-up"></i>
+                    </div>
+
+                    <div>
+                        <h6>Recuperar contraseña</h6>
+                        <p>Recibe un enlace de recuperación en tu correo.</p>
+                    </div>
+
+                </div>
+
+                <button class="btn btn-secundario"
+                        id="recuperarContrasena"
+                        disabled>
+
+                    Enviar correo
+
+                </button>
+
+            </div>
+
+            <div class="opcion-seguridad">
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div class="icono-seccion">
+                        <i class="bi bi-envelope-check"></i>
+                    </div>
+
+                    <div>
+                        <h6>Verificar correo electrónico</h6>
+                        <p>Confirma que eres propietario del correo registrado.</p>
+                    </div>
+
+                </div>
+
+                <button class="btn btn-secundario"
+                        id="verificarCorreo"
+                        disabled>
+
+                    Enviar verificación
+
+                </button>
+
+            </div>
+
+            <div class="opcion-seguridad">
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div class="icono-seccion">
+                        <i class="bi bi-arrow-clockwise"></i>
+                    </div>
+
+                    <div>
+                        <h6>Actualizar estado de la cuenta</h6>
+                        <p>Consulta nuevamente los datos de autenticación.</p>
+                    </div>
+
+                </div>
+
+                <button class="btn btn-secundario"
+                        id="actualizarCuenta"
+                        disabled>
+
+                    Actualizar
+
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- PERMISOS -->
+
+        <section class="tarjeta mb-4">
+
+            <div class="d-flex align-items-center gap-3 mb-4">
+
+                <div class="icono-seccion">
+                    <i class="bi bi-person-check"></i>
+                </div>
+
+                <div>
+
+                    <h3 class="titulo-seccion mb-1">
+                        Permisos administrativos
+                    </h3>
+
+                    <small class="subtitulo">
+                        Accesos del administrador principal
+                    </small>
+
+                </div>
+
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-md-6">
+
+                    <div class="permiso">
+                        <span>Consultar panel administrativo</span>
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                    <div class="permiso">
+                        <span>Administrar celebraciones</span>
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                    <div class="permiso">
+                        <span>Crear y modificar contratos</span>
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                    <div class="permiso">
+                        <span>Registrar pagos y penalizaciones</span>
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                    <div class="permiso">
+                        <span>Administrar clientes</span>
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="permiso">
+                        <span>Modificar paquetes musicales</span>
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                    <div class="permiso">
+                        <span>Consultar estadísticas</span>
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                    <div class="permiso">
+                        <span>Exportar reportes y respaldos</span>
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                    <div class="permiso">
+                        <span>Modificar configuración general</span>
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                    <div class="permiso">
+                        <span>Administrar su propio perfil</span>
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="alert alert-light border mt-4 mb-0">
+
+                <i class="bi bi-shield-check"></i>
+
+                Los permisos reales se controlan mediante las reglas
+                de seguridad de Firebase. Esta sección es informativa
+                y no permite otorgar permisos a otras cuentas.
+
+            </div>
+
+        </section>
+
+        <!-- CUENTA AUTORIZADA -->
+
+        <section class="tarjeta mb-4">
+
+            <h3 class="titulo-seccion">
+                Cuenta administrativa autorizada
+            </h3>
+
+            <p class="subtitulo">
+                Actualmente el sistema está configurado
+                para un único administrador.
+            </p>
+
+            <div class="table-responsive">
+
+                <table class="table mb-0">
+
+                    <thead>
+
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Correo electrónico</th>
+                            <th>Rol</th>
+                            <th>Acceso</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+
+                            <td id="tablaNombre">Administrador</td>
+
+                            <td id="tablaCorreo">—</td>
+
+                            <td>Administrador principal</td>
+
+                            <td>
+
+                                <span class="etiqueta">
+                                    Autorizado
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="alert alert-warning mt-4 mb-0">
+
+                <i class="bi bi-info-circle"></i>
+
+                Para incorporar nuevos administradores será
+                necesario actualizar las reglas de Firebase
+                y los controles de acceso de los módulos.
+
+            </div>
+
+        </section>
+
+        <footer class="footer">
+            VOZ ANGELICAL — Sistema Integral de Gestión Musical
+        </footer>
+
+    </div>
+
+</main>
+
+<!-- MODAL CAMBIAR CONTRASEÑA -->
+
+<div class="modal fade"
+     id="modalContrasena"
+     tabindex="-1"
+     aria-labelledby="tituloModal"
+     aria-hidden="true"
+     data-bs-backdrop="static">
+
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+        <form class="modal-content" id="formContrasena">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="tituloModal">
+
+                    <i class="bi bi-key"></i>
+                    Cambiar contraseña
+
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar"
+                        id="cerrarModal"></button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="alert alert-light border">
+
+                    Por seguridad, confirma tu contraseña actual
+                    antes de registrar una nueva.
+
+                </div>
+
+                <div class="alert alert-danger d-none"
+                     id="errorContrasena"
+                     role="alert"></div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Contraseña actual *
+                    </label>
+
+                    <div class="input-group">
+
+                        <input class="form-control"
+                               type="password"
+                               id="contrasenaActual"
+                               autocomplete="current-password"
+                               required>
+
+                        <button class="btn btn-secundario ver-password"
+                                type="button"
+                                data-campo="contrasenaActual"
+                                aria-label="Mostrar u ocultar contraseña">
+
+                            <i class="bi bi-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Nueva contraseña *
+                    </label>
+
+                    <div class="input-group">
+
+                        <input class="form-control"
+                               type="password"
+                               id="nuevaContrasena"
+                               autocomplete="new-password"
+                               minlength="12"
+                               required>
+
+                        <button class="btn btn-secundario ver-password"
+                                type="button"
+                                data-campo="nuevaContrasena"
+                                aria-label="Mostrar u ocultar contraseña">
+
+                            <i class="bi bi-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                    <div class="medidor mt-3">
+
+                        <div id="barraFortaleza"></div>
+
+                    </div>
+
+                    <div class="form-text" id="textoFortaleza">
+                        Utiliza al menos 12 caracteres.
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Confirmar nueva contraseña *
+                    </label>
+
+                    <div class="input-group">
+
+                        <input class="form-control"
+                               type="password"
+                               id="confirmarContrasena"
+                               autocomplete="new-password"
+                               minlength="12"
+                               required>
+
+                        <button class="btn btn-secundario ver-password"
+                                type="button"
+                                data-campo="confirmarContrasena"
+                                aria-label="Mostrar u ocultar contraseña">
+
+                            <i class="bi bi-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <p class="form-text mb-0">
+
+                    Después de cambiar tu contraseña,
+                    se cerrará la sesión de este dispositivo
+                    y deberás iniciar sesión nuevamente.
+
+                </p>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-secundario"
+                        data-bs-dismiss="modal"
+                        id="cancelarContrasena">
+
+                    Cancelar
+
+                </button>
+
+                <button type="submit"
+                        class="btn btn-dorado"
+                        id="guardarContrasena">
+
+                    <i class="bi bi-shield-check"></i>
+                    Actualizar contraseña
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script type="module">
+
+import { auth, db } from "./firebase.js";
+
+import {
+    onAuthStateChanged,
+    signOut,
+    updatePassword,
+    reauthenticateWithCredential,
+    EmailAuthProvider,
+    sendPasswordResetEmail,
+    sendEmailVerification,
+    reload
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+import {
+    doc,
+    getDocFromServer,
+    runTransaction,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const UID_ADMIN = "TsWLtI74pTcivOzAC7gtiaaOzJx1";
+
+const $ = id => document.getElementById(id);
+
+let usuarioActual = null;
+let perfilListo = false;
+let guardandoPerfil = false;
+let cambiandoContrasena = false;
+
+const modal = new bootstrap.Modal(
+    $("modalContrasena")
+);
+
+/* MENSAJES */
+
+function mostrarMensaje(texto, tipo = "success") {
+
+    $("mensaje").className = "alert alert-" + tipo;
+
+    $("mensaje").textContent = texto;
+
+    $("mensaje").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+function errorModal(texto) {
+
+    $("errorContrasena").textContent = texto;
+
+    $("errorContrasena").classList.toggle(
+        "d-none",
+        !texto
+    );
+}
+
+function traducirError(error) {
+
+    const errores = {
+
+        "auth/wrong-password":
+            "La contraseña actual es incorrecta.",
+
+        "auth/invalid-credential":
+            "Las credenciales proporcionadas son incorrectas.",
+
+        "auth/invalid-login-credentials":
+            "La contraseña actual es incorrecta.",
+
+        "auth/weak-password":
+            "La nueva contraseña no cumple los requisitos.",
+
+        "auth/too-many-requests":
+            "Demasiados intentos. Intenta nuevamente más tarde.",
+
+        "auth/network-request-failed":
+            "No hay conexión con Firebase.",
+
+        "auth/requires-recent-login":
+            "Debes cerrar sesión e iniciar nuevamente.",
+
+        "auth/user-token-expired":
+            "Tu sesión expiró. Inicia sesión nuevamente.",
+
+        "auth/operation-not-allowed":
+            "Esta operación no está habilitada en Firebase.",
+
+        "permission-denied":
+            "No tienes permisos para realizar esta operación."
+
+    };
+
+    return errores[error.code] ||
+        error.message ||
+        "Ocurrió un error inesperado.";
+}
+
+/* FORMATO DE FECHAS */
+
+function fechaBonita(valor) {
+
+    if (!valor) return "Sin registro";
+
+    const fecha = valor.toDate
+        ? valor.toDate()
+        : new Date(valor);
+
+    if (isNaN(fecha.getTime())) {
+        return "Sin registro";
+    }
+
+    return fecha.toLocaleString("es-MX", {
+
+        timeZone: "America/Mexico_City",
+
+        dateStyle: "medium",
+
+        timeStyle: "short"
+
+    });
+}
+
+/* AUTENTICACION */
+
+onAuthStateChanged(auth, async usuario => {
+
+    if (!usuario) {
+
+        location.replace("index.html");
+
+        return;
+    }
+
+    if (usuario.uid !== UID_ADMIN) {
+
+        await signOut(auth);
+
+        location.replace("index.html");
+
+        return;
+    }
+
+    usuarioActual = usuario;
+
+    mostrarDatosCuenta();
+
+    $("abrirContrasena").disabled = false;
+    $("recuperarContrasena").disabled = false;
+    $("actualizarCuenta").disabled = false;
+
+    try {
+
+        await cargarPerfil();
+
+    } catch (error) {
+
+        mostrarMensaje(
+            traducirError(error),
+            "danger"
+        );
+
+    } finally {
+
+        $("pantallaCarga").classList.add("d-none");
+    }
+});
+
+/* MOSTRAR CUENTA */
+
+function mostrarDatosCuenta() {
+
+    if (!usuarioActual) return;
+
+    const correo = usuarioActual.email || "";
+
+    $("correoUsuario").textContent = correo;
+    $("correoPerfil").textContent = correo;
+    $("correo").value = correo;
+    $("tablaCorreo").textContent = correo;
+
+    $("uidUsuario").textContent = usuarioActual.uid;
+
+    $("fechaCreacion").textContent =
+        fechaBonita(usuarioActual.metadata.creationTime);
+
+    $("ultimoAcceso").textContent =
+        fechaBonita(usuarioActual.metadata.lastSignInTime);
+
+    $("correoVerificado").textContent =
+        usuarioActual.emailVerified
+            ? "Verificado"
+            : "Pendiente de verificar";
+
+    $("correoVerificado").className =
+        usuarioActual.emailVerified
+            ? "text-success"
+            : "text-warning";
+
+    $("verificarCorreo").disabled =
+        usuarioActual.emailVerified;
+
+    $("verificarCorreo").textContent =
+        usuarioActual.emailVerified
+            ? "Correo verificado"
+            : "Enviar verificación";
+}
+
+/* CARGAR PERFIL */
+
+async function cargarPerfil() {
+
+    perfilListo = false;
+
+    $("guardarPerfil").disabled = true;
+
+    const referencia = doc(
+        db,
+        "usuarios",
+        usuarioActual.uid
+    );
+
+    const snapshot = await getDocFromServer(
+        referencia
+    );
+
+    const datos = snapshot.exists()
+        ? snapshot.data()
+        : {};
+
+    const nombre =
+        datos.nombre ||
+        usuarioActual.displayName ||
+        "Administrador";
+
+    $("nombre").value = nombre;
+
+    $("telefono").value = datos.telefono || "";
+
+    $("nombrePerfil").textContent = nombre;
+
+    $("tablaNombre").textContent = nombre;
+
+    $("ultimaActualizacion").value =
+        fechaBonita(datos.actualizadoEn);
+
+    perfilListo = true;
+
+    $("guardarPerfil").disabled = false;
+}
+
+/* GUARDAR PERFIL */
+
+$("formPerfil").onsubmit = async evento => {
+
+    evento.preventDefault();
+
+    if (!perfilListo ||
+        !usuarioActual ||
+        guardandoPerfil) return;
+
+    const nombre = $("nombre").value.trim();
+
+    const telefono = $("telefono").value.trim();
+
+    if (!nombre) {
+
+        mostrarMensaje(
+            "Escribe tu nombre completo.",
+            "warning"
+        );
+
+        return;
+    }
+
+    if (telefono && !/^\d{10}$/.test(telefono)) {
+
+        mostrarMensaje(
+            "El teléfono debe contener 10 dígitos.",
+            "warning"
+        );
+
+        return;
+    }
+
+    guardandoPerfil = true;
+
+    const boton = $("guardarPerfil");
+
+    boton.disabled = true;
+
+    boton.textContent = "Guardando...";
+
+    $("nombre").disabled = true;
+    $("telefono").disabled = true;
+
+    try {
+
+        const referencia = doc(
+            db,
+            "usuarios",
+            usuarioActual.uid
+        );
+
+        await runTransaction(db, async tx => {
+
+            const actual = await tx.get(referencia);
+
+            tx.set(referencia, {
+
+                uid: usuarioActual.uid,
+
+                nombre,
+
+                telefono,
+
+                correo: usuarioActual.email || "",
+
+                rol: "administrador",
+
+                activo: true,
+
+                creadoEn:
+                    actual.data()?.creadoEn ||
+                    serverTimestamp(),
+
+                actualizadoEn: serverTimestamp()
+
+            }, { merge: true });
+        });
+
+        await cargarPerfil();
+
+        mostrarMensaje(
+            "Tu información se guardó correctamente."
+        );
+
+    } catch (error) {
+
+        mostrarMensaje(
+            traducirError(error),
+            "danger"
+        );
+
+    } finally {
+
+        guardandoPerfil = false;
+
+        $("nombre").disabled = false;
+        $("telefono").disabled = false;
+
+        boton.disabled = !perfilListo;
+
+        boton.innerHTML =
+            '<i class="bi bi-save"></i> Guardar información';
+    }
+};
+
+$("telefono").oninput = () => {
+
+    $("telefono").value =
+        $("telefono").value.replace(/\D/g, "");
+};
+
+/* MENU RESPONSIVO */
+
+$("abrirMenu").onclick = () => {
+
+    $("sidebar").classList.toggle("abierto");
+
+    $("overlay").classList.toggle("activo");
+};
+
+$("overlay").onclick = () => {
+
+    $("sidebar").classList.remove("abierto");
+
+    $("overlay").classList.remove("activo");
+};
+
+/* ABRIR MODAL */
+
+$("abrirContrasena").onclick = () => {
+
+    $("formContrasena").reset();
+
+    errorModal("");
+
+    $("barraFortaleza").style.width = "0";
+
+    $("textoFortaleza").textContent =
+        "Utiliza al menos 12 caracteres.";
+
+    document.querySelectorAll(".ver-password")
+        .forEach(boton => {
+
+            $(boton.dataset.campo).type = "password";
+
+            boton.innerHTML =
+                '<i class="bi bi-eye"></i>';
+        });
+
+    modal.show();
+};
+
+/* LIMPIAR CONTRASEÑAS AL CERRAR */
+
+$("modalContrasena").addEventListener(
+    "hidden.bs.modal",
+    () => {
+
+        $("formContrasena").reset();
+
+        errorModal("");
+    }
+);
+
+$("modalContrasena").addEventListener(
+    "hide.bs.modal",
+    evento => {
+
+        if (cambiandoContrasena) {
+
+            evento.preventDefault();
+        }
+    }
+);
+
+/* MOSTRAR CONTRASEÑAS */
+
+document.querySelectorAll(".ver-password")
+    .forEach(boton => {
+
+        boton.onclick = () => {
+
+            const campo = $(boton.dataset.campo);
+
+            const mostrar = campo.type === "password";
+
+            campo.type = mostrar
+                ? "text"
+                : "password";
+
+            boton.innerHTML = mostrar
+                ? '<i class="bi bi-eye-slash"></i>'
+                : '<i class="bi bi-eye"></i>';
+        };
+    });
+
+/* MEDIDOR DE CONTRASEÑA */
+
+$("nuevaContrasena").oninput = () => {
+
+    const clave = $("nuevaContrasena").value;
+
+    let puntos = 0;
+
+    if (clave.length >= 12) puntos++;
+    if (clave.length >= 16) puntos++;
+    if (/[A-Z]/.test(clave)) puntos++;
+    if (/[a-z]/.test(clave)) puntos++;
+    if (/[0-9]/.test(clave)) puntos++;
+    if (/[^A-Za-z0-9]/.test(clave)) puntos++;
+
+    const barra = $("barraFortaleza");
+
+    barra.style.width = (puntos / 6 * 100) + "%";
+
+    if (clave.length < 12) {
+
+        barra.style.background = "#A94442";
+
+        $("textoFortaleza").textContent =
+            "Faltan caracteres: mínimo 12.";
+
+    } else if (puntos <= 3) {
+
+        barra.style.background = "#D8A03B";
+
+        $("textoFortaleza").textContent =
+            "Considera utilizar una contraseña más variada.";
+
+    } else {
+
+        barra.style.background = "#287A41";
+
+        $("textoFortaleza").textContent =
+            "Buena longitud y variedad de caracteres.";
+    }
+};
+
+/* CAMBIAR CONTRASEÑA */
+
+$("formContrasena").onsubmit = async evento => {
+
+    evento.preventDefault();
+
+    if (!usuarioActual ||
+        cambiandoContrasena) return;
+
+    errorModal("");
+
+    const actual = $("contrasenaActual").value;
+
+    const nueva = $("nuevaContrasena").value;
+
+    const confirmar =
+        $("confirmarContrasena").value;
+
+    if (nueva.length < 12) {
+
+        errorModal(
+            "La contraseña debe tener al menos 12 caracteres."
+        );
+
+        return;
+    }
+
+    if (nueva !== confirmar) {
+
+        errorModal(
+            "Las contraseñas nuevas no coinciden."
+        );
+
+        return;
+    }
+
+    if (actual === nueva) {
+
+        errorModal(
+            "La nueva contraseña debe ser diferente."
+        );
+
+        return;
+    }
+
+    cambiandoContrasena = true;
+
+    const boton = $("guardarContrasena");
+
+    boton.disabled = true;
+
+    boton.textContent = "Actualizando...";
+
+    $("cancelarContrasena").disabled = true;
+    $("cerrarModal").disabled = true;
+
+    const camposPassword = [
+        "contrasenaActual",
+        "nuevaContrasena",
+        "confirmarContrasena"
+    ];
+
+    camposPassword.forEach(id => $(id).disabled = true);
+
+    let contrasenaActualizada = false;
+
+    try {
+
+        const credencial =
+            EmailAuthProvider.credential(
+                usuarioActual.email,
+                actual
+            );
+
+        await reauthenticateWithCredential(
+            usuarioActual,
+            credencial
+        );
+
+        await updatePassword(
+            usuarioActual,
+            nueva
+        );
+
+        contrasenaActualizada = true;
+
+        $("formContrasena").reset();
+
+        alert(
+            "Contraseña actualizada correctamente. " +
+            "Inicia sesión con tu nueva contraseña."
+        );
+
+        await signOut(auth);
+
+        location.replace("index.html");
+
+    } catch (error) {
+
+        if (contrasenaActualizada) {
+
+            errorModal(
+                "La contraseña cambió correctamente, " +
+                "pero no se pudo cerrar la sesión. " +
+                "Cierra sesión manualmente."
+            );
+
+        } else {
+
+            errorModal(traducirError(error));
+        }
+
+    } finally {
+
+        cambiandoContrasena = false;
+
+        boton.disabled = false;
+
+        $("cancelarContrasena").disabled = false;
+        $("cerrarModal").disabled = false;
+
+        camposPassword.forEach(id => $(id).disabled = false);
+
+        boton.innerHTML =
+            '<i class="bi bi-shield-check"></i> Actualizar contraseña';
+    }
+};
+
+/* RECUPERAR CONTRASEÑA */
+
+$("recuperarContrasena").onclick = async () => {
+
+    if (!usuarioActual?.email) return;
+
+    if (!confirm(
+        "¿Deseas enviar un enlace de recuperación a " +
+        usuarioActual.email + "?"
+    )) return;
+
+    const boton = $("recuperarContrasena");
+
+    boton.disabled = true;
+
+    boton.textContent = "Enviando...";
+
+    try {
+
+        auth.languageCode = "es";
+
+        await sendPasswordResetEmail(
+            auth,
+            usuarioActual.email
+        );
+
+        mostrarMensaje(
+            "Solicitud de recuperación enviada. " +
+            "Revisa tu correo y la carpeta de spam."
+        );
+
+    } catch (error) {
+
+        mostrarMensaje(
+            traducirError(error),
+            "danger"
+        );
+
+    } finally {
+
+        boton.disabled = false;
+
+        boton.textContent = "Enviar correo";
+    }
+};
+
+/* VERIFICAR CORREO */
+
+$("verificarCorreo").onclick = async () => {
+
+    if (!usuarioActual ||
+        usuarioActual.emailVerified) return;
+
+    const boton = $("verificarCorreo");
+
+    boton.disabled = true;
+
+    boton.textContent = "Enviando...";
+
+    try {
+
+        auth.languageCode = "es";
+
+        await sendEmailVerification(
+            usuarioActual
+        );
+
+        mostrarMensaje(
+            "Correo de verificación solicitado. " +
+            "Abre el enlace recibido y después pulsa Actualizar."
+        );
+
+    } catch (error) {
+
+        mostrarMensaje(
+            traducirError(error),
+            "danger"
+        );
+
+    } finally {
+
+        mostrarDatosCuenta();
+    }
+};
+
+/* ACTUALIZAR CUENTA */
+
+$("actualizarCuenta").onclick = async () => {
+
+    if (!usuarioActual) return;
+
+    const boton = $("actualizarCuenta");
+
+    boton.disabled = true;
+
+    boton.textContent = "Actualizando...";
+
+    try {
+
+        await reload(usuarioActual);
+
+        mostrarDatosCuenta();
+
+        mostrarMensaje(
+            "Información de la cuenta actualizada."
+        );
+
+    } catch (error) {
+
+        mostrarMensaje(
+            traducirError(error),
+            "danger"
+        );
+
+    } finally {
+
+        boton.disabled = false;
+
+        boton.textContent = "Actualizar";
+    }
+};
+
+/* CERRAR SESION */
+
+$("cerrarSesion").onclick = async () => {
+
+    if (guardandoPerfil ||
+        cambiandoContrasena) return;
+
+    if (!confirm("¿Deseas cerrar sesión?")) return;
+
+    try {
+
+        await signOut(auth);
+
+        location.replace("index.html");
+
+    } catch (error) {
+
+        mostrarMensaje(
+            traducirError(error),
+            "danger"
+        );
+    }
+};
+
+</script>
+
+</body>
+</html>

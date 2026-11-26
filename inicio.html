@@ -1,0 +1,2299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inicio | Voz Angelical</title>
+
+    <link rel="icon" href="logo.png">
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- ICONOS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- TIPOGRAFÍAS -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root {
+            --dorado: #B48A42;
+            --dorado-claro: #DCC18A;
+            --dorado-oscuro: #8A632B;
+            --marfil: #F5EFE4;
+            --blanco: #FFFFFF;
+            --cafe: #30271D;
+            --gris: #796C59;
+            --borde: #E6D8C1;
+            --sidebar: 270px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--marfil);
+            font-family: 'Poppins', sans-serif;
+            color: var(--cafe);
+        }
+
+        body.bloqueado {
+            overflow: hidden;
+        }
+
+        /* PANTALLA DE CARGA */
+
+        #pantallaCarga {
+            position: fixed;
+            inset: 0;
+            background: var(--marfil);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        #pantallaCarga img {
+            width: 140px;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+        }
+
+        #pantallaCarga h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+        }
+
+        /* MENÚ LATERAL */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar);
+            height: 100dvh;
+            background: var(--blanco);
+            border-right: 1px solid var(--borde);
+            display: flex;
+            flex-direction: column;
+            z-index: 1050;
+            transition: transform .3s ease;
+        }
+
+        .marca {
+            text-align: center;
+            padding: 25px 15px 20px;
+            border-bottom: 1px solid var(--borde);
+        }
+
+        .marca img {
+            width: 105px;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+        }
+
+        .marca h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dorado-oscuro);
+            margin-top: 12px;
+            letter-spacing: 1px;
+        }
+
+        .marca p {
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--gris);
+            margin-bottom: 0;
+        }
+
+        .menu {
+            padding: 20px 15px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .titulo-menu {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: var(--gris);
+            padding: 10px 12px;
+            font-weight: 600;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            text-decoration: none;
+            color: var(--cafe);
+            font-size: 13px;
+            padding: 13px 15px;
+            margin-bottom: 5px;
+            border-radius: 10px;
+            transition: .25s;
+        }
+
+        .menu a i {
+            font-size: 18px;
+            color: var(--dorado-oscuro);
+        }
+
+        .menu a:hover {
+            background: var(--marfil);
+            transform: translateX(3px);
+        }
+
+        .menu a.activo {
+            background: linear-gradient(
+                135deg,
+                #8A632B,
+                #B48A42
+            );
+            color: white;
+            box-shadow: 0 5px 15px rgba(138,99,43,.18);
+        }
+
+        .menu a.activo i {
+            color: white;
+        }
+
+        .sidebar-footer {
+            padding: 18px;
+            border-top: 1px solid var(--borde);
+        }
+
+        .btn-salir {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E7CCCC;
+            background: #FFF6F6;
+            color: #A94442;
+            border-radius: 10px;
+            font-size: 13px;
+            transition: .25s;
+        }
+
+        .btn-salir:hover {
+            background: #A94442;
+            color: white;
+        }
+
+        .version {
+            font-size: 10px;
+            text-align: center;
+            color: var(--gris);
+            margin-top: 12px;
+        }
+
+        /* CONTENIDO PRINCIPAL */
+
+        .principal {
+            margin-left: var(--sidebar);
+            min-height: 100vh;
+        }
+
+        .barra-superior {
+            min-height: 80px;
+            background: white;
+            border-bottom: 1px solid var(--borde);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            gap: 15px;
+        }
+
+        .barra-superior h5 {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .barra-superior small {
+            color: var(--gris);
+            font-size: 11px;
+        }
+
+        .usuario {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--marfil);
+            color: var(--dorado-oscuro);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 23px;
+            flex-shrink: 0;
+        }
+
+        .usuario strong {
+            display: block;
+            font-size: 12px;
+        }
+
+        .usuario small {
+            display: block;
+            font-size: 10px;
+        }
+
+        .contenido {
+            padding: 30px;
+            animation: aparecer .7s ease;
+        }
+
+        /* BIENVENIDA */
+
+        .bienvenida {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: linear-gradient(
+                120deg,
+                #8A632B,
+                #B48A42,
+                #C6A46A
+            );
+            padding: 35px;
+            color: white;
+            margin-bottom: 28px;
+            box-shadow: 0 10px 25px rgba(138,99,43,.15);
+        }
+
+        .bienvenida::after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 50%;
+            right: -90px;
+            top: -110px;
+            pointer-events: none;
+        }
+
+        .bienvenida h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .bienvenida p {
+            font-size: 13px;
+            line-height: 1.8;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+
+        .fecha-actual {
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.25);
+            padding: 10px 15px;
+            border-radius: 9px;
+            font-size: 12px;
+        }
+
+        /* INDICADORES */
+
+        .indicador {
+            background: white;
+            border: 1px solid var(--borde);
+            border-radius: 16px;
+            padding: 22px;
+            height: 100%;
+            box-shadow: 0 5px 15px rgba(95,67,25,.04);
+            transition: .3s;
+        }
+
+        .indicador:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(95,67,25,.09);
+        }
+
+        .indicador-icono {
+            width: 48px;
+            height: 48px;
+            background: var(--marfil);
+            color: var(--dorado-oscuro);
+            border-radius: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 23px;
+            margin-bottom: 15px;
+        }
+
+        .indicador p {
+            font-size: 12px;
+            color: var(--gris);
+            margin-bottom: 8px;
+        }
+
+        .indicador h3 {
+            color: var(--dorado-oscuro);
+            font-size: 27px;
+            font-weight: 600;
+            overflow-wrap: anywhere;
+            margin-bottom: 8px;
+        }
+
+        .indicador small {
+            color: var(--gris);
+            font-size: 10px;
+        }
+
+        /* TARJETAS */
+
+        .tarjeta {
+            background: white;
+            border: 1px solid var(--borde);
+            border-radius: 17px;
+            padding: 25px;
+            height: 100%;
+            box-shadow: 0 5px 15px rgba(95,67,25,.04);
+        }
+
+        .titulo-seccion {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--dorado-oscuro);
+            margin: 0;
+        }
+
+        .subtitulo-seccion {
+            color: var(--gris);
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        /* ACCESOS RÁPIDOS */
+
+        .acceso-rapido {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 15px;
+            background: #FCFAF6;
+            border: 1px solid var(--borde);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--cafe);
+            margin-bottom: 12px;
+            transition: .25s;
+        }
+
+        .acceso-rapido:hover {
+            background: var(--marfil);
+            border-color: var(--dorado);
+            color: var(--dorado-oscuro);
+            transform: translateX(3px);
+        }
+
+        .acceso-icono {
+            width: 40px;
+            height: 40px;
+            background: var(--marfil);
+            color: var(--dorado-oscuro);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+            flex-shrink: 0;
+        }
+
+        .acceso-rapido strong {
+            display: block;
+            font-size: 12px;
+        }
+
+        .acceso-rapido small {
+            display: block;
+            font-size: 10px;
+            color: var(--gris);
+        }
+
+        /* GRÁFICA */
+
+        .contenedor-grafica {
+            height: 290px;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        /* TABLAS */
+
+        .table {
+            font-size: 12px;
+            vertical-align: middle;
+            margin-bottom: 0;
+        }
+
+        .table thead th {
+            background: #F9F5ED;
+            color: var(--dorado-oscuro);
+            font-size: 11px;
+            padding: 15px;
+            white-space: nowrap;
+            border-bottom: 1px solid var(--borde);
+        }
+
+        .table tbody td {
+            padding: 15px;
+            color: var(--cafe);
+            border-color: #F0EBE2;
+        }
+
+        .estado {
+            display: inline-block;
+            border-radius: 30px;
+            padding: 6px 12px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .estado-pendiente {
+            background: #FFF2D5;
+            color: #916A13;
+        }
+
+        .estado-pagado {
+            background: #E5F4E9;
+            color: #287A41;
+        }
+
+        .estado-cancelado {
+            background: #FCE5E5;
+            color: #A94442;
+        }
+
+        .estado-neutro {
+            background: #EEEEEE;
+            color: #555555;
+        }
+
+        .vacio {
+            text-align: center;
+            padding: 45px 15px;
+            color: var(--gris);
+        }
+
+        .vacio i {
+            font-size: 42px;
+            color: var(--dorado-claro);
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .vacio p {
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .vacio small {
+            font-size: 11px;
+        }
+
+        /* BOTONES */
+
+        .btn-dorado {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--dorado-oscuro);
+            border: none;
+            color: white;
+            border-radius: 9px;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 11px;
+            transition: .25s;
+        }
+
+        .btn-dorado:hover {
+            background: var(--dorado);
+            color: white;
+        }
+
+        /* PAQUETES */
+
+        .paquete {
+            background: #FCFAF6;
+            border: 1px solid var(--dorado-claro);
+            border-radius: 13px;
+            padding: 23px;
+            text-align: center;
+            height: 100%;
+        }
+
+        .paquete i {
+            font-size: 28px;
+            color: var(--dorado);
+        }
+
+        .paquete h5 {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+            font-weight: 700;
+            margin: 15px 0 5px;
+        }
+
+        .paquete p {
+            color: var(--gris);
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        .paquete h3 {
+            color: var(--dorado-oscuro);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+
+        /* PIE DE PÁGINA */
+
+        .footer {
+            text-align: center;
+            padding: 25px 10px 10px;
+            color: var(--gris);
+            font-size: 11px;
+        }
+
+        .btn-menu {
+            display: none;
+            background: var(--marfil);
+            border: 1px solid var(--borde);
+            color: var(--dorado-oscuro);
+            width: 40px;
+            height: 40px;
+            border-radius: 9px;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.35);
+            z-index: 1040;
+        }
+
+        .overlay.activo {
+            display: block;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 991px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.abierto {
+                transform: translateX(0);
+            }
+
+            .principal {
+                margin-left: 0;
+            }
+
+            .btn-menu {
+                display: block;
+            }
+
+            .contenido {
+                padding: 20px;
+            }
+
+            .barra-superior {
+                padding: 15px 20px;
+            }
+
+        }
+
+        @media (max-width: 576px) {
+
+            .contenido {
+                padding: 15px;
+            }
+
+            .bienvenida {
+                padding: 25px;
+            }
+
+            .bienvenida h2 {
+                font-size: 23px;
+            }
+
+            .barra-superior h5 {
+                font-size: 15px;
+            }
+
+            .datos-usuario {
+                display: none;
+            }
+
+            .indicador {
+                padding: 17px;
+            }
+
+            .indicador h3 {
+                font-size: 21px;
+            }
+
+            .tarjeta {
+                padding: 18px;
+            }
+
+            .titulo-seccion {
+                font-size: 15px;
+            }
+
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body class="bloqueado">
+
+    <!-- PANTALLA DE CARGA -->
+
+    <div id="pantallaCarga">
+
+        <img src="logo.png" alt="Voz Angelical">
+
+        <div class="spinner-border"
+             style="color:#B48A42;"
+             role="status">
+        </div>
+
+        <h4>Voz Angelical</h4>
+
+        <small id="mensajeCarga">
+            Verificando acceso...
+        </small>
+
+        <a href="index.html"
+           id="volverLogin"
+           class="btn-dorado d-none">
+            Volver al inicio de sesión
+        </a>
+
+    </div>
+
+    <div id="aplicacion" hidden>
+
+        <div class="overlay" id="overlay"></div>
+
+        <!-- MENÚ LATERAL -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="marca">
+
+                <img src="logo.png" alt="Logo Voz Angelical">
+
+                <h1>VOZ ANGELICAL</h1>
+
+                <p>GESTIÓN MUSICAL</p>
+
+            </div>
+
+            <nav class="menu">
+
+                <div class="titulo-menu">
+                    MENÚ PRINCIPAL
+                </div>
+
+                <a href="inicio.html" class="activo">
+                    <i class="bi bi-grid-1x2"></i>
+                    Inicio
+                </a>
+
+                <a href="agenda.html">
+                    <i class="bi bi-calendar3"></i>
+                    Agenda
+                </a>
+
+                <a href="contratos.html">
+                    <i class="bi bi-file-earmark-text"></i>
+                    Contratos
+                </a>
+
+                <a href="clientes.html">
+                    <i class="bi bi-people"></i>
+                    Clientes
+                </a>
+
+                <a href="servicios.html">
+                    <i class="bi bi-music-note-beamed"></i>
+                    Servicios
+                </a>
+
+                <a href="estadisticas.html">
+                    <i class="bi bi-bar-chart-line"></i>
+                    Estadísticas
+                </a>
+
+                <div class="titulo-menu mt-3">
+                    ADMINISTRACIÓN
+                </div>
+
+                <a href="configuracion.html">
+                    <i class="bi bi-gear"></i>
+                    Configuración
+                </a>
+
+                <a href="usuarios.html">
+                    <i class="bi bi-shield-lock"></i>
+                    Usuarios
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <button class="btn-salir" id="cerrarSesion">
+                    <i class="bi bi-box-arrow-right me-2"></i>
+                    Cerrar sesión
+                </button>
+
+                <div class="version">
+                    Voz Angelical | Versión 1.0
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+
+        <main class="principal">
+
+            <!-- BARRA SUPERIOR -->
+
+            <header class="barra-superior">
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <button class="btn-menu"
+                            id="abrirMenu"
+                            aria-label="Abrir menú"
+                            aria-expanded="false">
+
+                        <i class="bi bi-list"></i>
+
+                    </button>
+
+                    <div>
+
+                        <h5>Panel administrativo</h5>
+
+                        <small>
+                            Sistema Integral de Gestión Musical
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="usuario">
+
+                    <div class="avatar">
+                        <i class="bi bi-person"></i>
+                    </div>
+
+                    <div class="datos-usuario">
+
+                        <strong>Administrador</strong>
+
+                        <small id="correoUsuario">
+                            Cargando...
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+            <div class="contenido">
+
+                <!-- BIENVENIDA -->
+
+                <section class="bienvenida">
+
+                    <h2 id="saludo">
+                        Bienvenido a Voz Angelical
+                    </h2>
+
+                    <p>
+                        Administra tus celebraciones, clientes,
+                        contratos y servicios musicales desde
+                        una misma plataforma.
+                    </p>
+
+                    <div class="fecha-actual">
+
+                        <i class="bi bi-calendar3"></i>
+
+                        <span id="fechaActual"></span>
+
+                        <i class="bi bi-clock"></i>
+
+                        <span id="horaActual"></span>
+
+                    </div>
+
+                </section>
+
+                <!-- ESTADO DE CONEXIÓN -->
+
+                <div id="avisoDatos"
+                     class="alert alert-warning d-none"
+                     role="alert">
+                </div>
+
+                <!-- INDICADORES -->
+
+                <div class="row g-3 mb-4">
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <div class="indicador-icono">
+                                <i class="bi bi-calendar-event"></i>
+                            </div>
+
+                            <p>Eventos del mes</p>
+
+                            <h3 id="totalEventos">—</h3>
+
+                            <small>Celebraciones registradas</small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <div class="indicador-icono">
+                                <i class="bi bi-cash-stack"></i>
+                            </div>
+
+                            <p>Ingresos del mes</p>
+
+                            <h3 id="totalIngresos">—</h3>
+
+                            <small>Pagos recibidos este mes</small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <div class="indicador-icono">
+                                <i class="bi bi-people"></i>
+                            </div>
+
+                            <p>Clientes registrados</p>
+
+                            <h3 id="totalClientes">—</h3>
+
+                            <small>Total de clientes</small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <div class="indicador-icono">
+                                <i class="bi bi-file-earmark-text"></i>
+                            </div>
+
+                            <p>Contratos generados</p>
+
+                            <h3 id="totalContratos">—</h3>
+
+                            <small>Historial de contratos</small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <div class="indicador-icono">
+                                <i class="bi bi-wallet2"></i>
+                            </div>
+
+                            <p>Pagos pendientes</p>
+
+                            <h3 id="totalPendientes">—</h3>
+
+                            <small>Importe pendiente de liquidar</small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <div class="indicador-icono">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+
+                            <p>Próximos eventos</p>
+
+                            <h3 id="totalProximos">—</h3>
+
+                            <small>Celebraciones programadas</small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- GRÁFICA Y ACCESOS RÁPIDOS -->
+
+                <div class="row g-4 mb-4">
+
+                    <div class="col-xl-8">
+
+                        <section class="tarjeta">
+
+                            <h3 class="titulo-seccion">
+                                Resumen de ingresos
+                            </h3>
+
+                            <p class="subtitulo-seccion">
+                                Pagos recibidos durante los últimos seis meses
+                            </p>
+
+                            <div class="contenedor-grafica">
+
+                                <canvas id="graficaIngresos"></canvas>
+
+                            </div>
+
+                            <small id="estadoGrafica"
+                                   class="text-muted">
+                                Cargando información...
+                            </small>
+
+                        </section>
+
+                    </div>
+
+                    <div class="col-xl-4">
+
+                        <section class="tarjeta">
+
+                            <h3 class="titulo-seccion mb-4">
+                                Accesos rápidos
+                            </h3>
+
+                            <a href="contratos.html?accion=nuevo"
+                               class="acceso-rapido">
+
+                                <div class="acceso-icono">
+                                    <i class="bi bi-file-earmark-plus"></i>
+                                </div>
+
+                                <div class="flex-grow-1">
+
+                                    <strong>Nuevo contrato</strong>
+
+                                    <small>Generar documento PDF</small>
+
+                                </div>
+
+                                <i class="bi bi-chevron-right"></i>
+
+                            </a>
+
+                            <a href="agenda.html?accion=nuevo"
+                               class="acceso-rapido">
+
+                                <div class="acceso-icono">
+                                    <i class="bi bi-calendar-plus"></i>
+                                </div>
+
+                                <div class="flex-grow-1">
+
+                                    <strong>Agendar celebración</strong>
+
+                                    <small>Registrar nuevo evento</small>
+
+                                </div>
+
+                                <i class="bi bi-chevron-right"></i>
+
+                            </a>
+
+                            <a href="clientes.html?accion=nuevo"
+                               class="acceso-rapido">
+
+                                <div class="acceso-icono">
+                                    <i class="bi bi-person-plus"></i>
+                                </div>
+
+                                <div class="flex-grow-1">
+
+                                    <strong>Nuevo cliente</strong>
+
+                                    <small>Registrar información</small>
+
+                                </div>
+
+                                <i class="bi bi-chevron-right"></i>
+
+                            </a>
+
+                            <a href="servicios.html"
+                               class="acceso-rapido">
+
+                                <div class="acceso-icono">
+                                    <i class="bi bi-music-note-list"></i>
+                                </div>
+
+                                <div class="flex-grow-1">
+
+                                    <strong>Administrar paquetes</strong>
+
+                                    <small>Servicios y precios</small>
+
+                                </div>
+
+                                <i class="bi bi-chevron-right"></i>
+
+                            </a>
+
+                        </section>
+
+                    </div>
+
+                </div>
+
+                <!-- PRÓXIMAS CELEBRACIONES -->
+
+                <section class="tarjeta mb-4">
+
+                    <div class="d-flex justify-content-between
+                                align-items-center flex-wrap gap-3 mb-4">
+
+                        <div>
+
+                            <h3 class="titulo-seccion">
+                                Próximas celebraciones
+                            </h3>
+
+                            <p class="subtitulo-seccion mb-0">
+                                Consulta tus siguientes compromisos musicales
+                            </p>
+
+                        </div>
+
+                        <a href="agenda.html" class="btn-dorado">
+
+                            <i class="bi bi-calendar3"></i>
+
+                            Ver agenda
+
+                        </a>
+
+                    </div>
+
+                    <div id="eventosVacios" class="vacio">
+
+                        <i class="bi bi-calendar2"></i>
+
+                        <p id="mensajeEventos">
+                            Cargando celebraciones...
+                        </p>
+
+                    </div>
+
+                    <div class="table-responsive d-none"
+                         id="contenedorTabla">
+
+                        <table class="table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Celebración</th>
+                                    <th>Cliente</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Lugar</th>
+                                    <th>Paquete</th>
+                                    <th>Importe</th>
+                                    <th>Pago</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="tablaEventos"></tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+                <!-- PAQUETES MUSICALES -->
+
+                <section class="tarjeta mb-4">
+
+                    <div class="d-flex justify-content-between
+                                align-items-center flex-wrap gap-3 mb-4">
+
+                        <div>
+
+                            <h3 class="titulo-seccion">
+                                Nuestros paquetes musicales
+                            </h3>
+
+                            <p class="subtitulo-seccion mb-0">
+                                Catálogo de servicios de Voz Angelical
+                            </p>
+
+                        </div>
+
+                        <a href="servicios.html" class="btn-dorado">
+
+                            <i class="bi bi-pencil-square"></i>
+
+                            Administrar
+
+                        </a>
+
+                    </div>
+
+                    <div class="row g-3" id="listaPaquetes"></div>
+
+                    <p class="text-center mt-4 mb-0"
+                       style="font-size:11px;color:#796C59;">
+
+                        El precio puede variar según la zona del evento.
+
+                    </p>
+
+                </section>
+
+                <!-- PIE DE PÁGINA -->
+
+                <footer class="footer">
+
+                    &copy; <span id="anio"></span> Voz Angelical.
+
+                    Todos los derechos reservados.
+
+                    <br>
+
+                    Sistema Integral de Gestión Musical | V.1.0
+
+                </footer>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- LIBRERÍAS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+    <!-- FUNCIONES VISUALES -->
+
+    <script>
+
+        const sidebar = document.getElementById("sidebar");
+
+        const overlay = document.getElementById("overlay");
+
+        const abrirMenu = document.getElementById("abrirMenu");
+
+        function cerrarMenu() {
+
+            sidebar.classList.remove("abierto");
+
+            overlay.classList.remove("activo");
+
+            abrirMenu.setAttribute("aria-expanded", "false");
+
+        }
+
+        abrirMenu.addEventListener("click", () => {
+
+            sidebar.classList.add("abierto");
+
+            overlay.classList.add("activo");
+
+            abrirMenu.setAttribute("aria-expanded", "true");
+
+        });
+
+        overlay.addEventListener("click", cerrarMenu);
+
+        document.addEventListener("keydown", (e) => {
+
+            if (e.key === "Escape") {
+
+                cerrarMenu();
+
+            }
+
+        });
+
+        function actualizarReloj() {
+
+            const ahora = new Date();
+
+            const fecha = ahora.toLocaleDateString("es-MX", {
+
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+
+            });
+
+            document.getElementById("fechaActual").textContent =
+                fecha.charAt(0).toUpperCase() + fecha.slice(1);
+
+            document.getElementById("horaActual").textContent =
+                ahora.toLocaleTimeString("es-MX");
+
+            const hora = ahora.getHours();
+
+            let saludo = "Buenas noches";
+
+            if (hora >= 5 && hora < 12) {
+
+                saludo = "Buenos días";
+
+            } else if (hora >= 12 && hora < 19) {
+
+                saludo = "Buenas tardes";
+
+            }
+
+            document.getElementById("saludo").textContent =
+                saludo + ", bienvenido a Voz Angelical";
+
+        }
+
+        actualizarReloj();
+
+        setInterval(actualizarReloj, 1000);
+
+        document.getElementById("anio").textContent =
+            new Date().getFullYear();
+
+    </script>
+
+    <!-- CONEXIÓN CON FIREBASE -->
+
+    <script type="module">
+
+        import {
+
+            onAuthStateChanged,
+            signOut
+
+        } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+        import {
+
+            collection,
+            onSnapshot
+
+        } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+        // ADMINISTRADOR AUTORIZADO
+
+        const UID_ADMIN =
+            "TsWLtI74pTcivOzAC7gtiaaOzJx1";
+
+        let auth;
+
+        let db;
+
+        let grafica;
+
+        let suscripciones = [];
+
+        let eventos = [];
+
+        let clientes = [];
+
+        let contratos = [];
+
+        let servicios = [];
+
+        const cargado = {
+
+            eventos: false,
+            clientes: false,
+            contratos: false,
+            servicios: false
+
+        };
+
+        const paquetesBase = [
+
+            {
+                numero: 1,
+                nombre: "Solista",
+                voces: 1,
+                instrumento: "Piano",
+                audio: true,
+                precio: 500
+            },
+
+            {
+                numero: 2,
+                nombre: "Dúo",
+                voces: 2,
+                instrumento: "Piano",
+                audio: true,
+                precio: 800
+            },
+
+            {
+                numero: 3,
+                nombre: "Trío",
+                voces: 3,
+                instrumento: "Piano",
+                audio: true,
+                precio: 1200
+            }
+
+        ];
+
+        // FORMATO DE MONEDA
+
+        function moneda(valor) {
+
+            return Number(valor || 0).toLocaleString("es-MX", {
+
+                style: "currency",
+                currency: "MXN"
+
+            });
+
+        }
+
+        function texto(id, valor) {
+
+            document.getElementById(id).textContent = valor;
+
+        }
+
+        function normalizar(valor) {
+
+            return String(valor || "").trim().toLowerCase();
+
+        }
+
+        function importe(evento) {
+
+            const valor = Number(evento.precio);
+
+            return Number.isFinite(valor) && valor >= 0
+                ? valor
+                : 0;
+
+        }
+
+        function convertirFecha(valor) {
+
+            if (!valor) return null;
+
+            let fecha;
+
+            if (typeof valor.toDate === "function") {
+
+                fecha = valor.toDate();
+
+            } else if (
+                typeof valor === "string" &&
+                /^\d{4}-\d{2}-\d{2}$/.test(valor)
+            ) {
+
+                fecha = new Date(valor + "T00:00:00");
+
+            } else {
+
+                fecha = new Date(valor);
+
+            }
+
+            return Number.isNaN(fecha.getTime())
+                ? null
+                : fecha;
+
+        }
+
+        function fechaEvento(evento) {
+
+            if (
+                typeof evento.fecha === "string" &&
+                /^\d{4}-\d{2}-\d{2}$/.test(evento.fecha)
+            ) {
+
+                return convertirFecha(
+                    evento.fecha + "T" + (evento.hora || "00:00")
+                );
+
+            }
+
+            return convertirFecha(evento.fecha);
+
+        }
+
+        function formatearFecha(valor) {
+
+            const fecha = convertirFecha(valor);
+
+            return fecha
+                ? fecha.toLocaleDateString("es-MX")
+                : "Sin fecha";
+
+        }
+
+        function mismoMes(fecha, referencia) {
+
+            return fecha &&
+                fecha.getMonth() === referencia.getMonth() &&
+                fecha.getFullYear() === referencia.getFullYear();
+
+        }
+
+        function eventoCancelado(evento) {
+
+            return normalizar(evento.estado) === "cancelado";
+
+        }
+
+        function pagoRealizado(evento) {
+
+            return normalizar(evento.estadoPago) === "pagado";
+
+        }
+
+        // ERRORES DE CONEXIÓN
+
+        function mostrarError(mensaje) {
+
+            const aviso = document.getElementById("avisoDatos");
+
+            aviso.textContent = mensaje;
+
+            aviso.classList.remove("d-none");
+
+        }
+
+        function errorAcceso(mensaje) {
+
+            texto("mensajeCarga", mensaje);
+
+            document.getElementById("volverLogin")
+                .classList.remove("d-none");
+
+        }
+
+        // SUSCRIPCIONES A FIRESTORE
+
+        function escuchar(nombre, callback) {
+
+            const cancelar = onSnapshot(
+
+                collection(db, nombre),
+
+                (snapshot) => {
+
+                    const registros = snapshot.docs.map(doc => ({
+
+                        ...doc.data(),
+                        id: doc.id
+
+                    }));
+
+                    callback(registros);
+
+                },
+
+                (error) => {
+
+                    console.error(nombre, error);
+
+                    mostrarError(
+                        "No fue posible consultar la colección " +
+                        nombre +
+                        ". Revisa tu conexión y las reglas de Firestore."
+                    );
+
+                    if (nombre === "eventos") {
+
+                        texto(
+                            "mensajeEventos",
+                            "No fue posible consultar la agenda."
+                        );
+
+                        texto(
+                            "estadoGrafica",
+                            "Información no disponible."
+                        );
+
+                    }
+
+                }
+
+            );
+
+            suscripciones.push(cancelar);
+
+        }
+
+        function detenerSuscripciones() {
+
+            suscripciones.forEach(cancelar => cancelar());
+
+            suscripciones = [];
+
+        }
+
+        // ACTUALIZAR INDICADORES
+
+        function actualizarPanel() {
+
+            const ahora = new Date();
+
+            if (cargado.clientes) {
+
+                texto("totalClientes", clientes.length);
+
+            }
+
+            if (cargado.contratos) {
+
+                texto("totalContratos", contratos.length);
+
+            }
+
+            if (!cargado.eventos) return;
+
+            const activos = eventos.filter(
+                evento => !eventoCancelado(evento)
+            );
+
+            const eventosMes = activos.filter(evento =>
+
+                mismoMes(fechaEvento(evento), ahora)
+
+            );
+
+            const ingresosMes = activos
+
+                .filter(evento =>
+
+                    pagoRealizado(evento) &&
+                    mismoMes(
+                        convertirFecha(evento.fechaPago),
+                        ahora
+                    )
+
+                )
+
+                .reduce((total, evento) =>
+
+                    total + importe(evento), 0
+
+                );
+
+            const pendientes = activos
+
+                .filter(evento =>
+
+                    normalizar(evento.estadoPago) === "pendiente"
+
+                )
+
+                .reduce((total, evento) =>
+
+                    total + importe(evento), 0
+
+                );
+
+            const proximos = activos
+
+                .filter(evento => {
+
+                    const fecha = fechaEvento(evento);
+
+                    return fecha &&
+                        fecha >= ahora &&
+                        normalizar(evento.estado) !== "realizado";
+
+                })
+
+                .sort((a, b) =>
+
+                    fechaEvento(a) - fechaEvento(b)
+
+                );
+
+            texto("totalEventos", eventosMes.length);
+
+            texto("totalIngresos", moneda(ingresosMes));
+
+            texto("totalPendientes", moneda(pendientes));
+
+            texto("totalProximos", proximos.length);
+
+            mostrarEventos(proximos);
+
+            actualizarGrafica(activos);
+
+        }
+
+        // MOSTRAR EVENTOS
+
+        function mostrarEventos(proximos) {
+
+            const tabla = document.getElementById("tablaEventos");
+
+            const vacio = document.getElementById("eventosVacios");
+
+            const contenedor =
+                document.getElementById("contenedorTabla");
+
+            tabla.replaceChildren();
+
+            if (proximos.length === 0) {
+
+                vacio.classList.remove("d-none");
+
+                contenedor.classList.add("d-none");
+
+                texto(
+                    "mensajeEventos",
+                    "No hay próximas celebraciones registradas."
+                );
+
+                return;
+
+            }
+
+            vacio.classList.add("d-none");
+
+            contenedor.classList.remove("d-none");
+
+            proximos.slice(0, 8).forEach(evento => {
+
+                const fila = document.createElement("tr");
+
+                const datos = [
+
+                    evento.tipoServicio || "Celebración",
+
+                    evento.clienteNombre || "Sin cliente",
+
+                    formatearFecha(evento.fecha),
+
+                    evento.hora || "Sin horario",
+
+                    evento.lugar || "Sin ubicación",
+
+                    evento.paqueteNombre || "Sin paquete",
+
+                    moneda(importe(evento))
+
+                ];
+
+                datos.forEach(dato => {
+
+                    const celda = document.createElement("td");
+
+                    celda.textContent = dato;
+
+                    fila.appendChild(celda);
+
+                });
+
+                const celdaPago = document.createElement("td");
+
+                const etiqueta = document.createElement("span");
+
+                const estado = normalizar(evento.estadoPago);
+
+                etiqueta.className = "estado ";
+
+                if (estado === "pagado") {
+
+                    etiqueta.className += "estado-pagado";
+
+                    etiqueta.textContent = "Pagado";
+
+                } else if (estado === "pendiente") {
+
+                    etiqueta.className += "estado-pendiente";
+
+                    etiqueta.textContent = "Pendiente";
+
+                } else {
+
+                    etiqueta.className += "estado-neutro";
+
+                    etiqueta.textContent = "Sin registrar";
+
+                }
+
+                celdaPago.appendChild(etiqueta);
+
+                fila.appendChild(celdaPago);
+
+                tabla.appendChild(fila);
+
+            });
+
+        }
+
+        // GRÁFICA DE INGRESOS
+
+        function actualizarGrafica(registros) {
+
+            if (typeof Chart === "undefined") {
+
+                texto(
+                    "estadoGrafica",
+                    "No se pudo cargar la librería de gráficas."
+                );
+
+                return;
+
+            }
+
+            const ahora = new Date();
+
+            const etiquetas = [];
+
+            const cantidades = [];
+
+            for (let i = 5; i >= 0; i--) {
+
+                const mes = new Date(
+
+                    ahora.getFullYear(),
+                    ahora.getMonth() - i,
+                    1
+
+                );
+
+                const nombre = mes.toLocaleDateString(
+
+                    "es-MX",
+                    { month: "short" }
+
+                );
+
+                etiquetas.push(
+
+                    nombre.charAt(0).toUpperCase() +
+                    nombre.slice(1)
+
+                );
+
+                const total = registros
+
+                    .filter(evento =>
+
+                        pagoRealizado(evento) &&
+                        mismoMes(
+                            convertirFecha(evento.fechaPago),
+                            mes
+                        )
+
+                    )
+
+                    .reduce((suma, evento) =>
+
+                        suma + importe(evento), 0
+
+                    );
+
+                cantidades.push(total);
+
+            }
+
+            if (grafica) {
+
+                grafica.data.labels = etiquetas;
+
+                grafica.data.datasets[0].data = cantidades;
+
+                grafica.update();
+
+            } else {
+
+                grafica = new Chart(
+
+                    document.getElementById("graficaIngresos"),
+
+                    {
+
+                        type: "bar",
+
+                        data: {
+
+                            labels: etiquetas,
+
+                            datasets: [{
+
+                                label: "Ingresos",
+
+                                data: cantidades,
+
+                                backgroundColor: "#B48A42",
+
+                                hoverBackgroundColor: "#8A632B",
+
+                                borderRadius: 7,
+
+                                maxBarThickness: 55
+
+                            }]
+
+                        },
+
+                        options: {
+
+                            responsive: true,
+
+                            maintainAspectRatio: false,
+
+                            plugins: {
+
+                                legend: {
+                                    display: false
+                                },
+
+                                tooltip: {
+
+                                    callbacks: {
+
+                                        label: contexto =>
+
+                                            moneda(contexto.parsed.y)
+
+                                    }
+
+                                }
+
+                            },
+
+                            scales: {
+
+                                y: {
+
+                                    beginAtZero: true,
+
+                                    ticks: {
+
+                                        callback: valor =>
+
+                                            moneda(valor)
+
+                                    },
+
+                                    grid: {
+                                        color: "#F0EBE2"
+                                    }
+
+                                },
+
+                                x: {
+
+                                    grid: {
+                                        display: false
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                );
+
+            }
+
+            texto(
+
+                "estadoGrafica",
+
+                cantidades.every(valor => valor === 0)
+
+                    ? "Todavía no hay ingresos registrados en este periodo."
+
+                    : "Ingresos calculados a partir de los pagos registrados."
+
+            );
+
+        }
+
+        // MOSTRAR PAQUETES
+
+        function mostrarPaquetes() {
+
+            const contenedor =
+                document.getElementById("listaPaquetes");
+
+            contenedor.replaceChildren();
+
+            const catalogo = paquetesBase.map(base => {
+
+                const registrado = servicios.find(
+
+                    servicio =>
+                        Number(servicio.numero) === base.numero
+
+                );
+
+                return registrado
+
+                    ? { ...base, ...registrado }
+
+                    : base;
+
+            });
+
+            catalogo.forEach(paquete => {
+
+                const columna = document.createElement("div");
+
+                columna.className = "col-md-4";
+
+                const tarjeta = document.createElement("div");
+
+                tarjeta.className = "paquete";
+
+                const icono = document.createElement("i");
+
+                icono.className = "bi bi-music-note-beamed";
+
+                const titulo = document.createElement("h5");
+
+                titulo.textContent =
+                    "Paquete " + paquete.numero;
+
+                const nombre = document.createElement("strong");
+
+                nombre.textContent = paquete.nombre;
+
+                nombre.style.color = "#8A632B";
+
+                const descripcion = document.createElement("p");
+
+                descripcion.className = "mt-3";
+
+                const lineas = [
+
+                    paquete.voces +
+                        (Number(paquete.voces) === 1
+                            ? " persona en voz"
+                            : " personas en voces"),
+
+                    "Instrumento: " + paquete.instrumento,
+
+                    paquete.audio
+                        ? "Incluye equipo de audio"
+                        : "No incluye equipo de audio"
+
+                ];
+
+                lineas.forEach((linea, indice) => {
+
+                    if (indice > 0) {
+
+                        descripcion.appendChild(
+                            document.createElement("br")
+                        );
+
+                    }
+
+                    descripcion.appendChild(
+                        document.createTextNode(linea)
+                    );
+
+                });
+
+                const precio = document.createElement("h3");
+
+                precio.textContent =
+                    moneda(paquete.precio) + " MXN";
+
+                tarjeta.append(
+
+                    icono,
+                    titulo,
+                    nombre,
+                    descripcion,
+                    precio
+
+                );
+
+                columna.appendChild(tarjeta);
+
+                contenedor.appendChild(columna);
+
+            });
+
+        }
+
+        // INICIAR CONSULTAS
+
+        function cargarDatos() {
+
+            detenerSuscripciones();
+
+            escuchar("eventos", datos => {
+
+                eventos = datos;
+
+                cargado.eventos = true;
+
+                actualizarPanel();
+
+            });
+
+            escuchar("clientes", datos => {
+
+                clientes = datos;
+
+                cargado.clientes = true;
+
+                actualizarPanel();
+
+            });
+
+            escuchar("contratos", datos => {
+
+                contratos = datos;
+
+                cargado.contratos = true;
+
+                actualizarPanel();
+
+            });
+
+            escuchar("servicios", datos => {
+
+                servicios = datos;
+
+                cargado.servicios = true;
+
+                mostrarPaquetes();
+
+            });
+
+        }
+
+        // CERRAR SESIÓN
+
+        document.getElementById("cerrarSesion")
+            .addEventListener("click", async () => {
+
+                const confirmar = window.confirm(
+
+                    "¿Deseas cerrar sesión en Voz Angelical?"
+
+                );
+
+                if (!confirmar) return;
+
+                try {
+
+                    await signOut(auth);
+
+                    detenerSuscripciones();
+
+                    window.location.replace("index.html");
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    mostrarError(
+                        "No fue posible cerrar sesión. Intenta nuevamente."
+                    );
+
+                }
+
+            });
+
+        // VERIFICACIÓN DE SEGURIDAD
+
+        try {
+
+            const firebase = await import("./firebase.js");
+
+            auth = firebase.auth;
+
+            db = firebase.db;
+
+            if (!auth || !db) {
+
+                throw new Error("Firebase no configurado");
+
+            }
+
+            onAuthStateChanged(auth, async usuario => {
+
+                if (!usuario) {
+
+                    detenerSuscripciones();
+
+                    window.location.replace("index.html");
+
+                    return;
+
+                }
+
+                if (usuario.uid !== UID_ADMIN) {
+
+                    detenerSuscripciones();
+
+                    document.getElementById("aplicacion").hidden =
+                        true;
+
+                    try {
+
+                        await signOut(auth);
+
+                    } catch (error) {
+
+                        console.error(error);
+
+                        errorAcceso("Usuario no autorizado.");
+
+                    }
+
+                    return;
+
+                }
+
+                texto(
+
+                    "correoUsuario",
+
+                    usuario.email || "Administrador"
+
+                );
+
+                document.getElementById("pantallaCarga")
+                    .style.display = "none";
+
+                document.getElementById("aplicacion").hidden =
+                    false;
+
+                document.body.classList.remove("bloqueado");
+
+                mostrarPaquetes();
+
+                cargarDatos();
+
+            }, error => {
+
+                console.error(error);
+
+                errorAcceso("No se pudo verificar la sesión.");
+
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            errorAcceso(
+
+                "No fue posible conectar con Firebase. " +
+                "Revisa firebase.js y tu conexión."
+
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>

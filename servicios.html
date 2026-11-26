@@ -1,0 +1,2588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Servicios | Voz Angelical</title>
+
+    <link rel="icon" href="logo.png">
+
+    <!-- BOOTSTRAP 5 -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- ICONOS -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- TIPOGRAFÍAS -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root {
+            --dorado: #B48A42;
+            --dorado-claro: #DCC18A;
+            --dorado-oscuro: #8A632B;
+            --marfil: #F5EFE4;
+            --blanco: #FFFFFF;
+            --cafe: #30271D;
+            --gris: #796C59;
+            --borde: #E6D8C1;
+            --sidebar: 270px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--marfil);
+            font-family: 'Poppins', sans-serif;
+            color: var(--cafe);
+        }
+
+        /* PANTALLA DE CARGA */
+
+        #pantallaCarga {
+            position: fixed;
+            inset: 0;
+            background: var(--marfil);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 9999;
+        }
+
+        #pantallaCarga img {
+            width: 140px;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+        }
+
+        #pantallaCarga h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+        }
+
+        /* MENÚ LATERAL */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar);
+            height: 100dvh;
+            background: white;
+            border-right: 1px solid var(--borde);
+            display: flex;
+            flex-direction: column;
+            z-index: 1050;
+            transition: transform .3s ease;
+        }
+
+        .marca {
+            text-align: center;
+            padding: 25px 15px 20px;
+            border-bottom: 1px solid var(--borde);
+        }
+
+        .marca img {
+            width: 105px;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+        }
+
+        .marca h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dorado-oscuro);
+            margin-top: 12px;
+            letter-spacing: 1px;
+        }
+
+        .marca p {
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--gris);
+            margin: 0;
+        }
+
+        .menu {
+            padding: 20px 15px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .titulo-menu {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: var(--gris);
+            padding: 10px 12px;
+            font-weight: 600;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            text-decoration: none;
+            color: var(--cafe);
+            font-size: 13px;
+            padding: 13px 15px;
+            margin-bottom: 5px;
+            border-radius: 10px;
+            transition: .25s;
+        }
+
+        .menu a i {
+            font-size: 18px;
+            color: var(--dorado-oscuro);
+        }
+
+        .menu a:hover {
+            background: var(--marfil);
+            transform: translateX(3px);
+        }
+
+        .menu a.activo {
+            background: linear-gradient(135deg, #8A632B, #B48A42);
+            color: white;
+            box-shadow: 0 5px 15px rgba(138,99,43,.18);
+        }
+
+        .menu a.activo i {
+            color: white;
+        }
+
+        .sidebar-footer {
+            padding: 18px;
+            border-top: 1px solid var(--borde);
+        }
+
+        .btn-salir {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E7CCCC;
+            background: #FFF6F6;
+            color: #A94442;
+            border-radius: 10px;
+            font-size: 13px;
+            transition: .25s;
+        }
+
+        .btn-salir:hover {
+            background: #A94442;
+            color: white;
+        }
+
+        .version {
+            font-size: 10px;
+            text-align: center;
+            color: var(--gris);
+            margin-top: 12px;
+        }
+
+        /* CONTENIDO PRINCIPAL */
+
+        .principal {
+            margin-left: var(--sidebar);
+            min-height: 100vh;
+        }
+
+        .barra-superior {
+            min-height: 80px;
+            background: white;
+            border-bottom: 1px solid var(--borde);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            gap: 15px;
+        }
+
+        .barra-superior h5 {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .barra-superior small {
+            font-size: 11px;
+            color: var(--gris);
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--marfil);
+            color: var(--dorado-oscuro);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+        }
+
+        .contenido {
+            padding: 30px;
+            animation: aparecer .7s ease;
+        }
+
+        /* ENCABEZADO */
+
+        .encabezado {
+            background: linear-gradient(
+                120deg,
+                #8A632B,
+                #B48A42,
+                #C6A46A
+            );
+            padding: 35px;
+            border-radius: 20px;
+            color: white;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(138,99,43,.15);
+        }
+
+        .encabezado h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .encabezado p {
+            font-size: 13px;
+            line-height: 1.9;
+            max-width: 650px;
+            margin-bottom: 0;
+        }
+
+        /* INDICADORES */
+
+        .indicador {
+            background: white;
+            border: 1px solid var(--borde);
+            padding: 22px;
+            border-radius: 15px;
+            height: 100%;
+        }
+
+        .indicador i {
+            color: var(--dorado-oscuro);
+            font-size: 25px;
+        }
+
+        .indicador p {
+            font-size: 12px;
+            color: var(--gris);
+            margin-top: 12px;
+            margin-bottom: 5px;
+        }
+
+        .indicador h3 {
+            color: var(--dorado-oscuro);
+            font-size: 26px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* TARJETAS DE PAQUETES */
+
+        .paquete {
+            position: relative;
+            overflow: hidden;
+            background: #FFFCF6;
+            border: 1px solid var(--dorado-claro);
+            border-radius: 18px;
+            padding: 28px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 25px rgba(95,67,25,.06);
+            transition: .3s;
+        }
+
+        .paquete:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(95,67,25,.12);
+        }
+
+        .paquete::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(
+                90deg,
+                #8A632B,
+                #DCC18A,
+                #8A632B
+            );
+        }
+
+        .paquete.inactivo {
+            background: #F3F1ED;
+        }
+
+        .icono-paquete {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: var(--marfil);
+            border: 1px solid var(--dorado-claro);
+            color: var(--dorado-oscuro);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 20px auto;
+        }
+
+        .numero-paquete {
+            text-align: center;
+            color: var(--gris);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .nombre-paquete {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+            font-weight: 700;
+            font-size: 27px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .precio-paquete {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+            font-size: 36px;
+            font-weight: 700;
+            margin-top: 20px;
+        }
+
+        .moneda {
+            text-align: center;
+            color: var(--gris);
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        .separador {
+            height: 1px;
+            background: var(--dorado-claro);
+            margin: 25px 0;
+        }
+
+        .caracteristica {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .caracteristica i {
+            color: var(--dorado-oscuro);
+            font-size: 17px;
+        }
+
+        .descripcion-paquete {
+            font-size: 12px;
+            color: var(--gris);
+            line-height: 1.8;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .estado {
+            display: inline-block;
+            font-size: 10px;
+            padding: 7px 13px;
+            border-radius: 30px;
+        }
+
+        .estado-activo {
+            background: #E5F4E9;
+            color: #287A41;
+        }
+
+        .estado-inactivo {
+            background: #FCE5E5;
+            color: #A94442;
+        }
+
+        /* BOTONES */
+
+        .btn-dorado {
+            border: none;
+            background: var(--dorado-oscuro);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 12px;
+            transition: .25s;
+        }
+
+        .btn-dorado:hover {
+            background: var(--dorado);
+            color: white;
+        }
+
+        .btn-dorado:disabled {
+            opacity: .6;
+        }
+
+        .btn-secundario {
+            background: white;
+            color: var(--dorado-oscuro);
+            border: 1px solid var(--dorado-claro);
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .btn-secundario:hover {
+            background: var(--marfil);
+            color: var(--dorado-oscuro);
+        }
+
+        .acciones {
+            margin-top: auto;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* INFORMACIÓN */
+
+        .tarjeta-informacion {
+            background: white;
+            border: 1px solid var(--borde);
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 30px;
+        }
+
+        .tarjeta-informacion h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .tarjeta-informacion p {
+            font-size: 13px;
+            color: var(--gris);
+            line-height: 1.9;
+        }
+
+        /* FORMULARIOS */
+
+        .modal-content {
+            border: 1px solid var(--borde);
+            border-radius: 20px;
+        }
+
+        .modal-title {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+            font-weight: 700;
+            font-size: 19px;
+        }
+
+        .form-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .form-control,
+        .form-select {
+            background: #FDFBF7;
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+            min-height: 45px;
+            font-size: 13px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--dorado);
+            box-shadow: 0 0 0 3px rgba(180,138,66,.15);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--dorado-oscuro);
+            border-color: var(--dorado-oscuro);
+        }
+
+        .form-check-label {
+            font-size: 13px;
+        }
+
+        .alert {
+            font-size: 12px;
+        }
+
+        /* MENÚ RESPONSIVO */
+
+        .btn-menu {
+            display: none;
+            background: var(--marfil);
+            border: 1px solid var(--borde);
+            color: var(--dorado-oscuro);
+            width: 40px;
+            height: 40px;
+            border-radius: 9px;
+            font-size: 22px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.35);
+            z-index: 1040;
+        }
+
+        .overlay.activo {
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 10px 10px;
+            color: var(--gris);
+            font-size: 11px;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 991px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.abierto {
+                transform: translateX(0);
+            }
+
+            .principal {
+                margin-left: 0;
+            }
+
+            .btn-menu {
+                display: block;
+            }
+
+            .contenido {
+                padding: 20px;
+            }
+
+            .barra-superior {
+                padding: 15px 20px;
+            }
+
+        }
+
+        @media (max-width: 576px) {
+
+            .contenido {
+                padding: 15px;
+            }
+
+            .encabezado {
+                padding: 25px;
+            }
+
+            .encabezado h2 {
+                font-size: 23px;
+            }
+
+            .barra-superior h5 {
+                font-size: 15px;
+            }
+
+            .datos-usuario {
+                display: none;
+            }
+
+            .paquete {
+                padding: 23px;
+            }
+
+            .indicador {
+                padding: 16px;
+            }
+
+            .indicador h3 {
+                font-size: 22px;
+            }
+
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- PANTALLA DE CARGA -->
+
+    <div id="pantallaCarga">
+
+        <img src="logo.png" alt="Voz Angelical">
+
+        <div class="spinner-border"
+             id="spinnerCarga"
+             style="color:#B48A42;"
+             role="status">
+        </div>
+
+        <h4>Voz Angelical</h4>
+
+        <small id="mensajeCarga">
+            Verificando acceso...
+        </small>
+
+        <a href="index.html"
+           id="volverLogin"
+           class="btn btn-dorado d-none">
+
+            Volver al inicio de sesión
+
+        </a>
+
+    </div>
+
+    <!-- APLICACIÓN -->
+
+    <div id="aplicacion" hidden>
+
+        <div class="overlay" id="overlay"></div>
+
+        <!-- MENÚ LATERAL -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="marca">
+
+                <img src="logo.png" alt="Logo Voz Angelical">
+
+                <h1>VOZ ANGELICAL</h1>
+
+                <p>GESTIÓN MUSICAL</p>
+
+            </div>
+
+            <nav class="menu">
+
+                <div class="titulo-menu">
+                    MENÚ PRINCIPAL
+                </div>
+
+                <a href="inicio.html">
+                    <i class="bi bi-grid-1x2"></i>
+                    Inicio
+                </a>
+
+                <a href="agenda.html">
+                    <i class="bi bi-calendar3"></i>
+                    Agenda
+                </a>
+
+                <a href="contratos.html">
+                    <i class="bi bi-file-earmark-text"></i>
+                    Contratos
+                </a>
+
+                <a href="clientes.html">
+                    <i class="bi bi-people"></i>
+                    Clientes
+                </a>
+
+                <a href="servicios.html" class="activo">
+                    <i class="bi bi-music-note-beamed"></i>
+                    Servicios
+                </a>
+
+                <a href="estadisticas.html">
+                    <i class="bi bi-bar-chart-line"></i>
+                    Estadísticas
+                </a>
+
+                <div class="titulo-menu mt-3">
+                    ADMINISTRACIÓN
+                </div>
+
+                <a href="configuracion.html">
+                    <i class="bi bi-gear"></i>
+                    Configuración
+                </a>
+
+                <a href="usuarios.html">
+                    <i class="bi bi-shield-lock"></i>
+                    Usuarios
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <button class="btn-salir" id="cerrarSesion">
+
+                    <i class="bi bi-box-arrow-right me-2"></i>
+
+                    Cerrar sesión
+
+                </button>
+
+                <div class="version">
+                    Voz Angelical | Versión 1.0
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- CONTENIDO -->
+
+        <main class="principal">
+
+            <header class="barra-superior">
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <button class="btn-menu"
+                            id="abrirMenu"
+                            aria-label="Abrir menú"
+                            aria-expanded="false">
+
+                        <i class="bi bi-list"></i>
+
+                    </button>
+
+                    <div>
+
+                        <h5>Servicios musicales</h5>
+
+                        <small>Administración de paquetes</small>
+
+                    </div>
+
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div class="avatar">
+                        <i class="bi bi-person"></i>
+                    </div>
+
+                    <div class="datos-usuario">
+
+                        <strong style="font-size:12px;">
+                            Administrador
+                        </strong>
+
+                        <br>
+
+                        <small id="correoUsuario"></small>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+            <div class="contenido">
+
+                <!-- ENCABEZADO -->
+
+                <section class="encabezado">
+
+                    <h2>
+
+                        <i class="bi bi-music-note-beamed me-2"></i>
+
+                        Paquetes musicales
+
+                    </h2>
+
+                    <p>
+                        Administra los servicios musicales de Voz Angelical,
+                        modifica sus precios y características para mantener
+                        actualizado el catálogo utilizado en los contratos.
+                    </p>
+
+                </section>
+
+                <div id="mensajeGeneral"
+                     class="alert d-none"
+                     role="alert"
+                     aria-live="polite">
+                </div>
+
+                <!-- INDICADORES -->
+
+                <div class="row g-3 mb-4">
+
+                    <div class="col-6 col-lg-3">
+
+                        <div class="indicador">
+
+                            <i class="bi bi-music-note-list"></i>
+
+                            <p>Paquetes registrados</p>
+
+                            <h3 id="totalPaquetes">—</h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-lg-3">
+
+                        <div class="indicador">
+
+                            <i class="bi bi-check-circle"></i>
+
+                            <p>Paquetes activos</p>
+
+                            <h3 id="totalActivos">—</h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-lg-3">
+
+                        <div class="indicador">
+
+                            <i class="bi bi-cash"></i>
+
+                            <p>Precio mínimo activo</p>
+
+                            <h3 id="precioMinimo">—</h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-lg-3">
+
+                        <div class="indicador">
+
+                            <i class="bi bi-cash-stack"></i>
+
+                            <p>Precio máximo activo</p>
+
+                            <h3 id="precioMaximo">—</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- CATÁLOGO -->
+
+                <div class="d-flex justify-content-between
+                            align-items-center flex-wrap gap-3 mb-4">
+
+                    <div>
+
+                        <h4 style="font-family:Cinzel;
+                                   color:#8A632B;
+                                   font-weight:700;">
+
+                            Catálogo oficial
+
+                        </h4>
+
+                        <small style="color:#796C59;">
+
+                            Servicios musicales para misas y rosarios
+
+                        </small>
+
+                    </div>
+
+                    <button class="btn btn-secundario"
+                            id="restaurarPrecios"
+                            disabled>
+
+                        <i class="bi bi-arrow-counterclockwise me-2"></i>
+
+                        Restaurar precios base
+
+                    </button>
+
+                </div>
+
+                <div class="row g-4" id="listaPaquetes">
+
+                    <div class="col-12 text-center py-5">
+
+                        <div class="spinner-border"
+                             style="color:#B48A42;">
+                        </div>
+
+                        <p class="mt-3" style="font-size:13px;">
+                            Cargando catálogo...
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- CONDICIONES DEL SERVICIO -->
+
+                <section class="tarjeta-informacion">
+
+                    <h4>
+
+                        <i class="bi bi-info-circle me-2"></i>
+
+                        Condiciones generales
+
+                    </h4>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+
+                            <p>
+
+                                <i class="bi bi-geo-alt me-2"></i>
+
+                                <strong>Precios variables:</strong>
+
+                                el precio puede variar según la zona
+                                en la que se realice la celebración.
+
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <p>
+
+                                <i class="bi bi-wallet2 me-2"></i>
+
+                                <strong>Anticipos:</strong>
+
+                                no se solicitan anticipos de contratación.
+
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <p>
+
+                                <i class="bi bi-cash me-2"></i>
+
+                                <strong>Pago en efectivo:</strong>
+
+                                deberá liquidarse antes del inicio
+                                de la celebración.
+
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <p>
+
+                                <i class="bi bi-bank me-2"></i>
+
+                                <strong>Transferencia bancaria:</strong>
+
+                                deberá realizarse con un mínimo de dos
+                                horas de anticipación y deberá enviarse
+                                el comprobante de pago.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <footer class="footer">
+
+                    &copy; <span id="anio"></span> Voz Angelical.
+
+                    Todos los derechos reservados.
+
+                    <br>
+
+                    Sistema Integral de Gestión Musical | V.1.0
+
+                </footer>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- MODAL EDITAR PAQUETE -->
+
+    <div class="modal fade"
+         id="modalEditar"
+         tabindex="-1"
+         aria-labelledby="tituloModal"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="tituloModal">
+
+                        Editar paquete musical
+
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
+
+                </div>
+
+                <form id="formEditar">
+
+                    <div class="modal-body p-4">
+
+                        <input type="hidden" id="paqueteId">
+
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+
+                                <label class="form-label"
+                                       for="numeroPaquete">
+
+                                    Número de paquete
+
+                                </label>
+
+                                <input type="number"
+                                       id="numeroPaquete"
+                                       class="form-control"
+                                       readonly>
+
+                            </div>
+
+                            <div class="col-md-8">
+
+                                <label class="form-label"
+                                       for="nombrePaquete">
+
+                                    Nombre del paquete
+
+                                </label>
+
+                                <input type="text"
+                                       id="nombrePaquete"
+                                       class="form-control"
+                                       maxlength="60"
+                                       required>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label"
+                                       for="vocesPaquete">
+
+                                    Número de personas en voz
+
+                                </label>
+
+                                <input type="number"
+                                       id="vocesPaquete"
+                                       class="form-control"
+                                       min="1"
+                                       max="50"
+                                       step="1"
+                                       required>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label"
+                                       for="precioPaquete">
+
+                                    Precio base (MXN)
+
+                                </label>
+
+                                <input type="number"
+                                       id="precioPaquete"
+                                       class="form-control"
+                                       min="1"
+                                       max="1000000"
+                                       step="0.01"
+                                       required>
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <label class="form-label"
+                                       for="instrumentoPaquete">
+
+                                    Instrumento musical
+
+                                </label>
+
+                                <input type="text"
+                                       id="instrumentoPaquete"
+                                       class="form-control"
+                                       maxlength="100"
+                                       required>
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <label class="form-label"
+                                       for="descripcionPaquete">
+
+                                    Características adicionales
+
+                                </label>
+
+                                <textarea id="descripcionPaquete"
+                                          class="form-control"
+                                          rows="4"
+                                          maxlength="1000"
+                                          placeholder="Información adicional del servicio..."></textarea>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-check form-switch">
+
+                                    <input type="checkbox"
+                                           class="form-check-input"
+                                           id="audioPaquete">
+
+                                    <label class="form-check-label"
+                                           for="audioPaquete">
+
+                                        Incluye equipo de audio
+
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-check form-switch">
+
+                                    <input type="checkbox"
+                                           class="form-check-input"
+                                           id="activoPaquete">
+
+                                    <label class="form-check-label"
+                                           for="activoPaquete">
+
+                                        Paquete disponible
+
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div id="mensajeModal"
+                             class="alert d-none mt-3"
+                             role="alert">
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button"
+                                class="btn btn-secundario"
+                                data-bs-dismiss="modal">
+
+                            Cancelar
+
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-dorado"
+                                id="guardarPaquete">
+
+                            <i class="bi bi-floppy me-2"></i>
+
+                            Guardar cambios
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOOTSTRAP -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- FUNCIONES VISUALES -->
+
+    <script>
+
+        const sidebar = document.getElementById("sidebar");
+
+        const overlay = document.getElementById("overlay");
+
+        const abrirMenu = document.getElementById("abrirMenu");
+
+        function cerrarMenu() {
+
+            sidebar.classList.remove("abierto");
+
+            overlay.classList.remove("activo");
+
+            abrirMenu.setAttribute("aria-expanded", "false");
+
+        }
+
+        abrirMenu.addEventListener("click", () => {
+
+            sidebar.classList.add("abierto");
+
+            overlay.classList.add("activo");
+
+            abrirMenu.setAttribute("aria-expanded", "true");
+
+        });
+
+        overlay.addEventListener("click", cerrarMenu);
+
+        document.addEventListener("keydown", e => {
+
+            if (e.key === "Escape") {
+
+                cerrarMenu();
+
+            }
+
+        });
+
+        document.getElementById("anio").textContent =
+            new Date().getFullYear();
+
+    </script>
+
+    <!-- FIREBASE -->
+
+    <script type="module">
+
+        import {
+
+            onAuthStateChanged,
+            signOut
+
+        } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+        import {
+
+            collection,
+            doc,
+            updateDoc,
+            onSnapshot,
+            runTransaction,
+            writeBatch,
+            serverTimestamp
+
+        } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+        // ADMINISTRADOR PRINCIPAL
+
+        const UID_ADMIN =
+            "TsWLtI74pTcivOzAC7gtiaaOzJx1";
+
+        let auth;
+
+        let db;
+
+        let cancelarEscucha = null;
+
+        let paquetes = [];
+
+        let autorizado = false;
+
+        const modalEditar = new bootstrap.Modal(
+            document.getElementById("modalEditar")
+        );
+
+        // PAQUETES OFICIALES
+
+        const paquetesBase = [
+
+            {
+                id: "paquete1",
+                numero: 1,
+                nombre: "Solista",
+                voces: 1,
+                instrumento: "Piano",
+                audio: true,
+                precio: 500,
+                activo: true,
+                descripcion: ""
+            },
+
+            {
+                id: "paquete2",
+                numero: 2,
+                nombre: "Dúo",
+                voces: 2,
+                instrumento: "Piano",
+                audio: true,
+                precio: 800,
+                activo: true,
+                descripcion: ""
+            },
+
+            {
+                id: "paquete3",
+                numero: 3,
+                nombre: "Trío",
+                voces: 3,
+                instrumento: "Piano",
+                audio: true,
+                precio: 1200,
+                activo: true,
+                descripcion: ""
+            }
+
+        ];
+
+        // FUNCIONES AUXILIARES
+
+        function moneda(valor) {
+
+            return Number(valor).toLocaleString("es-MX", {
+
+                style: "currency",
+                currency: "MXN"
+
+            });
+
+        }
+
+        function texto(id, valor) {
+
+            document.getElementById(id).textContent = valor;
+
+        }
+
+        function mostrarMensaje(id, mensaje, tipo) {
+
+            const elemento = document.getElementById(id);
+
+            elemento.className = "alert alert-" + tipo;
+
+            elemento.textContent = mensaje;
+
+        }
+
+        function ocultarMensaje(id) {
+
+            document.getElementById(id)
+                .classList.add("d-none");
+
+        }
+
+        function crearElemento(etiqueta, clase, contenido) {
+
+            const elemento = document.createElement(etiqueta);
+
+            if (clase) {
+
+                elemento.className = clase;
+
+            }
+
+            if (contenido !== undefined) {
+
+                elemento.textContent = contenido;
+
+            }
+
+            return elemento;
+
+        }
+
+        function crearIcono(clase) {
+
+            return crearElemento("i", "bi " + clase);
+
+        }
+
+        // REGISTRAR PAQUETES AUTOMÁTICAMENTE
+        // SOLO SI TODAVÍA NO EXISTEN
+
+        async function inicializarPaquetes() {
+
+            await runTransaction(db, async transaction => {
+
+                const referencias = paquetesBase.map(paquete =>
+
+                    doc(db, "servicios", paquete.id)
+
+                );
+
+                const documentos = await Promise.all(
+
+                    referencias.map(referencia =>
+
+                        transaction.get(referencia)
+
+                    )
+
+                );
+
+                documentos.forEach((documento, indice) => {
+
+                    if (!documento.exists()) {
+
+                        const { id, ...datos } =
+                            paquetesBase[indice];
+
+                        transaction.set(
+
+                            referencias[indice],
+
+                            {
+                                ...datos,
+                                creadoEn: serverTimestamp(),
+                                actualizadoEn: serverTimestamp()
+                            }
+
+                        );
+
+                    }
+
+                });
+
+            });
+
+        }
+
+        // ESCUCHAR CAMBIOS EN FIRESTORE
+
+        function escucharPaquetes() {
+
+            if (cancelarEscucha) {
+
+                cancelarEscucha();
+
+            }
+
+            cancelarEscucha = onSnapshot(
+
+                collection(db, "servicios"),
+
+                snapshot => {
+
+                    paquetes = snapshot.docs
+
+                        .map(documento => ({
+
+                            ...documento.data(),
+                            id: documento.id
+
+                        }))
+
+                        .filter(paquete =>
+
+                            paquetesBase.some(base =>
+
+                                base.id === paquete.id
+
+                            )
+
+                        )
+
+                        .sort((a, b) => a.numero - b.numero);
+
+                    mostrarPaquetes();
+
+                    actualizarIndicadores();
+
+                    document.getElementById("restaurarPrecios")
+                        .disabled = paquetes.length !== 3;
+
+                },
+
+                error => {
+
+                    console.error(error);
+
+                    mostrarMensaje(
+
+                        "mensajeGeneral",
+
+                        "No fue posible consultar los paquetes. Revisa las reglas de Firestore y tu conexión.",
+
+                        "danger"
+
+                    );
+
+                    document.getElementById("restaurarPrecios")
+                        .disabled = true;
+
+                    texto("totalPaquetes", "—");
+
+                    texto("totalActivos", "—");
+
+                    texto("precioMinimo", "—");
+
+                    texto("precioMaximo", "—");
+
+                    document.getElementById("listaPaquetes")
+                        .replaceChildren(
+
+                            crearElemento(
+                                "p",
+                                "text-center py-4",
+                                "Catálogo no disponible."
+                            )
+
+                        );
+
+                }
+
+            );
+
+        }
+
+        // INDICADORES
+
+        function actualizarIndicadores() {
+
+            const activos = paquetes.filter(
+
+                paquete => paquete.activo === true
+
+            );
+
+            const precios = activos
+
+                .map(paquete => Number(paquete.precio))
+
+                .filter(precio =>
+
+                    Number.isFinite(precio) && precio > 0
+
+                );
+
+            texto("totalPaquetes", paquetes.length);
+
+            texto("totalActivos", activos.length);
+
+            texto(
+
+                "precioMinimo",
+
+                precios.length
+
+                    ? moneda(Math.min(...precios))
+
+                    : "—"
+
+            );
+
+            texto(
+
+                "precioMaximo",
+
+                precios.length
+
+                    ? moneda(Math.max(...precios))
+
+                    : "—"
+
+            );
+
+        }
+
+        // CREAR CARACTERÍSTICAS
+
+        function caracteristica(icono, contenido) {
+
+            const fila = crearElemento(
+
+                "div",
+
+                "caracteristica"
+
+            );
+
+            fila.append(
+
+                crearIcono(icono),
+
+                crearElemento("span", "", contenido)
+
+            );
+
+            return fila;
+
+        }
+
+        // MOSTRAR CATÁLOGO
+
+        function mostrarPaquetes() {
+
+            const contenedor =
+                document.getElementById("listaPaquetes");
+
+            contenedor.replaceChildren();
+
+            if (paquetes.length === 0) {
+
+                contenedor.append(
+
+                    crearElemento(
+
+                        "p",
+
+                        "text-center py-4",
+
+                        "No hay paquetes registrados."
+
+                    )
+
+                );
+
+                return;
+
+            }
+
+            paquetes.forEach(paquete => {
+
+                const columna = crearElemento(
+
+                    "div",
+
+                    "col-md-6 col-xl-4"
+
+                );
+
+                const tarjeta = crearElemento(
+
+                    "article",
+
+                    paquete.activo
+
+                        ? "paquete"
+
+                        : "paquete inactivo"
+
+                );
+
+                const estado = crearElemento(
+
+                    "span",
+
+                    paquete.activo
+
+                        ? "estado estado-activo"
+
+                        : "estado estado-inactivo",
+
+                    paquete.activo
+
+                        ? "Disponible"
+
+                        : "Desactivado"
+
+                );
+
+                const estadoContenedor = crearElemento(
+
+                    "div",
+
+                    "text-center"
+
+                );
+
+                estadoContenedor.append(estado);
+
+                const icono = crearElemento(
+
+                    "div",
+
+                    "icono-paquete"
+
+                );
+
+                icono.append(
+
+                    crearIcono(
+
+                        paquete.numero === 1
+
+                            ? "bi-person"
+
+                            : paquete.numero === 2
+
+                                ? "bi-people"
+
+                                : "bi-people-fill"
+
+                    )
+
+                );
+
+                const numero = crearElemento(
+
+                    "div",
+
+                    "numero-paquete",
+
+                    "Paquete " + paquete.numero
+
+                );
+
+                const nombre = crearElemento(
+
+                    "h3",
+
+                    "nombre-paquete",
+
+                    paquete.nombre
+
+                );
+
+                const precio = crearElemento(
+
+                    "div",
+
+                    "precio-paquete",
+
+                    moneda(paquete.precio)
+
+                );
+
+                const divisa = crearElemento(
+
+                    "div",
+
+                    "moneda",
+
+                    "PESOS MEXICANOS"
+
+                );
+
+                const separador = crearElemento(
+
+                    "div",
+
+                    "separador"
+
+                );
+
+                tarjeta.append(
+
+                    estadoContenedor,
+
+                    icono,
+
+                    numero,
+
+                    nombre,
+
+                    precio,
+
+                    divisa,
+
+                    separador,
+
+                    caracteristica(
+
+                        "bi-mic",
+
+                        paquete.voces +
+
+                        (Number(paquete.voces) === 1
+
+                            ? " persona en voz"
+
+                            : " personas en voces")
+
+                    ),
+
+                    caracteristica(
+
+                        "bi-music-note-beamed",
+
+                        "Instrumento: " + paquete.instrumento
+
+                    ),
+
+                    caracteristica(
+
+                        "bi-speaker",
+
+                        paquete.audio
+
+                            ? "Incluye equipo de audio"
+
+                            : "No incluye equipo de audio"
+
+                    )
+
+                );
+
+                if (paquete.descripcion) {
+
+                    tarjeta.append(
+
+                        crearElemento(
+
+                            "p",
+
+                            "descripcion-paquete",
+
+                            paquete.descripcion
+
+                        )
+
+                    );
+
+                }
+
+                const acciones = crearElemento(
+
+                    "div",
+
+                    "acciones"
+
+                );
+
+                const btnEditar = crearElemento(
+
+                    "button",
+
+                    "btn btn-dorado w-100"
+
+                );
+
+                btnEditar.type = "button";
+
+                btnEditar.append(
+
+                    crearIcono("bi-pencil-square me-2"),
+
+                    document.createTextNode("Editar paquete")
+
+                );
+
+                btnEditar.addEventListener("click", () => {
+
+                    abrirEdicion(paquete.id);
+
+                });
+
+                const btnEstado = crearElemento(
+
+                    "button",
+
+                    "btn btn-secundario w-100"
+
+                );
+
+                btnEstado.type = "button";
+
+                btnEstado.append(
+
+                    crearIcono(
+
+                        paquete.activo
+
+                            ? "bi-pause-circle me-2"
+
+                            : "bi-play-circle me-2"
+
+                    ),
+
+                    document.createTextNode(
+
+                        paquete.activo
+
+                            ? "Desactivar paquete"
+
+                            : "Activar paquete"
+
+                    )
+
+                );
+
+                btnEstado.addEventListener("click", () => {
+
+                    cambiarEstado(paquete.id, btnEstado);
+
+                });
+
+                acciones.append(
+
+                    btnEditar,
+
+                    btnEstado
+
+                );
+
+                tarjeta.append(acciones);
+
+                columna.append(tarjeta);
+
+                contenedor.append(columna);
+
+            });
+
+        }
+
+        // ABRIR MODAL DE EDICIÓN
+
+        function abrirEdicion(id) {
+
+            if (!autorizado) return;
+
+            const paquete = paquetes.find(
+
+                elemento => elemento.id === id
+
+            );
+
+            if (!paquete) return;
+
+            ocultarMensaje("mensajeModal");
+
+            document.getElementById("paqueteId").value =
+                paquete.id;
+
+            document.getElementById("numeroPaquete").value =
+                paquete.numero;
+
+            document.getElementById("nombrePaquete").value =
+                paquete.nombre;
+
+            document.getElementById("vocesPaquete").value =
+                paquete.voces;
+
+            document.getElementById("precioPaquete").value =
+                paquete.precio;
+
+            document.getElementById("instrumentoPaquete").value =
+                paquete.instrumento;
+
+            document.getElementById("descripcionPaquete").value =
+                paquete.descripcion || "";
+
+            document.getElementById("audioPaquete").checked =
+                paquete.audio === true;
+
+            document.getElementById("activoPaquete").checked =
+                paquete.activo === true;
+
+            texto(
+
+                "tituloModal",
+
+                "Editar paquete " + paquete.numero
+
+            );
+
+            modalEditar.show();
+
+        }
+
+        // GUARDAR CAMBIOS
+
+        document.getElementById("formEditar")
+            .addEventListener("submit", async e => {
+
+                e.preventDefault();
+
+                if (!autorizado) return;
+
+                const id =
+                    document.getElementById("paqueteId").value;
+
+                const paquete = paquetes.find(
+
+                    elemento => elemento.id === id
+
+                );
+
+                if (!paquete) return;
+
+                const nombre = document
+
+                    .getElementById("nombrePaquete")
+
+                    .value.trim();
+
+                const voces = Number(
+
+                    document.getElementById("vocesPaquete").value
+
+                );
+
+                const precio = Number(
+
+                    document.getElementById("precioPaquete").value
+
+                );
+
+                const instrumento = document
+
+                    .getElementById("instrumentoPaquete")
+
+                    .value.trim();
+
+                const descripcion = document
+
+                    .getElementById("descripcionPaquete")
+
+                    .value.trim();
+
+                const audio = document
+
+                    .getElementById("audioPaquete").checked;
+
+                const activo = document
+
+                    .getElementById("activoPaquete").checked;
+
+                if (
+
+                    !nombre ||
+
+                    !instrumento ||
+
+                    !Number.isInteger(voces) ||
+
+                    voces < 1 ||
+
+                    voces > 50 ||
+
+                    !Number.isFinite(precio) ||
+
+                    precio <= 0 ||
+
+                    precio > 1000000
+
+                ) {
+
+                    mostrarMensaje(
+
+                        "mensajeModal",
+
+                        "Verifica que todos los datos sean correctos.",
+
+                        "warning"
+
+                    );
+
+                    return;
+
+                }
+
+                const boton =
+                    document.getElementById("guardarPaquete");
+
+                boton.disabled = true;
+
+                boton.textContent = "Guardando...";
+
+                ocultarMensaje("mensajeModal");
+
+                try {
+
+                    await updateDoc(
+
+                        doc(db, "servicios", id),
+
+                        {
+
+                            nombre,
+
+                            voces,
+
+                            precio: Math.round(precio * 100) / 100,
+
+                            instrumento,
+
+                            descripcion,
+
+                            audio,
+
+                            activo,
+
+                            actualizadoEn: serverTimestamp()
+
+                        }
+
+                    );
+
+                    modalEditar.hide();
+
+                    mostrarMensaje(
+
+                        "mensajeGeneral",
+
+                        "El paquete se actualizó correctamente.",
+
+                        "success"
+
+                    );
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    mostrarMensaje(
+
+                        "mensajeModal",
+
+                        "No fue posible guardar los cambios.",
+
+                        "danger"
+
+                    );
+
+                } finally {
+
+                    boton.disabled = false;
+
+                    boton.innerHTML = `
+
+                        <i class="bi bi-floppy me-2"></i>
+
+                        Guardar cambios
+
+                    `;
+
+                }
+
+            });
+
+        // ACTIVAR O DESACTIVAR PAQUETES
+
+        async function cambiarEstado(id, boton) {
+
+            if (!autorizado) return;
+
+            const paquete = paquetes.find(
+
+                elemento => elemento.id === id
+
+            );
+
+            if (!paquete) return;
+
+            const nuevoEstado = !paquete.activo;
+
+            const confirmar = window.confirm(
+
+                nuevoEstado
+
+                    ? "¿Deseas activar este paquete?"
+
+                    : "¿Deseas desactivar este paquete? Los contratos anteriores conservarán sus datos."
+
+            );
+
+            if (!confirmar) return;
+
+            boton.disabled = true;
+
+            try {
+
+                await updateDoc(
+
+                    doc(db, "servicios", id),
+
+                    {
+
+                        activo: nuevoEstado,
+
+                        actualizadoEn: serverTimestamp()
+
+                    }
+
+                );
+
+                mostrarMensaje(
+
+                    "mensajeGeneral",
+
+                    nuevoEstado
+
+                        ? "Paquete activado correctamente."
+
+                        : "Paquete desactivado correctamente.",
+
+                    "success"
+
+                );
+
+            } catch (error) {
+
+                console.error(error);
+
+                mostrarMensaje(
+
+                    "mensajeGeneral",
+
+                    "No fue posible cambiar el estado del paquete.",
+
+                    "danger"
+
+                );
+
+            } finally {
+
+                boton.disabled = false;
+
+            }
+
+        }
+
+        // RESTAURAR PRECIOS BASE
+
+        document.getElementById("restaurarPrecios")
+            .addEventListener("click", async () => {
+
+                if (!autorizado) return;
+
+                const confirmar = window.confirm(
+
+                    "¿Deseas restaurar los precios a $500, $800 y $1,200 MXN? Las demás características no cambiarán."
+
+                );
+
+                if (!confirmar) return;
+
+                const boton =
+                    document.getElementById("restaurarPrecios");
+
+                boton.disabled = true;
+
+                try {
+
+                    const batch = writeBatch(db);
+
+                    paquetesBase.forEach(paquete => {
+
+                        batch.update(
+
+                            doc(db, "servicios", paquete.id),
+
+                            {
+
+                                precio: paquete.precio,
+
+                                actualizadoEn: serverTimestamp()
+
+                            }
+
+                        );
+
+                    });
+
+                    await batch.commit();
+
+                    mostrarMensaje(
+
+                        "mensajeGeneral",
+
+                        "Los precios base se restauraron correctamente.",
+
+                        "success"
+
+                    );
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    mostrarMensaje(
+
+                        "mensajeGeneral",
+
+                        "No fue posible restaurar los precios.",
+
+                        "danger"
+
+                    );
+
+                } finally {
+
+                    boton.disabled = paquetes.length !== 3;
+
+                }
+
+            });
+
+        // CERRAR SESIÓN
+
+        document.getElementById("cerrarSesion")
+            .addEventListener("click", async () => {
+
+                if (!window.confirm(
+
+                    "¿Deseas cerrar sesión en Voz Angelical?"
+
+                )) return;
+
+                try {
+
+                    await signOut(auth);
+
+                    window.location.replace("index.html");
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    mostrarMensaje(
+
+                        "mensajeGeneral",
+
+                        "No fue posible cerrar sesión.",
+
+                        "danger"
+
+                    );
+
+                }
+
+            });
+
+        // DETENER CONSULTAS
+
+        function detenerEscucha() {
+
+            if (cancelarEscucha) {
+
+                cancelarEscucha();
+
+                cancelarEscucha = null;
+
+            }
+
+        }
+
+        function errorAcceso(mensaje) {
+
+            texto("mensajeCarga", mensaje);
+
+            document.getElementById("spinnerCarga")
+                .classList.add("d-none");
+
+            document.getElementById("volverLogin")
+                .classList.remove("d-none");
+
+        }
+
+        // CONEXIÓN Y SEGURIDAD
+
+        try {
+
+            const firebase = await import("./firebase.js");
+
+            auth = firebase.auth;
+
+            db = firebase.db;
+
+            if (!auth || !db) {
+
+                throw new Error("Firebase no configurado");
+
+            }
+
+            onAuthStateChanged(auth, async usuario => {
+
+                autorizado = false;
+
+                detenerEscucha();
+
+                if (!usuario) {
+
+                    document.getElementById("aplicacion")
+                        .hidden = true;
+
+                    window.location.replace("index.html");
+
+                    return;
+
+                }
+
+                if (usuario.uid !== UID_ADMIN) {
+
+                    document.getElementById("aplicacion")
+                        .hidden = true;
+
+                    document.getElementById("pantallaCarga")
+                        .style.display = "flex";
+
+                    try {
+
+                        await signOut(auth);
+
+                    } catch (error) {
+
+                        console.error(error);
+
+                        errorAcceso("Usuario no autorizado.");
+
+                    }
+
+                    return;
+
+                }
+
+                autorizado = true;
+
+                texto(
+
+                    "correoUsuario",
+
+                    usuario.email || "Administrador"
+
+                );
+
+                try {
+
+                    texto(
+
+                        "mensajeCarga",
+
+                        "Preparando catálogo musical..."
+
+                    );
+
+                    await inicializarPaquetes();
+
+                    if (auth.currentUser?.uid !== UID_ADMIN) {
+
+                        return;
+
+                    }
+
+                    document.getElementById("pantallaCarga")
+                        .style.display = "none";
+
+                    document.getElementById("aplicacion")
+                        .hidden = false;
+
+                    escucharPaquetes();
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    errorAcceso(
+
+                        "No fue posible preparar el catálogo. Revisa la conexión y las reglas de Firestore."
+
+                    );
+
+                }
+
+            }, error => {
+
+                console.error(error);
+
+                errorAcceso("No se pudo verificar la sesión.");
+
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            errorAcceso(
+
+                "No fue posible conectar con Firebase. Revisa firebase.js."
+
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,3113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Clientes | Voz Angelical</title>
+    <link rel="icon" href="logo.png">
+
+    <!-- BOOTSTRAP 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- ICONOS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- TIPOGRAFÍAS -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root {
+            --dorado: #B48A42;
+            --dorado-claro: #DCC18A;
+            --dorado-oscuro: #8A632B;
+            --marfil: #F5EFE4;
+            --blanco: #FFFFFF;
+            --cafe: #30271D;
+            --gris: #796C59;
+            --borde: #E6D8C1;
+            --sidebar: 270px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--marfil);
+            font-family: 'Poppins', sans-serif;
+            color: var(--cafe);
+        }
+
+        /* PANTALLA DE CARGA */
+
+        #pantallaCarga {
+            position: fixed;
+            inset: 0;
+            background: var(--marfil);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        #pantallaCarga img {
+            width: 140px;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+        }
+
+        #pantallaCarga h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+        }
+
+        /* MENU LATERAL */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar);
+            height: 100dvh;
+            background: white;
+            border-right: 1px solid var(--borde);
+            display: flex;
+            flex-direction: column;
+            z-index: 1050;
+            transition: transform .3s ease;
+        }
+
+        .marca {
+            text-align: center;
+            padding: 25px 15px 20px;
+            border-bottom: 1px solid var(--borde);
+        }
+
+        .marca img {
+            width: 105px;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+        }
+
+        .marca h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dorado-oscuro);
+            margin-top: 12px;
+            letter-spacing: 1px;
+        }
+
+        .marca p {
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--gris);
+            margin: 0;
+        }
+
+        .menu {
+            padding: 20px 15px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .titulo-menu {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: var(--gris);
+            padding: 10px 12px;
+            font-weight: 600;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            text-decoration: none;
+            color: var(--cafe);
+            font-size: 13px;
+            padding: 13px 15px;
+            margin-bottom: 5px;
+            border-radius: 10px;
+            transition: .25s;
+        }
+
+        .menu a i {
+            font-size: 18px;
+            color: var(--dorado-oscuro);
+        }
+
+        .menu a:hover {
+            background: var(--marfil);
+            transform: translateX(3px);
+        }
+
+        .menu a.activo {
+            background: linear-gradient(
+                135deg,
+                #8A632B,
+                #B48A42
+            );
+            color: white;
+            box-shadow: 0 5px 15px rgba(138,99,43,.18);
+        }
+
+        .menu a.activo i {
+            color: white;
+        }
+
+        .sidebar-footer {
+            padding: 18px;
+            border-top: 1px solid var(--borde);
+        }
+
+        .btn-salir {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E7CCCC;
+            background: #FFF6F6;
+            color: #A94442;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        .btn-salir:hover {
+            background: #A94442;
+            color: white;
+        }
+
+        .version {
+            font-size: 10px;
+            text-align: center;
+            color: var(--gris);
+            margin-top: 12px;
+        }
+
+        /* CONTENIDO PRINCIPAL */
+
+        .principal {
+            margin-left: var(--sidebar);
+            min-height: 100vh;
+        }
+
+        .barra-superior {
+            min-height: 80px;
+            background: white;
+            border-bottom: 1px solid var(--borde);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            gap: 15px;
+        }
+
+        .barra-superior h5 {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .barra-superior small {
+            color: var(--gris);
+            font-size: 11px;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--marfil);
+            color: var(--dorado-oscuro);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            flex-shrink: 0;
+        }
+
+        .contenido {
+            padding: 30px;
+            animation: aparecer .7s ease;
+        }
+
+        /* ENCABEZADO */
+
+        .encabezado {
+            background: linear-gradient(
+                120deg,
+                #8A632B,
+                #B48A42,
+                #C6A46A
+            );
+            color: white;
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 28px;
+            box-shadow: 0 10px 25px rgba(138,99,43,.15);
+        }
+
+        .encabezado h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .encabezado p {
+            font-size: 13px;
+            line-height: 1.8;
+            max-width: 650px;
+            margin-bottom: 0;
+        }
+
+        /* INDICADORES */
+
+        .indicador {
+            background: white;
+            border: 1px solid var(--borde);
+            border-radius: 16px;
+            padding: 22px;
+            height: 100%;
+            transition: .3s;
+        }
+
+        .indicador:hover {
+            transform: translateY(-4px);
+        }
+
+        .indicador-icono {
+            width: 48px;
+            height: 48px;
+            background: var(--marfil);
+            color: var(--dorado-oscuro);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            margin-bottom: 15px;
+        }
+
+        .indicador p {
+            font-size: 12px;
+            color: var(--gris);
+            margin-bottom: 7px;
+        }
+
+        .indicador h3 {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--dorado-oscuro);
+            margin: 0;
+        }
+
+        /* TARJETAS */
+
+        .tarjeta {
+            background: white;
+            border: 1px solid var(--borde);
+            border-radius: 17px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(95,67,25,.04);
+        }
+
+        .titulo-seccion {
+            font-family: 'Cinzel', serif;
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--dorado-oscuro);
+        }
+
+        .subtitulo {
+            color: var(--gris);
+            font-size: 12px;
+        }
+
+        /* BOTONES */
+
+        .btn-dorado {
+            background: var(--dorado-oscuro);
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 12px;
+            transition: .25s;
+        }
+
+        .btn-dorado:hover {
+            background: var(--dorado);
+            color: white;
+        }
+
+        .btn-secundario {
+            background: white;
+            border: 1px solid var(--dorado-claro);
+            color: var(--dorado-oscuro);
+            border-radius: 10px;
+            padding: 12px 18px;
+            font-size: 12px;
+        }
+
+        .btn-secundario:hover {
+            background: var(--marfil);
+            color: var(--dorado-oscuro);
+        }
+
+        .btn-accion {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border: 1px solid var(--borde);
+            background: var(--marfil);
+            color: var(--dorado-oscuro);
+            border-radius: 8px;
+            font-size: 15px;
+            text-decoration: none;
+            transition: .25s;
+        }
+
+        .btn-accion:hover {
+            background: var(--dorado-oscuro);
+            color: white;
+        }
+
+        .btn-whatsapp {
+            background: #E7F7EB;
+            color: #258B46;
+            border-color: #CDE9D4;
+        }
+
+        .btn-whatsapp:hover {
+            background: #258B46;
+            color: white;
+        }
+
+        .btn-eliminar {
+            background: #FFF1F1;
+            color: #A94442;
+            border-color: #E7CCCC;
+        }
+
+        .btn-eliminar:hover {
+            background: #A94442;
+            color: white;
+        }
+
+        /* FORMULARIOS */
+
+        .form-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .form-control,
+        .form-select {
+            background: #FDFBF7;
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+            min-height: 45px;
+            font-size: 13px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--dorado);
+            box-shadow: 0 0 0 3px rgba(180,138,66,.15);
+        }
+
+        .input-group-text {
+            background: var(--marfil);
+            color: var(--dorado-oscuro);
+            border-color: var(--borde);
+        }
+
+        .modal-content {
+            border: 1px solid var(--borde);
+            border-radius: 20px;
+        }
+
+        .modal-title {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+            font-weight: 700;
+            font-size: 19px;
+        }
+
+        .alert {
+            font-size: 12px;
+        }
+
+        /* TABLA DE CLIENTES */
+
+        .table {
+            font-size: 12px;
+            vertical-align: middle;
+            margin-bottom: 0;
+        }
+
+        .table thead th {
+            background: #F9F5ED;
+            color: var(--dorado-oscuro);
+            padding: 15px;
+            white-space: nowrap;
+            font-size: 11px;
+            border-bottom: 1px solid var(--borde);
+        }
+
+        .table tbody td {
+            padding: 15px;
+            color: var(--cafe);
+            border-color: #F0EBE2;
+        }
+
+        .cliente-avatar {
+            width: 43px;
+            height: 43px;
+            background: var(--marfil);
+            color: var(--dorado-oscuro);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .nombre-cliente {
+            font-weight: 600;
+            font-size: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        .dato-secundario {
+            color: var(--gris);
+            font-size: 10px;
+        }
+
+        .acciones-tabla {
+            display: flex;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .vacio {
+            text-align: center;
+            padding: 55px 15px;
+            color: var(--gris);
+        }
+
+        .vacio i {
+            display: block;
+            font-size: 48px;
+            color: var(--dorado-claro);
+            margin-bottom: 15px;
+        }
+
+        .vacio h5 {
+            font-size: 15px;
+            color: var(--dorado-oscuro);
+        }
+
+        .vacio p {
+            font-size: 12px;
+        }
+
+        /* EXPEDIENTE */
+
+        .perfil-cliente {
+            background: var(--marfil);
+            border: 1px solid var(--borde);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .perfil-avatar {
+            width: 75px;
+            height: 75px;
+            background: var(--dorado-oscuro);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            margin: 0 auto 15px;
+        }
+
+        .perfil-cliente h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--dorado-oscuro);
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .dato-perfil {
+            padding: 15px;
+            background: #FCFAF6;
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+            height: 100%;
+        }
+
+        .dato-perfil small {
+            display: block;
+            font-size: 10px;
+            color: var(--gris);
+            margin-bottom: 7px;
+        }
+
+        .dato-perfil strong {
+            font-size: 12px;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .historial-item {
+            border: 1px solid var(--borde);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #FCFAF6;
+            font-size: 12px;
+        }
+
+        .historial-item strong {
+            color: var(--dorado-oscuro);
+        }
+
+        /* MENU RESPONSIVO */
+
+        .btn-menu {
+            display: none;
+            width: 40px;
+            height: 40px;
+            background: var(--marfil);
+            border: 1px solid var(--borde);
+            color: var(--dorado-oscuro);
+            border-radius: 9px;
+            font-size: 22px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.35);
+            z-index: 1040;
+        }
+
+        .overlay.activo {
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 10px 10px;
+            color: var(--gris);
+            font-size: 11px;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media(max-width: 991px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.abierto {
+                transform: translateX(0);
+            }
+
+            .principal {
+                margin-left: 0;
+            }
+
+            .btn-menu {
+                display: block;
+            }
+
+            .contenido {
+                padding: 20px;
+            }
+
+            .barra-superior {
+                padding: 15px 20px;
+            }
+        }
+
+        @media(max-width: 576px) {
+
+            .contenido {
+                padding: 15px;
+            }
+
+            .encabezado {
+                padding: 25px;
+            }
+
+            .encabezado h2 {
+                font-size: 23px;
+            }
+
+            .datos-usuario {
+                display: none;
+            }
+
+            .barra-superior h5 {
+                font-size: 15px;
+            }
+
+            .indicador {
+                padding: 17px;
+            }
+
+            .indicador h3 {
+                font-size: 23px;
+            }
+
+            .tarjeta {
+                padding: 17px;
+            }
+        }
+
+        @media(prefers-reduced-motion: reduce) {
+
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- PANTALLA DE CARGA -->
+
+    <div id="pantallaCarga">
+
+        <img src="logo.png" alt="Voz Angelical">
+
+        <div class="spinner-border"
+             id="spinnerCarga"
+             style="color:#B48A42;">
+        </div>
+
+        <h4>Voz Angelical</h4>
+
+        <small id="mensajeCarga">
+            Verificando acceso...
+        </small>
+
+        <a href="index.html"
+           id="volverLogin"
+           class="btn btn-dorado d-none">
+
+            Volver al inicio de sesión
+
+        </a>
+
+    </div>
+
+    <div id="aplicacion" hidden>
+
+        <div class="overlay" id="overlay"></div>
+
+        <!-- MENU LATERAL -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="marca">
+
+                <img src="logo.png" alt="Voz Angelical">
+
+                <h1>VOZ ANGELICAL</h1>
+
+                <p>GESTIÓN MUSICAL</p>
+
+            </div>
+
+            <nav class="menu">
+
+                <div class="titulo-menu">
+                    MENÚ PRINCIPAL
+                </div>
+
+                <a href="inicio.html">
+                    <i class="bi bi-grid-1x2"></i>
+                    Inicio
+                </a>
+
+                <a href="agenda.html">
+                    <i class="bi bi-calendar3"></i>
+                    Agenda
+                </a>
+
+                <a href="contratos.html">
+                    <i class="bi bi-file-earmark-text"></i>
+                    Contratos
+                </a>
+
+                <a href="clientes.html" class="activo">
+                    <i class="bi bi-people"></i>
+                    Clientes
+                </a>
+
+                <a href="servicios.html">
+                    <i class="bi bi-music-note-beamed"></i>
+                    Servicios
+                </a>
+
+                <a href="estadisticas.html">
+                    <i class="bi bi-bar-chart-line"></i>
+                    Estadísticas
+                </a>
+
+                <div class="titulo-menu mt-3">
+                    ADMINISTRACIÓN
+                </div>
+
+                <a href="configuracion.html">
+                    <i class="bi bi-gear"></i>
+                    Configuración
+                </a>
+
+                <a href="usuarios.html">
+                    <i class="bi bi-shield-lock"></i>
+                    Usuarios
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <button class="btn-salir" id="cerrarSesion">
+
+                    <i class="bi bi-box-arrow-right me-2"></i>
+
+                    Cerrar sesión
+
+                </button>
+
+                <div class="version">
+                    Voz Angelical | Versión 1.0
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+
+        <main class="principal">
+
+            <header class="barra-superior">
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <button class="btn-menu"
+                            id="abrirMenu"
+                            aria-label="Abrir menú"
+                            aria-expanded="false">
+
+                        <i class="bi bi-list"></i>
+
+                    </button>
+
+                    <div>
+
+                        <h5>Administración de clientes</h5>
+
+                        <small>
+                            Directorio y expedientes digitales
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div class="avatar">
+
+                        <i class="bi bi-person"></i>
+
+                    </div>
+
+                    <div class="datos-usuario">
+
+                        <strong style="font-size:12px;">
+                            Administrador
+                        </strong>
+
+                        <br>
+
+                        <small id="correoUsuario"></small>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+            <div class="contenido">
+
+                <!-- ENCABEZADO -->
+
+                <section class="encabezado">
+
+                    <h2>
+
+                        <i class="bi bi-people me-2"></i>
+
+                        Nuestros clientes
+
+                    </h2>
+
+                    <p>
+
+                        Administra la información de las personas
+                        que contratan los servicios musicales de
+                        Voz Angelical y consulta su historial
+                        de celebraciones y contratos.
+
+                    </p>
+
+                </section>
+
+                <div id="mensajeGeneral"
+                     class="alert d-none"
+                     role="alert"
+                     aria-live="polite">
+                </div>
+
+                <!-- INDICADORES -->
+
+                <div class="row g-3 mb-4">
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <div class="indicador-icono">
+                                <i class="bi bi-people"></i>
+                            </div>
+
+                            <p>Total de clientes</p>
+
+                            <h3 id="totalClientes">—</h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <div class="indicador-icono">
+                                <i class="bi bi-person-plus"></i>
+                            </div>
+
+                            <p>Nuevos este mes</p>
+
+                            <h3 id="clientesMes">—</h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <div class="indicador-icono">
+                                <i class="bi bi-arrow-repeat"></i>
+                            </div>
+
+                            <p>Clientes frecuentes</p>
+
+                            <h3 id="clientesFrecuentes">—</h3>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-xl-3">
+
+                        <div class="indicador">
+
+                            <div class="indicador-icono">
+                                <i class="bi bi-whatsapp"></i>
+                            </div>
+
+                            <p>Con teléfono registrado</p>
+
+                            <h3 id="clientesTelefono">—</h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- DIRECTORIO -->
+
+                <section class="tarjeta">
+
+                    <div class="d-flex justify-content-between
+                                align-items-center flex-wrap gap-3 mb-4">
+
+                        <div>
+
+                            <h3 class="titulo-seccion">
+
+                                Directorio de clientes
+
+                            </h3>
+
+                            <p class="subtitulo mb-0">
+
+                                Consulta y administra tus registros.
+
+                            </p>
+
+                        </div>
+
+                        <button class="btn btn-dorado"
+                                id="nuevoCliente"
+                                disabled>
+
+                            <i class="bi bi-person-plus me-2"></i>
+
+                            Registrar cliente
+
+                        </button>
+
+                    </div>
+
+                    <!-- BUSCADOR -->
+
+                    <div class="row g-3 mb-4">
+
+                        <div class="col-md-8">
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+
+                                    <i class="bi bi-search"></i>
+
+                                </span>
+
+                                <input type="search"
+                                       class="form-control"
+                                       id="buscador"
+                                       placeholder="Buscar por nombre, teléfono o localidad...">
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <select id="ordenClientes"
+                                    class="form-select">
+
+                                <option value="recientes">
+                                    Más recientes
+                                </option>
+
+                                <option value="az">
+                                    Nombre A - Z
+                                </option>
+
+                                <option value="za">
+                                    Nombre Z - A
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <!-- TABLA -->
+
+                    <div class="table-responsive d-none"
+                         id="contenedorTabla">
+
+                        <table class="table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Cliente</th>
+
+                                    <th>Teléfono</th>
+
+                                    <th>Localidad</th>
+
+                                    <th>Fecha de registro</th>
+
+                                    <th>Eventos</th>
+
+                                    <th>Acciones</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="tablaClientes"></tbody>
+
+                        </table>
+
+                    </div>
+
+                    <!-- ESTADO VACIO -->
+
+                    <div class="vacio" id="estadoVacio">
+
+                        <i class="bi bi-people"></i>
+
+                        <h5 id="tituloVacio">
+
+                            Cargando clientes...
+
+                        </h5>
+
+                        <p id="descripcionVacio">
+
+                            Consultando la base de datos.
+
+                        </p>
+
+                    </div>
+
+                    <div class="mt-3 subtitulo"
+                         id="cantidadResultados">
+                    </div>
+
+                </section>
+
+                <footer class="footer">
+
+                    &copy; <span id="anio"></span> Voz Angelical.
+
+                    Todos los derechos reservados.
+
+                    <br>
+
+                    Sistema Integral de Gestión Musical | V.1.0
+
+                </footer>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- MODAL REGISTRAR Y EDITAR CLIENTE -->
+
+    <div class="modal fade"
+         id="modalCliente"
+         tabindex="-1"
+         aria-labelledby="tituloModal">
+
+        <div class="modal-dialog modal-dialog-centered
+                    modal-lg modal-dialog-scrollable">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="tituloModal">
+
+                        Registrar cliente
+
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
+
+                </div>
+
+                <form id="formCliente">
+
+                    <div class="modal-body p-4">
+
+                        <input type="hidden" id="clienteId">
+
+                        <div class="row g-3">
+
+                            <div class="col-12">
+
+                                <label class="form-label"
+                                       for="nombre">
+
+                                    Nombre completo *
+
+                                </label>
+
+                                <input type="text"
+                                       id="nombre"
+                                       class="form-control"
+                                       maxlength="150"
+                                       placeholder="Nombre y apellidos"
+                                       required>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label"
+                                       for="telefono">
+
+                                    Teléfono *
+
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        +52
+                                    </span>
+
+                                    <input type="tel"
+                                           id="telefono"
+                                           class="form-control"
+                                           pattern="[0-9]{10}"
+                                           maxlength="10"
+                                           placeholder="10 dígitos"
+                                           required>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label"
+                                       for="correo">
+
+                                    Correo electrónico
+
+                                </label>
+
+                                <input type="email"
+                                       id="correo"
+                                       class="form-control"
+                                       maxlength="150"
+                                       placeholder="Opcional">
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label"
+                                       for="localidad">
+
+                                    Localidad o municipio
+
+                                </label>
+
+                                <input type="text"
+                                       id="localidad"
+                                       class="form-control"
+                                       maxlength="150"
+                                       placeholder="Ej. Chiautempan">
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label"
+                                       for="estado">
+
+                                    Estado
+
+                                </label>
+
+                                <input type="text"
+                                       id="estado"
+                                       class="form-control"
+                                       maxlength="100"
+                                       value="Tlaxcala">
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <label class="form-label"
+                                       for="domicilio">
+
+                                    Domicilio
+
+                                </label>
+
+                                <input type="text"
+                                       id="domicilio"
+                                       class="form-control"
+                                       maxlength="250"
+                                       placeholder="Opcional">
+
+                            </div>
+
+                            <div class="col-12">
+
+                                <label class="form-label"
+                                       for="notas">
+
+                                    Observaciones
+
+                                </label>
+
+                                <textarea id="notas"
+                                          class="form-control"
+                                          rows="4"
+                                          maxlength="1000"
+                                          placeholder="Información adicional del cliente..."></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <p class="subtitulo mt-3 mb-0">
+
+                            * Campos obligatorios. Registra únicamente
+                            información necesaria para prestar el servicio.
+
+                        </p>
+
+                        <div id="mensajeModal"
+                             class="alert d-none mt-3"
+                             role="alert">
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button"
+                                class="btn btn-secundario"
+                                data-bs-dismiss="modal">
+
+                            Cancelar
+
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-dorado"
+                                id="guardarCliente">
+
+                            <i class="bi bi-floppy me-2"></i>
+
+                            Guardar cliente
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MODAL EXPEDIENTE DIGITAL -->
+
+    <div class="modal fade"
+         id="modalExpediente"
+         tabindex="-1"
+         aria-labelledby="tituloExpediente">
+
+        <div class="modal-dialog modal-dialog-centered
+                    modal-lg modal-dialog-scrollable">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="tituloExpediente">
+
+                        Expediente del cliente
+
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
+
+                </div>
+
+                <div class="modal-body p-4">
+
+                    <div class="perfil-cliente">
+
+                        <div class="perfil-avatar"
+                             id="perfilIniciales">
+                        </div>
+
+                        <h4 id="perfilNombre"></h4>
+
+                        <small class="subtitulo"
+                               id="perfilRegistro">
+                        </small>
+
+                    </div>
+
+                    <div class="row g-3 mb-4">
+
+                        <div class="col-md-6">
+
+                            <div class="dato-perfil">
+
+                                <small>Teléfono</small>
+
+                                <strong id="perfilTelefono"></strong>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="dato-perfil">
+
+                                <small>Correo electrónico</small>
+
+                                <strong id="perfilCorreo"></strong>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="dato-perfil">
+
+                                <small>Localidad</small>
+
+                                <strong id="perfilLocalidad"></strong>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="dato-perfil">
+
+                                <small>Domicilio</small>
+
+                                <strong id="perfilDomicilio"></strong>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-12">
+
+                            <div class="dato-perfil">
+
+                                <small>Observaciones</small>
+
+                                <strong id="perfilNotas"></strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <h5 class="titulo-seccion mb-3">
+
+                        Historial de celebraciones
+
+                    </h5>
+
+                    <div id="historialEventos"></div>
+
+                    <hr class="my-4">
+
+                    <h5 class="titulo-seccion mb-3">
+
+                        Historial de contratos
+
+                    </h5>
+
+                    <div id="historialContratos"></div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button class="btn btn-secundario"
+                            data-bs-dismiss="modal">
+
+                        Cerrar
+
+                    </button>
+
+                    <a href="#"
+                       class="btn btn-dorado"
+                       id="perfilNuevoEvento">
+
+                        <i class="bi bi-calendar-plus me-2"></i>
+
+                        Agendar evento
+
+                    </a>
+
+                    <a href="#"
+                       class="btn btn-dorado"
+                       id="perfilNuevoContrato">
+
+                        <i class="bi bi-file-earmark-plus me-2"></i>
+
+                        Generar contrato
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BOOTSTRAP -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- FUNCIONES VISUALES -->
+
+    <script>
+
+        const sidebar = document.getElementById("sidebar");
+
+        const overlay = document.getElementById("overlay");
+
+        const abrirMenu = document.getElementById("abrirMenu");
+
+        function cerrarMenu() {
+
+            sidebar.classList.remove("abierto");
+
+            overlay.classList.remove("activo");
+
+            abrirMenu.setAttribute("aria-expanded", "false");
+
+        }
+
+        abrirMenu.addEventListener("click", () => {
+
+            sidebar.classList.add("abierto");
+
+            overlay.classList.add("activo");
+
+            abrirMenu.setAttribute("aria-expanded", "true");
+
+        });
+
+        overlay.addEventListener("click", cerrarMenu);
+
+        document.addEventListener("keydown", e => {
+
+            if (e.key === "Escape") cerrarMenu();
+
+        });
+
+        document.getElementById("anio").textContent =
+            new Date().getFullYear();
+
+    </script>
+
+    <!-- FIREBASE -->
+
+    <script type="module">
+
+        import {
+
+            onAuthStateChanged,
+            signOut
+
+        } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+        import {
+
+            collection,
+            doc,
+            addDoc,
+            updateDoc,
+            deleteDoc,
+            onSnapshot,
+            getDocsFromServer,
+            query,
+            where,
+            limit,
+            serverTimestamp
+
+        } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+        // ADMINISTRADOR AUTORIZADO
+
+        const UID_ADMIN =
+            "TsWLtI74pTcivOzAC7gtiaaOzJx1";
+
+        let auth;
+        let db;
+
+        let autorizado = false;
+
+        let clientes = [];
+        let eventos = [];
+        let contratos = [];
+
+        let suscripciones = [];
+
+        let clientesCargados = false;
+        let eventosCargados = false;
+        let contratosCargados = false;
+
+        let expedienteActual = null;
+
+        const $ = id => document.getElementById(id);
+
+        const modalCliente = new bootstrap.Modal(
+            $("modalCliente")
+        );
+
+        const modalExpediente = new bootstrap.Modal(
+            $("modalExpediente")
+        );
+
+        // FUNCIONES AUXILIARES
+
+        function texto(id, valor) {
+
+            $(id).textContent = valor;
+
+        }
+
+        function normalizar(valor) {
+
+            return String(valor || "")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+                .trim();
+
+        }
+
+        function iniciales(nombre) {
+
+            return String(nombre || "?")
+                .trim()
+                .split(/\s+/)
+                .slice(0, 2)
+                .map(palabra => palabra.charAt(0))
+                .join("")
+                .toUpperCase();
+
+        }
+
+        function convertirFecha(valor) {
+
+            if (!valor) return null;
+
+            let fecha;
+
+            if (typeof valor.toDate === "function") {
+
+                fecha = valor.toDate();
+
+            } else if (
+                typeof valor === "string" &&
+                /^\d{4}-\d{2}-\d{2}$/.test(valor)
+            ) {
+
+                fecha = new Date(valor + "T00:00:00");
+
+            } else {
+
+                fecha = new Date(valor);
+
+            }
+
+            return Number.isNaN(fecha.getTime())
+                ? null
+                : fecha;
+
+        }
+
+        function fechaTexto(valor) {
+
+            const fecha = convertirFecha(valor);
+
+            return fecha
+
+                ? fecha.toLocaleDateString("es-MX")
+
+                : "Sin registrar";
+
+        }
+
+        function moneda(valor) {
+
+            return Number(valor || 0).toLocaleString(
+                "es-MX",
+                {
+                    style: "currency",
+                    currency: "MXN"
+                }
+            );
+
+        }
+
+        function elemento(etiqueta, clase, contenido) {
+
+            const nodo = document.createElement(etiqueta);
+
+            if (clase) nodo.className = clase;
+
+            if (contenido !== undefined) {
+
+                nodo.textContent = contenido;
+
+            }
+
+            return nodo;
+
+        }
+
+        function mensaje(id, contenido, tipo) {
+
+            $(id).className = "alert alert-" + tipo;
+
+            $(id).textContent = contenido;
+
+        }
+
+        function ocultarMensaje(id) {
+
+            $(id).classList.add("d-none");
+
+        }
+
+        function eventosCliente(id) {
+
+            return eventos.filter(
+                evento => evento.clienteId === id
+            );
+
+        }
+
+        function contratosCliente(id) {
+
+            return contratos.filter(
+                contrato => contrato.clienteId === id
+            );
+
+        }
+
+        // INDICADORES
+
+        function actualizarIndicadores() {
+
+            if (!clientesCargados) return;
+
+            const ahora = new Date();
+
+            const nuevos = clientes.filter(cliente => {
+
+                const fecha = convertirFecha(cliente.creadoEn);
+
+                return fecha &&
+                    fecha.getMonth() === ahora.getMonth() &&
+                    fecha.getFullYear() === ahora.getFullYear();
+
+            });
+
+            const frecuentes = clientes.filter(cliente =>
+
+                eventosCliente(cliente.id).filter(evento =>
+
+                    normalizar(evento.estado) === "realizado"
+
+                ).length >= 2
+
+            );
+
+            texto("totalClientes", clientes.length);
+
+            texto("clientesMes", nuevos.length);
+
+            texto(
+                "clientesFrecuentes",
+                eventosCargados ? frecuentes.length : "—"
+            );
+
+            texto(
+
+                "clientesTelefono",
+
+                clientes.filter(cliente =>
+                    /^\d{10}$/.test(cliente.telefono || "")
+                ).length
+
+            );
+
+        }
+
+        // BOTONES DE ACCIONES
+
+        function botonAccion(icono, titulo, clase, accion) {
+
+            const boton = elemento(
+                "button",
+                "btn-accion " + clase
+            );
+
+            boton.type = "button";
+
+            boton.title = titulo;
+
+            boton.setAttribute("aria-label", titulo);
+
+            boton.append(
+                elemento("i", "bi " + icono)
+            );
+
+            boton.addEventListener("click", accion);
+
+            return boton;
+
+        }
+
+        // MOSTRAR CLIENTES
+
+        function mostrarClientes() {
+
+            if (!clientesCargados) return;
+
+            const busqueda = normalizar(
+                $("buscador").value
+            );
+
+            const orden = $("ordenClientes").value;
+
+            let resultados = clientes.filter(cliente => {
+
+                const contenido = normalizar([
+
+                    cliente.nombre,
+                    cliente.telefono,
+                    cliente.correo,
+                    cliente.localidad,
+                    cliente.estado
+
+                ].join(" "));
+
+                return contenido.includes(busqueda);
+
+            });
+
+            if (orden === "az") {
+
+                resultados.sort((a, b) =>
+
+                    String(a.nombre || "").localeCompare(
+                        String(b.nombre || ""),
+                        "es"
+                    )
+
+                );
+
+            } else if (orden === "za") {
+
+                resultados.sort((a, b) =>
+
+                    String(b.nombre || "").localeCompare(
+                        String(a.nombre || ""),
+                        "es"
+                    )
+
+                );
+
+            } else {
+
+                resultados.sort((a, b) =>
+
+                    (convertirFecha(b.creadoEn)?.getTime() || 0) -
+                    (convertirFecha(a.creadoEn)?.getTime() || 0)
+
+                );
+
+            }
+
+            const tabla = $("tablaClientes");
+
+            tabla.replaceChildren();
+
+            texto(
+
+                "cantidadResultados",
+
+                "Mostrando " + resultados.length +
+                " de " + clientes.length + " clientes."
+
+            );
+
+            if (!resultados.length) {
+
+                $("contenedorTabla").classList.add("d-none");
+
+                $("estadoVacio").classList.remove("d-none");
+
+                texto(
+
+                    "tituloVacio",
+
+                    busqueda
+                        ? "No se encontraron resultados"
+                        : "Todavía no tienes clientes registrados"
+
+                );
+
+                texto(
+
+                    "descripcionVacio",
+
+                    busqueda
+                        ? "Intenta realizar otra búsqueda."
+                        : "Registra tu primer cliente para comenzar."
+
+                );
+
+                return;
+
+            }
+
+            $("estadoVacio").classList.add("d-none");
+
+            $("contenedorTabla").classList.remove("d-none");
+
+            resultados.forEach(cliente => {
+
+                const fila = elemento("tr");
+
+                const celdaNombre = elemento("td");
+
+                const contenedorNombre = elemento(
+                    "div",
+                    "d-flex align-items-center gap-3"
+                );
+
+                const avatar = elemento(
+                    "div",
+                    "cliente-avatar",
+                    iniciales(cliente.nombre)
+                );
+
+                const datos = elemento("div");
+
+                datos.append(
+
+                    elemento(
+                        "div",
+                        "nombre-cliente",
+                        cliente.nombre
+                    ),
+
+                    elemento(
+                        "div",
+                        "dato-secundario",
+                        cliente.correo || "Sin correo electrónico"
+                    )
+
+                );
+
+                contenedorNombre.append(avatar, datos);
+
+                celdaNombre.append(contenedorNombre);
+
+                fila.append(celdaNombre);
+
+                const campos = [
+
+                    cliente.telefono || "Sin teléfono",
+
+                    cliente.localidad || "Sin registrar",
+
+                    fechaTexto(cliente.creadoEn),
+
+                    eventosCargados
+                        ? eventosCliente(cliente.id).length
+                        : "—"
+
+                ];
+
+                campos.forEach(valor => {
+
+                    fila.append(
+                        elemento("td", "", valor)
+                    );
+
+                });
+
+                const celdaAcciones = elemento("td");
+
+                const acciones = elemento(
+                    "div",
+                    "acciones-tabla"
+                );
+
+                acciones.append(
+
+                    botonAccion(
+
+                        "bi-eye",
+                        "Consultar expediente",
+                        "",
+                        () => verExpediente(cliente.id)
+
+                    ),
+
+                    botonAccion(
+
+                        "bi-pencil-square",
+                        "Editar cliente",
+                        "",
+                        () => editarCliente(cliente.id)
+
+                    )
+
+                );
+
+                if (/^\d{10}$/.test(cliente.telefono || "")) {
+
+                    const whatsapp = elemento(
+                        "a",
+                        "btn-accion btn-whatsapp"
+                    );
+
+                    whatsapp.href =
+                        "https://wa.me/52" + cliente.telefono;
+
+                    whatsapp.target = "_blank";
+
+                    whatsapp.rel = "noopener noreferrer";
+
+                    whatsapp.title = "Contactar por WhatsApp";
+
+                    whatsapp.setAttribute(
+                        "aria-label",
+                        "Contactar por WhatsApp"
+                    );
+
+                    whatsapp.append(
+                        elemento("i", "bi bi-whatsapp")
+                    );
+
+                    acciones.append(whatsapp);
+
+                }
+
+                acciones.append(
+
+                    botonAccion(
+
+                        "bi-trash",
+                        "Eliminar cliente",
+                        "btn-eliminar",
+                        () => eliminarCliente(cliente.id)
+
+                    )
+
+                );
+
+                celdaAcciones.append(acciones);
+
+                fila.append(celdaAcciones);
+
+                tabla.append(fila);
+
+            });
+
+        }
+
+        // NUEVO CLIENTE
+
+        function abrirNuevoCliente() {
+
+            if (!autorizado || !clientesCargados) return;
+
+            $("formCliente").reset();
+
+            $("clienteId").value = "";
+
+            $("estado").value = "Tlaxcala";
+
+            ocultarMensaje("mensajeModal");
+
+            texto("tituloModal", "Registrar cliente");
+
+            texto("guardarCliente", "Guardar cliente");
+
+            modalCliente.show();
+
+        }
+
+        $("nuevoCliente").addEventListener(
+            "click",
+            abrirNuevoCliente
+        );
+
+        // EDITAR CLIENTE
+
+        function editarCliente(id) {
+
+            if (!autorizado) return;
+
+            const cliente = clientes.find(
+                registro => registro.id === id
+            );
+
+            if (!cliente) return;
+
+            $("formCliente").reset();
+
+            $("clienteId").value = cliente.id;
+
+            $("nombre").value = cliente.nombre || "";
+
+            $("telefono").value = cliente.telefono || "";
+
+            $("correo").value = cliente.correo || "";
+
+            $("localidad").value = cliente.localidad || "";
+
+            $("estado").value = cliente.estado || "";
+
+            $("domicilio").value = cliente.domicilio || "";
+
+            $("notas").value = cliente.notas || "";
+
+            ocultarMensaje("mensajeModal");
+
+            texto("tituloModal", "Editar cliente");
+
+            texto("guardarCliente", "Guardar cambios");
+
+            modalCliente.show();
+
+        }
+
+        // GUARDAR CLIENTE
+
+        $("formCliente").addEventListener("submit", async e => {
+
+            e.preventDefault();
+
+            if (!autorizado || !clientesCargados) return;
+
+            const id = $("clienteId").value;
+
+            const datos = {
+
+                nombre: $("nombre").value.trim(),
+
+                telefono: $("telefono").value.trim(),
+
+                correo: $("correo").value.trim(),
+
+                localidad: $("localidad").value.trim(),
+
+                estado: $("estado").value.trim(),
+
+                domicilio: $("domicilio").value.trim(),
+
+                notas: $("notas").value.trim()
+
+            };
+
+            if (
+
+                !datos.nombre ||
+
+                !/^\d{10}$/.test(datos.telefono)
+
+            ) {
+
+                mensaje(
+
+                    "mensajeModal",
+
+                    "Escribe un nombre y un teléfono válido de 10 dígitos.",
+
+                    "warning"
+
+                );
+
+                return;
+
+            }
+
+            const duplicado = clientes.find(cliente =>
+
+                cliente.telefono === datos.telefono &&
+                cliente.id !== id
+
+            );
+
+            if (duplicado) {
+
+                const continuar = confirm(
+
+                    "Ya existe un cliente con este teléfono: " +
+                    duplicado.nombre +
+                    ". ¿Deseas continuar?"
+
+                );
+
+                if (!continuar) return;
+
+            }
+
+            const boton = $("guardarCliente");
+
+            boton.disabled = true;
+
+            boton.textContent = "Guardando...";
+
+            ocultarMensaje("mensajeModal");
+
+            try {
+
+                if (id) {
+
+                    await updateDoc(
+
+                        doc(db, "clientes", id),
+
+                        {
+
+                            ...datos,
+
+                            actualizadoEn: serverTimestamp()
+
+                        }
+
+                    );
+
+                } else {
+
+                    await addDoc(
+
+                        collection(db, "clientes"),
+
+                        {
+
+                            ...datos,
+
+                            creadoEn: serverTimestamp(),
+
+                            actualizadoEn: serverTimestamp()
+
+                        }
+
+                    );
+
+                }
+
+                modalCliente.hide();
+
+                mensaje(
+
+                    "mensajeGeneral",
+
+                    id
+                        ? "Cliente actualizado correctamente."
+                        : "Cliente registrado correctamente.",
+
+                    "success"
+
+                );
+
+                $("formCliente").reset();
+
+            } catch (error) {
+
+                console.error(error);
+
+                mensaje(
+
+                    "mensajeModal",
+
+                    "No fue posible guardar el cliente. Revisa tu conexión.",
+
+                    "danger"
+
+                );
+
+            } finally {
+
+                boton.disabled = false;
+
+                boton.textContent = "Guardar cliente";
+
+            }
+
+        });
+
+        // ELIMINAR CLIENTE
+
+        async function eliminarCliente(id) {
+
+            if (!autorizado) return;
+
+            const cliente = clientes.find(
+                registro => registro.id === id
+            );
+
+            if (!cliente) return;
+
+            const confirmar = confirm(
+
+                "¿Deseas eliminar a " +
+                cliente.nombre +
+                "? Esta acción no se puede deshacer."
+
+            );
+
+            if (!confirmar) return;
+
+            try {
+
+                // CONSULTAR EL SERVIDOR ANTES DE ELIMINAR
+
+                const [eventosAsociados, contratosAsociados] =
+                    await Promise.all([
+
+                        getDocsFromServer(
+
+                            query(
+
+                                collection(db, "eventos"),
+
+                                where("clienteId", "==", id),
+
+                                limit(1)
+
+                            )
+
+                        ),
+
+                        getDocsFromServer(
+
+                            query(
+
+                                collection(db, "contratos"),
+
+                                where("clienteId", "==", id),
+
+                                limit(1)
+
+                            )
+
+                        )
+
+                    ]);
+
+                if (
+
+                    !eventosAsociados.empty ||
+
+                    !contratosAsociados.empty
+
+                ) {
+
+                    mensaje(
+
+                        "mensajeGeneral",
+
+                        "No puedes eliminar este cliente porque tiene celebraciones o contratos asociados.",
+
+                        "warning"
+
+                    );
+
+                    return;
+
+                }
+
+                await deleteDoc(
+                    doc(db, "clientes", id)
+                );
+
+                mensaje(
+
+                    "mensajeGeneral",
+
+                    "Cliente eliminado correctamente.",
+
+                    "success"
+
+                );
+
+            } catch (error) {
+
+                console.error(error);
+
+                mensaje(
+
+                    "mensajeGeneral",
+
+                    "No fue posible comprobar o eliminar el registro.",
+
+                    "danger"
+
+                );
+
+            }
+
+        }
+
+        // EXPEDIENTE DIGITAL
+
+        function verExpediente(id) {
+
+            if (!autorizado) return;
+
+            expedienteActual = id;
+
+            actualizarExpediente();
+
+            modalExpediente.show();
+
+        }
+
+        function actualizarExpediente() {
+
+            if (!expedienteActual) return;
+
+            const cliente = clientes.find(
+
+                registro => registro.id === expedienteActual
+
+            );
+
+            if (!cliente) {
+
+                modalExpediente.hide();
+
+                expedienteActual = null;
+
+                return;
+
+            }
+
+            texto(
+
+                "perfilIniciales",
+
+                iniciales(cliente.nombre)
+
+            );
+
+            texto("perfilNombre", cliente.nombre);
+
+            texto(
+
+                "perfilRegistro",
+
+                "Cliente desde: " +
+                fechaTexto(cliente.creadoEn)
+
+            );
+
+            texto(
+
+                "perfilTelefono",
+
+                cliente.telefono
+                    ? "+52 " + cliente.telefono
+                    : "Sin registrar"
+
+            );
+
+            texto(
+
+                "perfilCorreo",
+
+                cliente.correo || "Sin registrar"
+
+            );
+
+            texto(
+
+                "perfilLocalidad",
+
+                [cliente.localidad, cliente.estado]
+                    .filter(Boolean)
+                    .join(", ") || "Sin registrar"
+
+            );
+
+            texto(
+
+                "perfilDomicilio",
+
+                cliente.domicilio || "Sin registrar"
+
+            );
+
+            texto(
+
+                "perfilNotas",
+
+                cliente.notas || "Sin observaciones"
+
+            );
+
+            $("perfilNuevoEvento").href =
+
+                "agenda.html?accion=nuevo&clienteId=" +
+                encodeURIComponent(cliente.id);
+
+            $("perfilNuevoContrato").href =
+
+                "contratos.html?accion=nuevo&clienteId=" +
+                encodeURIComponent(cliente.id);
+
+            mostrarHistorialEventos(cliente.id);
+
+            mostrarHistorialContratos(cliente.id);
+
+        }
+
+        // HISTORIAL DE CELEBRACIONES
+
+        function mostrarHistorialEventos(id) {
+
+            const contenedor = $("historialEventos");
+
+            contenedor.replaceChildren();
+
+            if (!eventosCargados) {
+
+                contenedor.append(
+
+                    elemento(
+
+                        "p",
+                        "subtitulo",
+                        "Historial de eventos no disponible todavía."
+
+                    )
+
+                );
+
+                return;
+
+            }
+
+            const registros = eventosCliente(id);
+
+            registros.sort((a, b) =>
+
+                (convertirFecha(b.fecha)?.getTime() || 0) -
+                (convertirFecha(a.fecha)?.getTime() || 0)
+
+            );
+
+            if (!registros.length) {
+
+                contenedor.append(
+
+                    elemento(
+
+                        "p",
+                        "subtitulo",
+                        "Este cliente todavía no tiene celebraciones registradas."
+
+                    )
+
+                );
+
+                return;
+
+            }
+
+            registros.forEach(evento => {
+
+                const tarjeta = elemento(
+                    "div",
+                    "historial-item"
+                );
+
+                tarjeta.append(
+
+                    elemento(
+
+                        "strong",
+                        "",
+                        evento.tipoServicio || "Celebración"
+
+                    ),
+
+                    elemento(
+
+                        "div",
+                        "mt-2",
+                        fechaTexto(evento.fecha) +
+                        " | " +
+                        (evento.hora || "Sin horario")
+
+                    ),
+
+                    elemento(
+
+                        "div",
+                        "mt-1",
+                        evento.lugar || "Sin ubicación"
+
+                    ),
+
+                    elemento(
+
+                        "div",
+                        "mt-1",
+                        "Importe: " + moneda(evento.precio)
+
+                    ),
+
+                    elemento(
+
+                        "div",
+                        "mt-1",
+                        "Estado: " +
+                        (evento.estado || "Sin registrar")
+
+                    ),
+
+                    elemento(
+
+                        "div",
+                        "mt-1",
+                        "Pago: " +
+                        (evento.estadoPago || "Sin registrar")
+
+                    )
+
+                );
+
+                contenedor.append(tarjeta);
+
+            });
+
+        }
+
+        // HISTORIAL DE CONTRATOS
+
+        function mostrarHistorialContratos(id) {
+
+            const contenedor = $("historialContratos");
+
+            contenedor.replaceChildren();
+
+            if (!contratosCargados) {
+
+                contenedor.append(
+
+                    elemento(
+
+                        "p",
+                        "subtitulo",
+                        "Historial de contratos no disponible todavía."
+
+                    )
+
+                );
+
+                return;
+
+            }
+
+            const registros = contratosCliente(id);
+
+            registros.sort((a, b) =>
+
+                (convertirFecha(b.creadoEn)?.getTime() || 0) -
+                (convertirFecha(a.creadoEn)?.getTime() || 0)
+
+            );
+
+            if (!registros.length) {
+
+                contenedor.append(
+
+                    elemento(
+
+                        "p",
+                        "subtitulo",
+                        "Este cliente todavía no tiene contratos registrados."
+
+                    )
+
+                );
+
+                return;
+
+            }
+
+            registros.forEach(contrato => {
+
+                const tarjeta = elemento(
+                    "div",
+                    "historial-item"
+                );
+
+                tarjeta.append(
+
+                    elemento(
+
+                        "strong",
+                        "",
+                        "Contrato " +
+                        (contrato.folio || contrato.id)
+
+                    ),
+
+                    elemento(
+
+                        "div",
+                        "mt-2",
+                        "Fecha: " +
+                        fechaTexto(contrato.creadoEn)
+
+                    ),
+
+                    elemento(
+
+                        "div",
+                        "mt-1",
+                        "Paquete: " +
+                        (contrato.paqueteNombre || "Sin registrar")
+
+                    ),
+
+                    elemento(
+
+                        "div",
+                        "mt-1",
+                        "Importe: " + moneda(contrato.precio)
+
+                    )
+
+                );
+
+                contenedor.append(tarjeta);
+
+            });
+
+        }
+
+        $("modalExpediente").addEventListener(
+
+            "hidden.bs.modal",
+
+            () => expedienteActual = null
+
+        );
+
+        // BUSCADOR Y ORDENAMIENTO
+
+        $("buscador").addEventListener(
+            "input",
+            mostrarClientes
+        );
+
+        $("ordenClientes").addEventListener(
+            "change",
+            mostrarClientes
+        );
+
+        // ESCUCHAR FIRESTORE
+
+        function escuchar(nombre, callback) {
+
+            const cancelar = onSnapshot(
+
+                collection(db, nombre),
+
+                snapshot => {
+
+                    if (!autorizado) return;
+
+                    const registros = snapshot.docs.map(
+
+                        documento => ({
+
+                            ...documento.data(),
+
+                            id: documento.id
+
+                        })
+
+                    );
+
+                    callback(registros);
+
+                },
+
+                error => {
+
+                    console.error(nombre, error);
+
+                    mensaje(
+
+                        "mensajeGeneral",
+
+                        "No fue posible consultar " +
+                        nombre +
+                        ". Revisa tu conexión y los permisos.",
+
+                        "danger"
+
+                    );
+
+                    if (nombre === "clientes") {
+
+                        clientesCargados = false;
+
+                        clientes = [];
+
+                        $("nuevoCliente").disabled = true;
+
+                        $("tablaClientes").replaceChildren();
+
+                        $("contenedorTabla")
+                            .classList.add("d-none");
+
+                        $("estadoVacio")
+                            .classList.remove("d-none");
+
+                        texto(
+                            "tituloVacio",
+                            "Directorio no disponible"
+                        );
+
+                        texto(
+                            "descripcionVacio",
+                            "No se pudo consultar la base de datos."
+                        );
+
+                        texto("totalClientes", "—");
+                        texto("clientesMes", "—");
+                        texto("clientesFrecuentes", "—");
+                        texto("clientesTelefono", "—");
+                        texto("cantidadResultados", "");
+
+                    }
+
+                    if (nombre === "eventos") {
+
+                        eventosCargados = false;
+
+                        eventos = [];
+
+                    }
+
+                    if (nombre === "contratos") {
+
+                        contratosCargados = false;
+
+                        contratos = [];
+
+                    }
+
+                    actualizarIndicadores();
+
+                    mostrarClientes();
+
+                    actualizarExpediente();
+
+                }
+
+            );
+
+            suscripciones.push(cancelar);
+
+        }
+
+        function detenerSuscripciones() {
+
+            suscripciones.forEach(cancelar => cancelar());
+
+            suscripciones = [];
+
+        }
+
+        let aperturaAutomatica = false;
+
+        function cargarDatos() {
+
+            detenerSuscripciones();
+
+            escuchar("clientes", registros => {
+
+                clientes = registros;
+
+                clientesCargados = true;
+
+                $("nuevoCliente").disabled = false;
+
+                actualizarIndicadores();
+
+                mostrarClientes();
+
+                actualizarExpediente();
+
+                const parametros = new URLSearchParams(
+                    window.location.search
+                );
+
+                if (
+
+                    !aperturaAutomatica &&
+
+                    parametros.get("accion") === "nuevo"
+
+                ) {
+
+                    aperturaAutomatica = true;
+
+                    abrirNuevoCliente();
+
+                    history.replaceState(
+
+                        null,
+
+                        "",
+
+                        window.location.pathname
+
+                    );
+
+                }
+
+            });
+
+            escuchar("eventos", registros => {
+
+                eventos = registros;
+
+                eventosCargados = true;
+
+                actualizarIndicadores();
+
+                mostrarClientes();
+
+                actualizarExpediente();
+
+            });
+
+            escuchar("contratos", registros => {
+
+                contratos = registros;
+
+                contratosCargados = true;
+
+                actualizarExpediente();
+
+            });
+
+        }
+
+        // CERRAR SESION
+
+        $("cerrarSesion").addEventListener("click", async () => {
+
+            if (!confirm(
+
+                "¿Deseas cerrar sesión en Voz Angelical?"
+
+            )) return;
+
+            try {
+
+                await signOut(auth);
+
+                window.location.replace("index.html");
+
+            } catch (error) {
+
+                console.error(error);
+
+                mensaje(
+
+                    "mensajeGeneral",
+
+                    "No fue posible cerrar sesión.",
+
+                    "danger"
+
+                );
+
+            }
+
+        });
+
+        // ERROR DE ACCESO
+
+        function errorAcceso(contenido) {
+
+            autorizado = false;
+
+            detenerSuscripciones();
+
+            $("aplicacion").hidden = true;
+
+            $("pantallaCarga").style.display = "flex";
+
+            $("spinnerCarga").classList.add("d-none");
+
+            $("volverLogin").classList.remove("d-none");
+
+            texto("mensajeCarga", contenido);
+
+        }
+
+        // VERIFICAR SESION
+
+        try {
+
+            const firebase = await import("./firebase.js");
+
+            auth = firebase.auth;
+
+            db = firebase.db;
+
+            if (!auth || !db) {
+
+                throw new Error("Firebase no configurado");
+
+            }
+
+            onAuthStateChanged(auth, async usuario => {
+
+                autorizado = false;
+
+                detenerSuscripciones();
+
+                if (!usuario) {
+
+                    $("aplicacion").hidden = true;
+
+                    window.location.replace("index.html");
+
+                    return;
+
+                }
+
+                if (usuario.uid !== UID_ADMIN) {
+
+                    $("aplicacion").hidden = true;
+
+                    try {
+
+                        await signOut(auth);
+
+                    } catch (error) {
+
+                        errorAcceso("Usuario no autorizado.");
+
+                    }
+
+                    return;
+
+                }
+
+                autorizado = true;
+
+                texto(
+
+                    "correoUsuario",
+
+                    usuario.email || "Administrador"
+
+                );
+
+                $("pantallaCarga").style.display = "none";
+
+                $("aplicacion").hidden = false;
+
+                cargarDatos();
+
+            }, error => {
+
+                console.error(error);
+
+                errorAcceso("No se pudo verificar la sesión.");
+
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            errorAcceso(
+
+                "No fue posible conectar con Firebase. Revisa firebase.js."
+
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>
